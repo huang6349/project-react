@@ -1,0 +1,27 @@
+import { checkPerm } from '@/utils';
+
+export default ({ perm } = {}) => ({
+  $system: checkPerm(perm, '@tenant:query', '@user:query', '@role:query', '@perm:query'),
+  $system$tenant: checkPerm(perm, '@tenant:query'),
+  $system$user: checkPerm(perm, '@user:query'),
+  $system$role: checkPerm(perm, '@role:query'),
+  $system$perm: checkPerm(perm, '@perm:query'),
+  $tenant$query: checkPerm(perm, '@tenant:query'),
+  $tenant$create: checkPerm(perm, '@tenant:add'),
+  $tenant$update: checkPerm(perm, '@tenant:update'),
+  $tenant$delete: checkPerm(perm, '@tenant:delete'),
+  $user$query: checkPerm(perm, '@user:query'),
+  $user$create: checkPerm(perm, '@user:add'),
+  $user$update: checkPerm(perm, '@user:update'),
+  $user$delete: checkPerm(perm, '@user:delete'),
+  $user$auth: checkPerm(perm, '@user:auth'),
+  $role$query: checkPerm(perm, '@role:query'),
+  $role$create: checkPerm(perm, '@role:add'),
+  $role$update: checkPerm(perm, '@role:update'),
+  $role$delete: checkPerm(perm, '@role:delete'),
+  $role$auth: checkPerm(perm, '@role:auth'),
+  $perm$query: checkPerm(perm, '@perm:query'),
+  $perm$create: checkPerm(perm, '@perm:add'),
+  $perm$update: checkPerm(perm, '@perm:update'),
+  $perm$delete: checkPerm(perm, '@perm:delete'),
+});

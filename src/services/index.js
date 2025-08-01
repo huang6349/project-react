@@ -1,0 +1,1 @@
+export { queryDict } from './dict';

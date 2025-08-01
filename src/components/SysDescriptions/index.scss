@@ -1,0 +1,17 @@
+:global(.ant-pro-card-tabs) .sys-descriptions:global(.ant-pro-card > .ant-pro-card-body) {
+  @apply px-0;
+  @apply py-0;
+}
+
+:global(.ant-pro-card-tabs) .sys-descriptions:global(.ant-pro-card-border) {
+  @apply border-none;
+}
+
+.sys-descriptions :global(.ant-card .ant-card-body) {
+  @apply px-0;
+  @apply py-0;
+}
+
+.sys-descriptions :global(.ant-card) {
+  @apply shadow-none;
+}

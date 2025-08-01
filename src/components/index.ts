@@ -1,0 +1,12 @@
+export { notification } from '@/hocs';
+export { message } from '@/hocs';
+export { modal } from '@/hocs';
+export { default as SysContainer } from './SysContainer';
+export { default as SysFooter } from './SysFooter';
+export { default as SysProTable } from './SysProTable';
+export { default as SysProTList } from './SysProTList';
+export { default as SysForm } from './SysForm';
+export { default as SysBack } from './SysBack';
+export { default as SysDescriptions } from './SysDescriptions';
+export { default as SysTabs } from './SysTabs';
+export { default as SysDictTag } from './SysDictTag';
