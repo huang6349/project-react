@@ -8,6 +8,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { useUpdateEffect } from 'react-use';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
+import { isFunction } from 'lodash-es';
 import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
@@ -15,6 +16,7 @@ import state from './index.state';
 
 const SysProTable = (props: ProTableProps<any, any> & {
   onTListChange?: (selectedRowKey?: Key) => void;
+  syncQueries?: boolean | ((values: any) => any);
 }) => {
   const headerRef = useRef<any>();
 
@@ -25,6 +27,7 @@ const SysProTable = (props: ProTableProps<any, any> & {
 
   const {
     onTListChange,
+    syncQueries,
     pagination,
     form,
     request,
@@ -83,8 +86,9 @@ const SysProTable = (props: ProTableProps<any, any> & {
       const {
         pageSize,
         current,
-        ...queries
+        ...values
       } = params || {};
+      const queries = getQueries(syncQueries || !0, values);
       set(state, `${workspace}.pageSize`, pageSize);
       set(state, `${workspace}.current`, current);
       set(state, `${workspace}.queries`, queries);
@@ -96,6 +100,15 @@ const SysProTable = (props: ProTableProps<any, any> & {
       header?.refreshTime();
     }}
   />);
+};
+
+const getQueries = (
+  syncQueries: boolean | ((values: any) => any),
+  values: any,
+): any => {
+  if (isFunction(syncQueries)) {
+    return syncQueries?.(values);
+  } else return values;
 };
 
 export default SysProTable;
