@@ -2,6 +2,7 @@ import type { FormColumnType } from './types';
 import type { FormProps } from './types';
 import { useMemo } from 'react';
 import { BetaSchemaForm } from '@ant-design/pro-components';
+import { isArray } from 'lodash-es';
 import { produce } from 'immer';
 
 const SchemaForm = (props: FormProps) => {
@@ -94,7 +95,7 @@ const SchemaForm = (props: FormProps) => {
           col.ellipsis = !1;
           col.copyable = !1;
 
-          if (columns && Array.isArray(columns)) {
+          if (isArray(columns)) {
             col.columns = patch(columns);
           }
 
