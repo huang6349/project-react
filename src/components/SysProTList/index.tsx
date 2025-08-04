@@ -2,6 +2,7 @@ import type { TableColumnType } from './types';
 import type { TableProps } from './types';
 import type { Key } from 'react';
 import { ProTable } from '@ant-design/pro-components';
+import { useMemo } from 'react';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useUpdateEffect } from 'react-use';
 import { useLocation } from '@umijs/max';
@@ -33,32 +34,35 @@ const SysProTList = (props: TableProps) => {
     ...proTableProps
   } = props;
 
-  const patchColumn = ($cols: TableColumnType[]): any[] => (
-    produce($cols, (cols) => {
-      cols?.forEach((col) => {
-        const {
-          fieldProps = {},
-          placeholder,
-        } = col;
+  const $cols = useMemo(() => {
+    const patch = ($cols: TableColumnType[]): any[] => (
+      produce($cols, (cols) => {
+        cols?.forEach((col) => {
+          const {
+            fieldProps = {},
+            placeholder,
+          } = col;
 
-        if (placeholder) {
-          if (typeof fieldProps === 'function') {
-            col.fieldProps = (_form: any, _config: any): any => {
-              const _fieldProps = fieldProps(_form, _config);
+          if (placeholder) {
+            if (typeof fieldProps === 'function') {
+              col.fieldProps = (_form: any, _config: any): any => {
+                const _fieldProps = fieldProps(_form, _config);
+                if (!_fieldProps.placeholder)
+                  _fieldProps.placeholder = placeholder;
+                return _fieldProps;
+              };
+            } else {
+              const _fieldProps = fieldProps || {};
               if (!_fieldProps.placeholder)
                 _fieldProps.placeholder = placeholder;
-              return _fieldProps;
-            };
-          } else {
-            const _fieldProps = fieldProps || {};
-            if (!_fieldProps.placeholder)
-              _fieldProps.placeholder = placeholder;
-            col.fieldProps = _fieldProps;
+              col.fieldProps = _fieldProps;
+            }
           }
-        }
-      });
-    })
-  );
+        });
+      })
+    );
+    return patch(columns);
+  }, [columns]);
 
   const {
     selectedRowKeys,
@@ -82,12 +86,12 @@ const SysProTList = (props: TableProps) => {
 
   return (<ProTable
     cardBordered={!1}
-    columns={patchColumn(columns)}
     options={!1}
     ghost={!0}
     defaultSize='small'
     tableAlertRender={!1}
     {...proTableProps}
+    columns={$cols}
     rowSelection={{
       ...rowSelection,
       selectedRowKeys: selectedRowKeys || [],

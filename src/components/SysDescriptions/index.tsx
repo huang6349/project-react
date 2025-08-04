@@ -1,5 +1,6 @@
 import type { DescriptionsColumnType } from './types';
 import type { DescriptionsProps } from './types';
+import { useMemo } from 'react';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
 import { produce } from 'immer';
@@ -13,22 +14,25 @@ const SysDescriptions = (props: DescriptionsProps) => {
     ...descriptionsProps
   } = props;
 
-  const patchColumn = ($cols: DescriptionsColumnType[]): any[] => (
-    produce($cols, (cols) => {
-      cols?.forEach((col) => {
-        col.copyable = !1;
-        col.ellipsis = !1;
-      });
-    })
-  );
+  const $cols = useMemo(() => {
+    const patch = ($cols: DescriptionsColumnType[]): any[] => (
+      produce($cols, (cols) => {
+        cols?.forEach((col) => {
+          col.ellipsis = !1;
+          col.copyable = !1;
+        });
+      })
+    );
+    return patch(columns);
+  }, [columns]);
 
   return (<ProCard
     className={styles['sys-descriptions']}
     title={title}
     bordered={bordered}>
     <ProDescriptions
-      columns={patchColumn(columns)}
-      {...descriptionsProps} />
+      {...descriptionsProps}
+      columns={$cols} />
   </ProCard>);
 };
 

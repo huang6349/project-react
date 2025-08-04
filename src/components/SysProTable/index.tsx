@@ -34,32 +34,35 @@ const SysProTable = (props: TableProps) => {
     ...proTableProps
   } = props;
 
-  const patchColumn = ($cols: TableColumnType[]): any[] => (
-    produce($cols, (cols) => {
-      cols?.forEach((col) => {
-        const {
-          fieldProps = {},
-          placeholder,
-        } = col;
+  const $cols = useMemo(() => {
+    const patch = ($cols: TableColumnType[]): any[] => (
+      produce($cols, (cols) => {
+        cols?.forEach((col) => {
+          const {
+            fieldProps = {},
+            placeholder,
+          } = col;
 
-        if (placeholder) {
-          if (typeof fieldProps === 'function') {
-            col.fieldProps = (_form: any, _config: any): any => {
-              const _fieldProps = fieldProps(_form, _config);
+          if (placeholder) {
+            if (typeof fieldProps === 'function') {
+              col.fieldProps = (_form: any, _config: any): any => {
+                const _fieldProps = fieldProps(_form, _config);
+                if (!_fieldProps.placeholder)
+                  _fieldProps.placeholder = placeholder;
+                return _fieldProps;
+              };
+            } else {
+              const _fieldProps = fieldProps || {};
               if (!_fieldProps.placeholder)
                 _fieldProps.placeholder = placeholder;
-              return _fieldProps;
-            };
-          } else {
-            const _fieldProps = fieldProps || {};
-            if (!_fieldProps.placeholder)
-              _fieldProps.placeholder = placeholder;
-            col.fieldProps = _fieldProps;
+              col.fieldProps = _fieldProps;
+            }
           }
-        }
-      });
-    })
-  );
+        });
+      })
+    );
+    return patch(columns);
+  }, [columns]);
 
   const {
     selectedRowKey,
@@ -96,8 +99,8 @@ const SysProTable = (props: TableProps) => {
       headerRef={headerRef}
     />)}
     cardBordered={!1}
-    columns={patchColumn(columns)}
     {...proTableProps}
+    columns={$cols}
     pagination={{
       ...pagination,
       defaultPageSize: pageSize || 10,
