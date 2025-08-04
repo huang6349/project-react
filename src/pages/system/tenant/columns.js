@@ -26,10 +26,10 @@ const columns = (options) => compact([{
   hideInSearch: !0,
 }, {
   title: '名称',
+  placeholder: '请输入名称',
   width: 150,
   dataIndex: 'name',
   ellipsis: !0,
-  fieldProps: { placeholder: '请输入名称' },
   hideInForm: !0,
 }, {
   title: '简称',
@@ -112,16 +112,16 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   columns: [{
     title: '名称',
+    placeholder: '请输入名称',
     width: 'md',
     dataIndex: 'name',
     formItemProps: { rules: [{ required: !0 }] },
-    fieldProps: { placeholder: '请输入名称' },
   }, {
     title: '简称',
+    placeholder: '请输入简称',
     width: 'md',
     dataIndex: 'abbr',
     formItemProps: { rules: [{ required: !0 }] },
-    fieldProps: { placeholder: '请输入简称' },
   }],
 }, {
   valueType: 'group',
@@ -131,10 +131,10 @@ const columns = (options) => compact([{
   columns: [{
     title: '类别',
     width: 'md',
+    placeholder: '请选择类别',
     dataIndex: 'category',
     request: queryDict('tenant-category'),
     formItemProps: { rules: [{ required: !0 }] },
-    fieldProps: { placeholder: '请选择类别' },
   }],
 }, {
   valueType: 'group',
@@ -143,15 +143,15 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   columns: [{
     title: '地区',
+    placeholder: '请输入地区',
     width: 'md',
     dataIndex: 'area',
     formItemProps: { rules: [{ required: !0 }] },
-    fieldProps: { placeholder: '请输入地区' },
   }, {
     title: '地址',
+    placeholder: '请输入地址',
     width: 'md',
     dataIndex: 'address',
-    fieldProps: { placeholder: '请输入地址' },
   }],
 }, {
   valueType: 'group',
@@ -160,10 +160,10 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   columns: [{
     title: '备注',
+    placeholder: '请输入备注',
     width: 'md',
     dataIndex: 'desc',
     valueType: 'textarea',
-    fieldProps: { placeholder: '请输入备注' },
   }],
 }, options]);
 

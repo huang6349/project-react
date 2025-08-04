@@ -1,4 +1,5 @@
 import type { ProTableProps } from '@ant-design/pro-components';
+import type { ProColumnType } from '@ant-design/pro-components';
 import type { Key } from 'react';
 import { ProTable } from '@ant-design/pro-components';
 import { TableTitle } from './TableTitle';
@@ -12,11 +13,17 @@ import { isFunction } from 'lodash-es';
 import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
+import { produce } from 'immer';
 import state from './index.state';
 
-const SysProTable = (props: ProTableProps<any, any> & {
+export type TableColumnType = ProColumnType<any, any> & {
+  placeholder?: string;
+}
+
+const SysProTable = (props: Omit<ProTableProps<any, any>, 'columns'> & {
   onTListChange?: (selectedRowKey?: Key) => void;
   syncQueries?: boolean | ((values: any) => any);
+  columns: TableColumnType[];
 }) => {
   const headerRef = useRef<any>();
 
@@ -29,11 +36,39 @@ const SysProTable = (props: ProTableProps<any, any> & {
     onTListChange,
     syncQueries,
     pagination,
+    columns,
     form,
     request,
     onLoad,
     ...proTableProps
   } = props;
+
+  const patchColumn = ($cols: TableColumnType[]): any[] => (
+    produce($cols, (cols) => {
+      cols?.forEach((col) => {
+        const {
+          fieldProps = {},
+          placeholder,
+        } = col;
+
+        if (placeholder) {
+          if (typeof fieldProps === 'function') {
+            col.fieldProps = (_form: any, _config: any): any => {
+              const _fieldProps = fieldProps(_form, _config);
+              if (!_fieldProps.placeholder)
+                _fieldProps.placeholder = placeholder;
+              return _fieldProps;
+            };
+          } else {
+            const _fieldProps = fieldProps || {};
+            if (!_fieldProps.placeholder)
+              _fieldProps.placeholder = placeholder;
+            col.fieldProps = _fieldProps;
+          }
+        }
+      });
+    })
+  );
 
   const {
     selectedRowKey,
@@ -70,6 +105,7 @@ const SysProTable = (props: ProTableProps<any, any> & {
       headerRef={headerRef}
     />)}
     cardBordered={!1}
+    columns={patchColumn(columns)}
     {...proTableProps}
     pagination={{
       ...pagination,

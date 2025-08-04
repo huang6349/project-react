@@ -1,12 +1,14 @@
 import type { FormSchema } from '@ant-design/pro-form/es/components/SchemaForm';
+import type { FormColumnType } from './SchemaForm';
 import type { ProCardProps } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
 import SchemaForm from './SchemaForm';
 
 const SysForm: {
   SchemaForm: typeof SchemaForm;
-} = (props: FormSchema<any, any> & {
+} = (props: Omit<FormSchema<any, any>, 'columns'> & {
   cardProps?: ProCardProps,
+  columns: FormColumnType[];
 }) => {
   const {
     cardProps,

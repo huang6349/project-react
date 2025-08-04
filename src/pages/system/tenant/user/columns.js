@@ -27,26 +27,26 @@ const columns = (options) => compact([{
   hideInSearch: !0,
 }, {
   title: '帐号',
+  placeholder: '请输入帐号',
   width: 150,
   dataIndex: 'username',
   ellipsis: !0,
   copyable: !0,
-  fieldProps: { placeholder: '请输入帐号' },
   hideInForm: !0,
 }, {
   title: '昵称',
+  placeholder: '请输入昵称',
   span: 2,
   width: 150,
   dataIndex: 'nickname',
   ellipsis: !0,
-  fieldProps: { placeholder: '请输入昵称' },
   hideInForm: !0,
 }, {
   title: '手机号码',
+  placeholder: '请输入手机号码',
   width: 180,
   dataIndex: 'mobile',
   copyable: !0,
-  fieldProps: { placeholder: '请输入手机号码' },
   hideInForm: !0,
 }, {
   title: '邮箱',
@@ -138,14 +138,16 @@ const columns = (options) => compact([{
     valueType: 'group',
     columns: [{
       title: '用户',
+      placeholder: '请选择用户',
       width: 'md',
       dataIndex: 'userId',
       request: dataUser(),
       formItemProps: { rules: [{ required: !0 }] },
-      fieldProps: { placeholder: '请选择用户', showSearch: !0 },
+      fieldProps: { showSearch: !0 },
     }],
   }] : [{
     title: '用户',
+    placeholder: '请输入用户',
     width: 'md',
     dataIndex: 'userId',
     formItemProps: { hidden: !0 },
@@ -157,10 +159,10 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   columns: [{
     title: '备注',
+    placeholder: '请输入备注',
     width: 'md',
     dataIndex: 'desc',
     valueType: 'textarea',
-    fieldProps: { placeholder: '请输入备注' },
   }],
 }, options]);
 

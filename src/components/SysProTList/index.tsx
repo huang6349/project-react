@@ -1,4 +1,5 @@
 import type { ProTableProps } from '@ant-design/pro-components';
+import type { ProColumnType } from '@ant-design/pro-components';
 import type { Key } from 'react';
 import { ProTable } from '@ant-design/pro-components';
 import { useIsomorphicLayoutEffect } from 'react-use';
@@ -10,11 +11,17 @@ import { includes } from 'lodash-es';
 import { head } from 'lodash-es';
 import { set } from 'lodash-es';
 import { map } from 'lodash-es';
+import { produce } from 'immer';
 import state from './index.state';
 
-const SysProTList = (props: ProTableProps<any, any> & {
+export type TableColumnType = ProColumnType<any, any> & {
+  placeholder?: string;
+}
+
+const SysProTList = (props: Omit<ProTableProps<any, any>, 'columns'> & {
   onTListChange?: (selectedRowKey?: Key) => void;
   syncQueries?: boolean | ((values: any) => any);
+  columns: TableColumnType[];
 }) => {
   const {
     pathname: namespace,
@@ -26,12 +33,40 @@ const SysProTList = (props: ProTableProps<any, any> & {
     syncQueries,
     rowSelection,
     pagination,
+    columns,
     search,
     form,
     request,
     onDataSourceChange,
     ...proTableProps
   } = props;
+
+  const patchColumn = ($cols: TableColumnType[]): any[] => (
+    produce($cols, (cols) => {
+      cols?.forEach((col) => {
+        const {
+          fieldProps = {},
+          placeholder,
+        } = col;
+
+        if (placeholder) {
+          if (typeof fieldProps === 'function') {
+            col.fieldProps = (_form: any, _config: any): any => {
+              const _fieldProps = fieldProps(_form, _config);
+              if (!_fieldProps.placeholder)
+                _fieldProps.placeholder = placeholder;
+              return _fieldProps;
+            };
+          } else {
+            const _fieldProps = fieldProps || {};
+            if (!_fieldProps.placeholder)
+              _fieldProps.placeholder = placeholder;
+            col.fieldProps = _fieldProps;
+          }
+        }
+      });
+    })
+  );
 
   const {
     selectedRowKeys,
@@ -55,6 +90,7 @@ const SysProTList = (props: ProTableProps<any, any> & {
 
   return (<ProTable
     cardBordered={!1}
+    columns={patchColumn(columns)}
     options={!1}
     ghost={!0}
     defaultSize='small'

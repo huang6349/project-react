@@ -35,6 +35,9 @@ importers:
       dayjs:
         specifier: 1.11.13
         version: 1.11.13
+      immer:
+        specifier: 9.0.21
+        version: 9.0.21
       localforage:
         specifier: 1.10.0
         version: 1.10.0
@@ -3396,6 +3399,9 @@ packages:
 
   immer@8.0.4:
     resolution: {integrity: sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==}
+
+  immer@9.0.21:
+    resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -10932,6 +10938,8 @@ snapshots:
   immediate@3.0.6: {}
 
   immer@8.0.4: {}
+
+  immer@9.0.21: {}
 
   import-fresh@3.3.1:
     dependencies:
