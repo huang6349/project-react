@@ -92,9 +92,6 @@ const SchemaForm = (props: FormProps) => {
             }
           }
 
-          col.ellipsis = !1;
-          col.copyable = !1;
-
           if (isArray(columns)) {
             col.columns = patch(columns);
           }
