@@ -17,6 +17,7 @@ const SchemaForm = (props: FormProps) => {
           fieldProps = {},
           placeholder,
           required,
+          showSearch,
           hidden,
           valueType,
           columns,
@@ -56,6 +57,22 @@ const SchemaForm = (props: FormProps) => {
           }
         }
 
+        if (showSearch) {
+          if (typeof fieldProps === 'function') {
+            col.fieldProps = (_form: any, _config: any): any => {
+              const _fieldProps: any = fieldProps(_form, _config);
+              if (!_fieldProps.showSearch)
+                _fieldProps.showSearch = showSearch;
+              return _fieldProps;
+            };
+          } else {
+            const _fieldProps: any = fieldProps || {};
+            if (!_fieldProps.showSearch)
+              _fieldProps.showSearch = showSearch;
+            col.fieldProps = _fieldProps;
+          }
+        }
+
         if (hidden) {
           if (typeof formItemProps === 'function') {
             col.formItemProps = (_form: any, _config: any): any => {
@@ -71,6 +88,9 @@ const SchemaForm = (props: FormProps) => {
             col.formItemProps = _formItemProps;
           }
         }
+
+        col.copyable = !1;
+        col.ellipsis = !1;
 
         if (columns && Array.isArray(columns)) {
           col.columns = patchColumn(columns);

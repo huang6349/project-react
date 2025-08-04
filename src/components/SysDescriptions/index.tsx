@@ -16,13 +16,8 @@ const SysDescriptions = (props: DescriptionsProps) => {
   const patchColumn = ($cols: DescriptionsColumnType[]): any[] => (
     produce($cols, (cols) => {
       cols?.forEach((col) => {
-        const {
-          ellipsis,
-        } = col;
-
-        if (ellipsis) {
-          col.ellipsis = !1;
-        }
+        col.copyable = !1;
+        col.ellipsis = !1;
       });
     })
   );

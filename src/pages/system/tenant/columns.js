@@ -130,9 +130,9 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   columns: [{
     title: '类别',
-    width: 'md',
     placeholder: '请选择类别',
     required: !0,
+    width: 'md',
     dataIndex: 'category',
     request: queryDict('tenant-category'),
   }],
@@ -144,8 +144,8 @@ const columns = (options) => compact([{
   columns: [{
     title: '地区',
     placeholder: '请输入地区',
-    width: 'md',
     required: !0,
+    width: 'md',
     dataIndex: 'area',
   }, {
     title: '地址',
