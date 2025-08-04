@@ -1,18 +1,9 @@
-import type { FormSchema } from '@ant-design/pro-form/es/components/SchemaForm';
-import type { ProFormColumnsType } from '@ant-design/pro-components';
+import type { FormColumnType } from './types';
+import type { FormProps } from './types';
 import { BetaSchemaForm } from '@ant-design/pro-components';
 import { produce } from 'immer';
 
-export type FormColumnType = Omit<ProFormColumnsType<any, any>, 'columns'> & {
-  placeholder?: string;
-  required?: boolean;
-  hidden?: boolean;
-  columns?: FormColumnType[] | ((values: any) => FormColumnType[]);
-}
-
-const SchemaForm = (props: Omit<FormSchema<any, any>, 'columns'> & {
-  columns: FormColumnType[];
-}) => {
+const SchemaForm = (props: FormProps) => {
   const {
     columns,
     ...formSchema
@@ -96,8 +87,9 @@ const SchemaForm = (props: Omit<FormSchema<any, any>, 'columns'> & {
     })
   );
 
-  // @ts-ignore
+
   return (<BetaSchemaForm
+    layoutType='Form'
     requiredMark={!0}
     columns={patchColumn(columns)}
     {...formSchema}

@@ -1,6 +1,5 @@
-import type { ProTableProps } from '@ant-design/pro-components';
-import type { ProColumnType } from '@ant-design/pro-components';
-import type { Key } from 'react';
+import type { TableColumnType } from './types';
+import type { TableProps } from './types';
 import { ProTable } from '@ant-design/pro-components';
 import { TableTitle } from './TableTitle';
 import { useMemo } from 'react';
@@ -16,15 +15,7 @@ import { set } from 'lodash-es';
 import { produce } from 'immer';
 import state from './index.state';
 
-export type TableColumnType = ProColumnType<any, any> & {
-  placeholder?: string;
-}
-
-const SysProTable = (props: Omit<ProTableProps<any, any>, 'columns'> & {
-  onTListChange?: (selectedRowKey?: Key) => void;
-  syncQueries?: boolean | ((values: any) => any);
-  columns: TableColumnType[];
-}) => {
+const SysProTable = (props: TableProps) => {
   const headerRef = useRef<any>();
 
   const {

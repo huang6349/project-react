@@ -1,5 +1,5 @@
-import type { ProTableProps } from '@ant-design/pro-components';
-import type { ProColumnType } from '@ant-design/pro-components';
+import type { TableColumnType } from './types';
+import type { TableProps } from './types';
 import type { Key } from 'react';
 import { ProTable } from '@ant-design/pro-components';
 import { useIsomorphicLayoutEffect } from 'react-use';
@@ -14,15 +14,7 @@ import { map } from 'lodash-es';
 import { produce } from 'immer';
 import state from './index.state';
 
-export type TableColumnType = ProColumnType<any, any> & {
-  placeholder?: string;
-}
-
-const SysProTList = (props: Omit<ProTableProps<any, any>, 'columns'> & {
-  onTListChange?: (selectedRowKey?: Key) => void;
-  syncQueries?: boolean | ((values: any) => any);
-  columns: TableColumnType[];
-}) => {
+const SysProTList = (props: TableProps) => {
   const {
     pathname: namespace,
   } = useLocation();
