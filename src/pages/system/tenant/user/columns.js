@@ -140,9 +140,9 @@ const columns = (options) => compact([{
       title: '用户',
       placeholder: '请选择用户',
       width: 'md',
+      required: !0,
       dataIndex: 'userId',
       request: dataUser(),
-      formItemProps: { rules: [{ required: !0 }] },
       fieldProps: { showSearch: !0 },
     }],
   }] : [{

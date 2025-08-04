@@ -114,14 +114,14 @@ const columns = (options) => compact([{
     title: '名称',
     placeholder: '请输入名称',
     width: 'md',
+    required: !0,
     dataIndex: 'name',
-    formItemProps: { rules: [{ required: !0 }] },
   }, {
     title: '简称',
     placeholder: '请输入简称',
     width: 'md',
+    required: !0,
     dataIndex: 'abbr',
-    formItemProps: { rules: [{ required: !0 }] },
   }],
 }, {
   valueType: 'group',
@@ -132,9 +132,9 @@ const columns = (options) => compact([{
     title: '类别',
     width: 'md',
     placeholder: '请选择类别',
+    required: !0,
     dataIndex: 'category',
     request: queryDict('tenant-category'),
-    formItemProps: { rules: [{ required: !0 }] },
   }],
 }, {
   valueType: 'group',
@@ -145,8 +145,8 @@ const columns = (options) => compact([{
     title: '地区',
     placeholder: '请输入地区',
     width: 'md',
+    required: !0,
     dataIndex: 'area',
-    formItemProps: { rules: [{ required: !0 }] },
   }, {
     title: '地址',
     placeholder: '请输入地址',
