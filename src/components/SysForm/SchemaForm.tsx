@@ -6,6 +6,7 @@ import { produce } from 'immer';
 export type FormColumnType = Omit<ProFormColumnsType<any, any>, 'columns'> & {
   placeholder?: string;
   required?: boolean;
+  hidden?: boolean;
   columns?: FormColumnType[] | ((values: any) => FormColumnType[]);
 }
 
@@ -25,6 +26,7 @@ const SchemaForm = (props: Omit<FormSchema<any, any>, 'columns'> & {
           fieldProps = {},
           placeholder,
           required,
+          hidden,
           valueType,
           columns,
         } = col;
@@ -59,6 +61,22 @@ const SchemaForm = (props: Omit<FormSchema<any, any>, 'columns'> & {
             if (!_formItemProps.rules)
               _formItemProps.rules = [];
             _formItemProps.rules.push({ required: true });
+            col.formItemProps = _formItemProps;
+          }
+        }
+
+        if (hidden) {
+          if (typeof formItemProps === 'function') {
+            col.formItemProps = (_form: any, _config: any): any => {
+              const _formItemProps: any = formItemProps(_form, _config);
+              if (!_formItemProps.hidden)
+                _formItemProps.hidden = hidden;
+              return _formItemProps;
+            };
+          } else {
+            const _formItemProps: any = formItemProps || {};
+            if (!_formItemProps.hidden)
+              _formItemProps.hidden = hidden;
             col.formItemProps = _formItemProps;
           }
         }
