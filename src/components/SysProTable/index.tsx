@@ -66,11 +66,11 @@ const SysProTable = (props: TableProps) => {
 
   const {
     selectedRowKey,
-  } = snap?.tl[namespace] || {};
+  } = snap?.tl?.[namespace] || {};
 
   const {
     activeKey,
-  } = snap?.tt[namespace] || {};
+  } = snap?.tt?.[namespace] || {};
 
   const workspace = useMemo(() => (
     join(compact([namespace, selectedRowKey, activeKey]), '#')
