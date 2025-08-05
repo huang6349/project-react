@@ -2,7 +2,9 @@ import type { FormColumnType } from './types';
 import type { FormProps } from './types';
 import { useMemo } from 'react';
 import { BetaSchemaForm } from '@ant-design/pro-components';
+import { isFunction } from 'lodash-es';
 import { isArray } from 'lodash-es';
+import { eq } from 'lodash-es';
 import { produce } from 'immer';
 
 const SchemaForm = (props: FormProps) => {
@@ -27,7 +29,7 @@ const SchemaForm = (props: FormProps) => {
           } = col;
 
           if (placeholder) {
-            if (typeof fieldProps === 'function') {
+            if (isFunction(fieldProps)) {
               col.fieldProps = (_form: any, _config: any): any => {
                 const _fieldProps: any = fieldProps(_form, _config);
                 if (!_fieldProps.placeholder)
@@ -43,7 +45,7 @@ const SchemaForm = (props: FormProps) => {
           }
 
           if (required) {
-            if (typeof formItemProps === 'function') {
+            if (isFunction(formItemProps)) {
               col.formItemProps = (_form: any, _config: any): any => {
                 const _formItemProps: any = formItemProps(_form, _config);
                 if (!_formItemProps.rules)
@@ -61,7 +63,7 @@ const SchemaForm = (props: FormProps) => {
           }
 
           if (showSearch) {
-            if (typeof fieldProps === 'function') {
+            if (isFunction(fieldProps)) {
               col.fieldProps = (_form: any, _config: any): any => {
                 const _fieldProps: any = fieldProps(_form, _config);
                 if (!_fieldProps.showSearch)
@@ -77,7 +79,7 @@ const SchemaForm = (props: FormProps) => {
           }
 
           if (hidden) {
-            if (typeof formItemProps === 'function') {
+            if (isFunction(formItemProps)) {
               col.formItemProps = (_form: any, _config: any): any => {
                 const _formItemProps: any = formItemProps(_form, _config);
                 if (!_formItemProps.hidden)
@@ -96,12 +98,10 @@ const SchemaForm = (props: FormProps) => {
             col.columns = patch(columns);
           }
 
-          if (valueType === 'dependency') {
-            if (columns && typeof columns === 'function') {
-              col.columns = (values) => (
-                patch(columns(values))
-              );
-            }
+          if (eq(valueType, 'dependency') && isFunction(columns)) {
+            col.columns = (values): FormColumnType[] => (
+              patch(columns(values))
+            );
           }
         });
       })

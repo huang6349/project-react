@@ -44,7 +44,7 @@ const SysProTable = (props: TableProps) => {
           } = col;
 
           if (placeholder) {
-            if (typeof fieldProps === 'function') {
+            if (isFunction(fieldProps)) {
               col.fieldProps = (_form: any, _config: any): any => {
                 const _fieldProps = fieldProps(_form, _config);
                 if (!_fieldProps.placeholder)
