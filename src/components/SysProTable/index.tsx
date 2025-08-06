@@ -95,10 +95,10 @@ const SysProTable = (props: TableProps) => {
   }, [selectedRowKey]);
 
   return (<ProTable
+    cardBordered={!1}
     headerTitle={(<TableTitle
       headerRef={headerRef}
     />)}
-    cardBordered={!1}
     {...proTableProps}
     columns={$cols}
     pagination={{
@@ -125,9 +125,9 @@ const SysProTable = (props: TableProps) => {
       return request?.(params, sort, filter) as any;
     }}
     onLoad={(dataSource) => {
-      onLoad?.(dataSource);
       const header = headerRef?.current;
       header?.refreshTime();
+      onLoad?.(dataSource);
     }}
   />);
 };

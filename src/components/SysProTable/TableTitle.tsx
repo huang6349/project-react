@@ -1,14 +1,15 @@
+import type { HeaderProps } from './types';
 import { memo } from 'react';
-import { useCallback, useState, useImperativeHandle } from 'react';
+import { useState, useImperativeHandle } from 'react';
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
 
-export const TableTitle = memo(({ headerRef }: any) => {
+export const TableTitle = memo(({ headerRef }: HeaderProps) => {
   const [refreshTime, setRefreshTime] = useState(dayjs());
 
-  const handleRefreshTime = useCallback(() => {
-    setRefreshTime(dayjs());
-  }, []);
+  const handleRefreshTime = () => (
+    setRefreshTime(dayjs())
+  );
 
   useImperativeHandle(headerRef, () => ({
     refreshTime: handleRefreshTime,
