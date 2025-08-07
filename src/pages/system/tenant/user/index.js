@@ -68,7 +68,7 @@ export const UserPane = ({ id: tenantId }) => {
 
   return (<SysProTable
     rowKey='id'
-    name='用户'
+    name='用户信息'
     params={{ tenantId }}
     request={service.dataPage()}
     scroll={{ x: 950 }}

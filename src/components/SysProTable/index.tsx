@@ -2,6 +2,7 @@ import type { TableColumnType } from './types';
 import type { TableProps } from './types';
 import type { AlertRenderType } from './types';
 import { ProTable } from '@ant-design/pro-components';
+import { Button } from 'antd';
 import { Space } from 'antd';
 import { TableTitle } from './TableTitle';
 import { useMemo } from 'react';
@@ -61,12 +62,20 @@ const SysProTable = (props: TableProps) => {
     );
 
     return (<Space>
-      {enableExport ? (<a onClick={handleExport} key='export'>
+      {enableExport ? (<Button
+        className='h-auto p-0'
+        type='link'
+        onClick={handleExport}
+        key='export'>
         <>导出所选</>
-      </a>) : null}
-      {enableClear ? (<a onClick={onCleanSelected} key='clear'>
+      </Button>) : null}
+      {enableClear ? (<Button
+        className='h-auto p-0'
+        type='link'
+        onClick={onCleanSelected}
+        key='clear'>
         {intl.getMessage('alert.clear', '清空')}
-      </a>) : null}
+      </Button>) : null}
     </Space>);
   };
 

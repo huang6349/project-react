@@ -24,7 +24,6 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
-  hideInExport: !0,
   hidden: !0,
 }, {
   title: '帐号',
