@@ -24,6 +24,7 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
+  hideInExport: !0,
   hidden: !0,
 }, {
   title: '帐号',
@@ -64,6 +65,9 @@ const columns = (options) => compact([{
   dataIndex: 'genderTag',
   hideInForm: !0,
   hideInSearch: !0,
+  renderExport: ({ label } = {}) => (
+    label
+  ),
   render: ({ label, style } = {}) => (<SysDictTag
     label={label}
     style={style}
@@ -101,6 +105,9 @@ const columns = (options) => compact([{
   hideInForm: !0,
   hideInTable: !0,
   hideInSearch: !0,
+  renderExport: ({ label } = {}) => (
+    label
+  ),
   render: ({ label, style } = {}) => (<SysDictTag
     label={label}
     style={style}
@@ -127,6 +134,7 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
+  hideInExport: !0,
   hidden: !0,
 }, {
   valueType: 'dependency',
@@ -134,6 +142,7 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
+  hideInExport: !0,
   columns: ({ id }) => ((isEmpty(id) ? [{
     valueType: 'group',
     columns: [{
@@ -157,6 +166,7 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
+  hideInExport: !0,
   columns: [{
     title: '备注',
     placeholder: '请输入备注',

@@ -68,12 +68,14 @@ export const UserPane = ({ id: tenantId }) => {
 
   return (<SysProTable
     rowKey='id'
+    name='用户'
     params={{ tenantId }}
     request={service.dataPage()}
     scroll={{ x: 950 }}
     actionRef={actionRef}
     formRef={formRef}
     form={{ className: 'border-b' }}
+    rowSelection={{}}
     columns={columns({
       title: '操作',
       width: 138,
