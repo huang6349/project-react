@@ -24,7 +24,9 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
-  hidden: !0,
+  formItemProps: {
+    hidden: !0,
+  },
 }, {
   title: '帐号',
   placeholder: '请输入帐号',
@@ -134,7 +136,9 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
   hideInExport: !0,
-  hidden: !0,
+  formItemProps: {
+    hidden: !0,
+  },
 }, {
   valueType: 'dependency',
   name: ['id'],
@@ -158,7 +162,9 @@ const columns = (options) => compact([{
     placeholder: '请输入用户',
     width: 'md',
     dataIndex: 'userId',
-    hidden: !0,
+    formItemProps: {
+      hidden: !0,
+    },
   }])),
 }, {
   valueType: 'group',

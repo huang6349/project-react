@@ -23,7 +23,9 @@ const columns = (options) => compact([{
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
-  hidden: !0,
+  formItemProps: {
+    hidden: !0,
+  },
 }, {
   title: '名称',
   placeholder: '请输入名称',

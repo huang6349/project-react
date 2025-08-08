@@ -5,7 +5,6 @@ export type FormColumnType = Omit<ProFormColumnsType<any, any>, 'columns'> & {
   placeholder?: string;
   required?: boolean;
   showSearch?: boolean;
-  hidden?: boolean;
   columns?: FormColumnType[] | ((values: any) => FormColumnType[]);
   [key: string]: any;
 }

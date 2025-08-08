@@ -24,7 +24,6 @@ const SchemaForm = (props: FormProps) => {
             placeholder,
             required,
             showSearch,
-            hidden,
             valueType,
             columns,
           } = col;
@@ -79,29 +78,13 @@ const SchemaForm = (props: FormProps) => {
             }
           }
 
-          if (hidden) {
-            if (isFunction(formItemProps)) {
-              col.formItemProps = (_form: any, _config: any): any => {
-                const _formItemProps: any = formItemProps(_form, _config);
-                if (!_formItemProps.hidden)
-                  _formItemProps.hidden = hidden;
-                return _formItemProps;
-              };
-            } else {
-              const _formItemProps: any = formItemProps || {};
-              if (!_formItemProps.hidden)
-                _formItemProps.hidden = hidden;
-              col.formItemProps = _formItemProps;
-            }
-          }
-
           if (isArray(columns)) {
-            col.columns = patch(columns);
+            col.columns = patch(filterFormCols(columns));
           }
 
           if (eq(valueType, 'dependency') && isFunction(columns)) {
             col.columns = (values): FormColumnType[] => (
-              patch(columns(values))
+              patch(filterFormCols(columns(values)))
             );
           }
         });
