@@ -16,7 +16,6 @@ import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
 import { filterExportCols } from './filterCols';
-import { filterTableCols } from './filterCols';
 import { exportToExcel } from './exceljs';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
@@ -99,7 +98,7 @@ const SysProTable = (props: TableProps) => {
         });
       })
     );
-    return patch(filterTableCols(columns));
+    return patch(columns);
   }, [columns]);
 
   const {
