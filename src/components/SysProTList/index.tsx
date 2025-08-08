@@ -12,6 +12,7 @@ import { includes } from 'lodash-es';
 import { head } from 'lodash-es';
 import { set } from 'lodash-es';
 import { map } from 'lodash-es';
+import { filterTableCols } from './filterCols';
 import { produce } from 'immer';
 import state from './index.state';
 
@@ -61,7 +62,7 @@ const SysProTList = (props: TableProps) => {
         });
       })
     );
-    return patch(columns);
+    return patch(filterTableCols(columns));
   }, [columns]);
 
   const {

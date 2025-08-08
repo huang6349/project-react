@@ -2,9 +2,9 @@ import type { TableColumnType } from './types';
 import type { TableProps } from './types';
 import type { AlertRenderType } from './types';
 import { ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
 import { Space } from 'antd';
 import { TableTitle } from './TableTitle';
+import { SysLink } from '@/components';
 import { useMemo } from 'react';
 import { useRef } from 'react';
 import { useIsomorphicLayoutEffect } from 'react-use';
@@ -16,6 +16,7 @@ import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
 import { filterExportCols } from './filterCols';
+import { filterTableCols } from './filterCols';
 import { exportToExcel } from './exceljs';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
@@ -61,21 +62,13 @@ const SysProTable = (props: TableProps) => {
       exportName ?? `${name}导出-${dayjs().format('x')}`,
     );
 
-    return (<Space>
-      {enableExport ? (<Button
-        className='h-auto p-0'
-        type='link'
-        onClick={handleExport}
-        key='export'>
+    return (<Space size='small'>
+      {enableExport ? (<SysLink onClick={handleExport} key='export'>
         <>导出所选</>
-      </Button>) : null}
-      {enableClear ? (<Button
-        className='h-auto p-0'
-        type='link'
-        onClick={onCleanSelected}
-        key='clear'>
+      </SysLink>) : null}
+      {enableClear ? (<SysLink onClick={onCleanSelected} key='clear'>
         {intl.getMessage('alert.clear', '清空')}
-      </Button>) : null}
+      </SysLink>) : null}
     </Space>);
   };
 
@@ -106,7 +99,7 @@ const SysProTable = (props: TableProps) => {
         });
       })
     );
-    return patch(columns);
+    return patch(filterTableCols(columns));
   }, [columns]);
 
   const {

@@ -11,7 +11,17 @@ export const filterExportCols = (
 ): TableColumnType[] => (
   columns?.filter((col) => (
     !col?.hideInExport
-  )).filter((col) => (
-    !includes(['index', 'indexBorder', 'option'], getValueType(col))
+  ))?.filter((col) => {
+    const cols = ['indexBorder', 'index', 'option'];
+    const valueType = getValueType(col);
+    return !includes(cols, valueType);
+  })
+);
+
+export const filterTableCols = (
+  columns: TableColumnType[],
+): TableColumnType[] => (
+  columns?.filter((col) => (
+    !col?.hideInTable
   ))
 );

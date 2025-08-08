@@ -7,6 +7,7 @@ export { default as SysProTable } from './SysProTable';
 export { default as SysProTList } from './SysProTList';
 export { default as SysForm } from './SysForm';
 export { default as SysBack } from './SysBack';
+export { default as SysLink } from './SysLink';
 export { default as SysDescriptions } from './SysDescriptions';
 export { default as SysTabs } from './SysTabs';
 export { default as SysDictTag } from './SysDictTag';

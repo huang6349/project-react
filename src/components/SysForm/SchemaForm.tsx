@@ -5,6 +5,7 @@ import { BetaSchemaForm } from '@ant-design/pro-components';
 import { isFunction } from 'lodash-es';
 import { isArray } from 'lodash-es';
 import { eq } from 'lodash-es';
+import { filterFormCols } from './filterCols';
 import { produce } from 'immer';
 
 const SchemaForm = (props: FormProps) => {
@@ -106,7 +107,7 @@ const SchemaForm = (props: FormProps) => {
         });
       })
     );
-    return patch(columns);
+    return patch(filterFormCols(columns));
   }, [columns]);
 
   return (<BetaSchemaForm
