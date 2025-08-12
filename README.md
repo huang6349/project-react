@@ -6,3 +6,5 @@ English | [简体中文](./README_zh-CN.md)
 [![](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
 This is a template library for the react project
+
+[cv](./CV.md)

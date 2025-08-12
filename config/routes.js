@@ -8,7 +8,7 @@ const $system$tenant = [{
   path: '/system/tenant/user/update',
   component: '@/pages/system/tenant/user/save',
   name: '编辑用户',
-  access: '$tenant$create',
+  access: '$tenant$update',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/user/view',
@@ -26,7 +26,7 @@ const $system$tenant = [{
   path: '/system/tenant/update',
   component: '@/pages/system/tenant/save',
   name: '编辑组织',
-  access: '$tenant$create',
+  access: '$tenant$update',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/view',

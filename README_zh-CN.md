@@ -6,3 +6,5 @@
 [![](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
 这是一个构建 REACT 项目的模板库
+
+[cv](./CV.md)
