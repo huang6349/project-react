@@ -121,9 +121,9 @@ import { withResponse } from '@/hofs';
 import { withAuth } from '@/hocs';
 import { TableDropdown } from '@ant-design/pro-components';
 import { Divider } from 'antd';
-import { Button } from 'antd';
 import { SysContainer } from '@/components';
 import { SysProTable } from '@/components';
+import { SysButton } from '@/components';
 import { useAccess } from '@umijs/max';
 import { useRequest } from 'alova/client';
 import { history } from '@umijs/max';
@@ -202,20 +202,20 @@ const IndexPage = withAuth(() => {
         hideInTable: !1,
         hideInDescriptions: !1,
         render: (_, record) => ([
-          <Button
+          <SysButton
             key='editable'
             type='link'
             onClick={handleUpdate(record)}
             disabled={!access?.$[权限]$update}>
             <>编辑</>
-          </Button>,
-          <Button
+          </SysButton>,
+          <SysButton
             key='delete'
             type='link'
             onClick={handleDelete(record)}
             disabled={!access?.$[权限]$delete}>
             <>删除</>
-          </Button>,
+          </SysButton>,
           <Divider
             key='divider'
             type='vertical' />,
@@ -233,13 +233,13 @@ const IndexPage = withAuth(() => {
         ]),
       })}
       toolBarRender={() => ([
-        <Button
+        <SysButton
           key='create'
           type='primary'
           onClick={handleCreate()}
-          disabled={!access?.$[权限]$create}>
+          invisible={!access?.$[权限]$create}>
           <>新建</>
-        </Button>,
+        </SysButton>,
       ])} />
   </SysContainer>);
 });
