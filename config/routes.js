@@ -86,6 +86,24 @@ const $system$role = [{
 }];
 
 const $system$perm = [{
+  path: '/system/perm/create',
+  component: '@/pages/system/perm/save',
+  name: '新建权限',
+  access: '$perm$create',
+  hideInMenu: !0,
+}, {
+  path: '/system/perm/update',
+  component: '@/pages/system/perm/save',
+  name: '编辑权限',
+  access: '$perm$update',
+  hideInMenu: !0,
+}, {
+  path: '/system/perm/view',
+  component: '@/pages/system/perm/view',
+  name: '权限详情',
+  access: '$perm$query',
+  hideInMenu: !0,
+}, {
   path: '/system/perm',
   component: '@/pages/system/perm',
 }];
