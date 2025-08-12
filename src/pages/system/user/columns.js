@@ -1,7 +1,6 @@
 import { SysDictTag } from '@/components';
 import { compact } from 'lodash-es';
-import { isEmpty } from 'lodash-es';
-import { dataUser } from './service';
+import { queryDict } from '@/services';
 
 const columns = (options) => compact([{
   title: '#序号',
@@ -11,7 +10,6 @@ const columns = (options) => compact([{
   fixed: 'left',
   hideInDescriptions: !0,
   hideInForm: !0,
-  hideInTable: !0,
   hideInSearch: !0,
 }, {
   title: '@数据编号',
@@ -22,7 +20,6 @@ const columns = (options) => compact([{
   ellipsis: !0,
   copyable: !0,
   hideInDescriptions: !0,
-  hideInTable: !0,
   hideInSearch: !0,
   formItemProps: {
     hidden: !0,
@@ -130,43 +127,101 @@ const columns = (options) => compact([{
   hideInForm: !0,
   hideInSearch: !0,
 }, {
-  title: '@租户编号',
-  width: 'md',
-  dataIndex: 'tenantId',
+  valueType: 'group',
   hideInDescriptions: !0,
   hideInTable: !0,
   hideInSearch: !0,
   hideInExport: !0,
-  formItemProps: {
-    hidden: !0,
-  },
-}, {
-  valueType: 'dependency',
-  name: ['id'],
-  hideInDescriptions: !0,
-  hideInTable: !0,
-  hideInSearch: !0,
-  hideInExport: !0,
-  columns: ({ id }) => ((isEmpty(id) ? [{
-    valueType: 'group',
-    columns: [{
-      title: '用户',
-      placeholder: '请选择用户',
-      width: 'md',
-      required: !0,
-      showSearch: !0,
-      dataIndex: 'userId',
-      request: dataUser(),
-    }],
-  }] : [{
-    title: '用户',
-    placeholder: '请输入用户',
+  columns: [{
+    title: '帐号',
+    placeholder: '请输入帐号',
+    required: !0,
     width: 'md',
-    dataIndex: 'userId',
-    formItemProps: {
-      hidden: !0,
-    },
-  }])),
+    dataIndex: 'username',
+  }],
+}, {
+  valueType: 'group',
+  hideInDescriptions: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+  hideInExport: !0,
+  columns: [{
+    title: '密码',
+    placeholder: '请输入密码',
+    required: !0,
+    width: 'md',
+    dataIndex: 'password1',
+    valueType: 'password',
+  }, {
+    title: '确认密码',
+    placeholder: '请输入密码',
+    required: !0,
+    width: 'md',
+    dataIndex: 'password2',
+    valueType: 'password',
+  }],
+}, {
+  valueType: 'group',
+  hideInDescriptions: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+  hideInExport: !0,
+  columns: [{
+    title: '昵称',
+    placeholder: '请输入昵称',
+    required: !0,
+    width: 'md',
+    dataIndex: 'nickname',
+  }],
+}, {
+  valueType: 'group',
+  hideInDescriptions: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+  hideInExport: !0,
+  columns: [{
+    title: '手机号码',
+    placeholder: '请输入手机号码',
+    required: !0,
+    width: 'md',
+    dataIndex: 'mobile',
+  }, {
+    title: '邮箱',
+    placeholder: '请输入邮箱',
+    width: 'md',
+    dataIndex: 'email',
+  }],
+}, {
+  valueType: 'group',
+  hideInDescriptions: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+  hideInExport: !0,
+  columns: [{
+    title: '性别',
+    placeholder: '请选择性别',
+    width: 'md',
+    dataIndex: 'gender',
+    request: queryDict('user-gender'),
+  }, {
+    title: '生日',
+    placeholder: '请输入生日',
+    width: 'md',
+    dataIndex: 'birthday',
+    valueType: 'date',
+  }],
+}, {
+  valueType: 'group',
+  hideInDescriptions: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+  hideInExport: !0,
+  columns: [{
+    title: '地址',
+    placeholder: '请输入地址',
+    width: 'md',
+    dataIndex: 'address',
+  }],
 }, {
   valueType: 'group',
   hideInDescriptions: !0,

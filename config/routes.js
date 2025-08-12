@@ -40,6 +40,24 @@ const $system$tenant = [{
 }];
 
 const $system$user = [{
+  path: '/system/user/create',
+  component: '@/pages/system/user/save',
+  name: '新建用户',
+  access: '$user$create',
+  hideInMenu: !0,
+}, {
+  path: '/system/user/update',
+  component: '@/pages/system/user/save',
+  name: '编辑用户',
+  access: '$user$update',
+  hideInMenu: !0,
+}, {
+  path: '/system/user/view',
+  component: '@/pages/system/user/view',
+  name: '用户详情',
+  access: '$user$query',
+  hideInMenu: !0,
+}, {
   path: '/system/user',
   component: '@/pages/system/user',
 }];
