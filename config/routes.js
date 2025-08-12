@@ -63,6 +63,24 @@ const $system$user = [{
 }];
 
 const $system$role = [{
+  path: '/system/role/create',
+  component: '@/pages/system/role/save',
+  name: '新建角色',
+  access: '$role$create',
+  hideInMenu: !0,
+}, {
+  path: '/system/role/update',
+  component: '@/pages/system/role/save',
+  name: '编辑角色',
+  access: '$role$update',
+  hideInMenu: !0,
+}, {
+  path: '/system/role/view',
+  component: '@/pages/system/role/view',
+  name: '角色详情',
+  access: '$role$query',
+  hideInMenu: !0,
+}, {
   path: '/system/role',
   component: '@/pages/system/role',
 }];
