@@ -3,9 +3,9 @@ import { withResponse } from '@/hofs';
 import { withAuth } from '@/hocs';
 import { ProCard } from '@ant-design/pro-components';
 import { TableDropdown } from '@ant-design/pro-components';
-import { Button } from 'antd';
 import { SysContainer } from '@/components';
 import { SysProTList } from '@/components';
+import { SysButton } from '@/components';
 import { UserPane } from './user';
 import { useAccess } from '@umijs/max';
 import { useRequest } from 'alova/client';
@@ -79,14 +79,14 @@ const IndexPage = withAuth(() => {
         className='min-h-[765px]'
         bordered={!1}
         colSpan='350px'>
-        <Button
+        <SysButton
           className='mt-2'
           type='primary'
           block={!0}
           onClick={handleCreate()}
           disabled={!access?.$tenant$create}>
           新建
-        </Button>
+        </SysButton>
         <SysProTList
           rowKey='id'
           onTListChange={handleTListChange()}

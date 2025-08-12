@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import { withResponse } from '@/hofs';
 import { TableDropdown } from '@ant-design/pro-components';
 import { Divider } from 'antd';
-import { Button } from 'antd';
 import { SysProTable } from '@/components';
+import { SysButton } from '@/components';
 import { useAccess } from '@umijs/max';
 import { useRequest } from 'alova/client';
 import { history } from '@umijs/max';
@@ -86,20 +86,20 @@ export const UserPane = ({ id: tenantId }) => {
       hideInTable: !1,
       hideInDescriptions: !1,
       render: (_, record) => ([
-        <Button
+        <SysButton
           key='editable'
           type='link'
           disabled={!access?.$tenant$update}
           onClick={handleUpdate(record)}>
           编辑
-        </Button>,
-        <Button
+        </SysButton>,
+        <SysButton
           key='delete'
           type='link'
           disabled={!access?.$tenant$delete}
           onClick={handleDelete(record)}>
           删除
-        </Button>,
+        </SysButton>,
         <Divider
           key='divider'
           type='vertical' />,
@@ -117,12 +117,12 @@ export const UserPane = ({ id: tenantId }) => {
       ]),
     })}
     toolBarRender={() => ([
-      <Button
+      <SysButton
         type='primary'
         onClick={handleCreate()}
-        disabled={!access?.$tenant$create}>
+        invisible={!access?.$tenant$create}>
         邀请
-      </Button>,
+      </SysButton>,
     ])}
   />);
 };

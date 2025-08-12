@@ -1,8 +1,9 @@
 import type { ButtonProps } from 'antd';
 import { useNavigate } from '@umijs/max';
-import { Button } from 'antd';
+import { SysButton } from '@/components';
 
 const SysBack = (props: ButtonProps & {
+  invisible?: boolean | (() => boolean);
   label?: string;
 }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const SysBack = (props: ButtonProps & {
     ...buttonProps
   } = props;
 
-  return (<Button
+  return (<SysButton
     type='primary'
     {...buttonProps}
     onClick={(event) => {
@@ -21,7 +22,7 @@ const SysBack = (props: ButtonProps & {
       navigate(-1);
     }}>
     {label}
-  </Button>);
+  </SysButton>);
 };
 
 SysBack.defaultProps = {

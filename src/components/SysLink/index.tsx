@@ -1,9 +1,9 @@
 import type { ButtonProps } from 'antd';
-import { Button } from 'antd';
+import { SysButton } from '@/components';
 
-const SysLink = (
-  props: ButtonProps,
-) => (<Button
+const SysLink = (props: ButtonProps & {
+  invisible?: boolean | (() => boolean);
+}) => (<SysButton
   className='h-auto p-0'
   type='link'
   {...props}

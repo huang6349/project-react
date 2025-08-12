@@ -6,6 +6,7 @@ export { default as SysFooter } from './SysFooter';
 export { default as SysProTable } from './SysProTable';
 export { default as SysProTList } from './SysProTList';
 export { default as SysForm } from './SysForm';
+export { default as SysButton } from './SysButton';
 export { default as SysBack } from './SysBack';
 export { default as SysLink } from './SysLink';
 export { default as SysDescriptions } from './SysDescriptions';
