@@ -295,8 +295,7 @@ const IndexPage = withAuth(() => {
 
   return (<SysContainer back={!0}>
     <SysForm
-      initialValues={{ tenantId: queries?.tenantId }}
-      request={service.dataAssoc(queries?.id)}
+      request={service.dataById(queries?.id)}
       formRef={formRef}
       columns={columns()}
       onFinish={handleFinish()} />
