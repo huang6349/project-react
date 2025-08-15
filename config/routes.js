@@ -81,6 +81,12 @@ const $system$role = [{
   access: '$role$update',
   hideInMenu: !0,
 }, {
+  path: '/system/role/auth',
+  component: '@/pages/system/role/auth',
+  name: '角色授权',
+  access: '$role$auth',
+  hideInMenu: !0,
+}, {
   path: '/system/role/view',
   component: '@/pages/system/role/view',
   name: '角色详情',

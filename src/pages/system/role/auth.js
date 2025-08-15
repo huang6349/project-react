@@ -2,7 +2,7 @@ import { withAuth } from '@/hocs';
 import { SysDescriptions } from '@/components';
 import { SysTabs } from '@/components';
 import { SysContainer } from '@/components';
-import { PermPane } from './components';
+import { PermForm } from './components';
 import { useQueries } from '@/hooks';
 import service from './service';
 import columns from './columns';
@@ -27,7 +27,7 @@ const tabs = {
   items: [{
     label: '权限信息',
     key: 'qxxx',
-    children: <PermPane />,
+    children: <PermForm />,
   }],
 };
 

@@ -39,6 +39,15 @@ const IndexPage = withAuth(() => {
     });
   };
 
+  const handleAuth = (record) => {
+    history.push({
+      pathname: `/system/role/auth`,
+      search: qs.stringify({
+        id: record?.id,
+      }),
+    });
+  };
+
   const handleCreate = () => (() => {
     history.push({
       pathname: `/system/role/create`,
@@ -106,11 +115,16 @@ const IndexPage = withAuth(() => {
             key={'action'}
             onSelect={(key) => {
               eq(key, 'view') && handleView(record);
+              eq(key, 'auth') && handleAuth(record);
             }}
             menus={[{
               key: 'view',
               name: '详情',
               disabled: !access?.$role$query,
+            }, {
+              key: 'auth',
+              name: '授权',
+              disabled: !access?.$role$auth,
             }]}
           />,
         ]),
