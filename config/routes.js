@@ -11,6 +11,12 @@ const $system$tenant = [{
   access: '$tenant$update',
   hideInMenu: !0,
 }, {
+  path: '/system/tenant/user/auth',
+  component: '@/pages/system/tenant/user/auth',
+  name: '用户授权',
+  access: '$tenant$auth',
+  hideInMenu: !0,
+}, {
   path: '/system/tenant/user/view',
   component: '@/pages/system/tenant/user/view',
   name: '用户详情',

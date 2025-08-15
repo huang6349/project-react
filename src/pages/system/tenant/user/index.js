@@ -33,6 +33,17 @@ export const UserPane = ({ id: tenantId }) => {
       pathname: `/system/tenant/user/view`,
       search: qs.stringify({
         id: record?.id,
+        tenantId,
+      }),
+    });
+  };
+
+  const handleAuth = (record) => {
+    history.push({
+      pathname: `/system/tenant/user/auth`,
+      search: qs.stringify({
+        id: record?.id,
+        tenantId,
       }),
     });
   };
@@ -107,11 +118,16 @@ export const UserPane = ({ id: tenantId }) => {
           key='action'
           onSelect={(key) => {
             eq(key, 'view') && handleView(record);
+            eq(key, 'auth') && handleAuth(record);
           }}
           menus={[{
             key: 'view',
             name: '详情',
             disabled: !access?.$tenant$query,
+          }, {
+            key: 'auth',
+            name: '授权',
+            disabled: !access?.$tenant$auth,
           }]}
         />,
       ]),

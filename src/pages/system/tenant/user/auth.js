@@ -2,8 +2,8 @@ import { withAuth } from '@/hocs';
 import { SysDescriptions } from '@/components';
 import { SysTabs } from '@/components';
 import { SysContainer } from '@/components';
-import { PermPane } from './components';
-import { RolePane } from './components';
+import { RoleForm } from './components';
+import { PermForm } from './components';
 import { useQueries } from '@/hooks';
 import service from './service';
 import columns from './columns';
@@ -26,13 +26,13 @@ const IndexPage = withAuth(() => {
 const tabs = {
   destroyInactiveTabPane: !0,
   items: [{
-    label: '权限信息',
-    key: 'qxxx',
-    children: <PermPane />,
-  }, {
     label: '角色信息',
     key: 'jsxx',
-    children: <RolePane />,
+    children: <RoleForm />,
+  }, {
+    label: '权限信息',
+    key: 'qxxx',
+    children: <PermForm />,
   }],
 };
 

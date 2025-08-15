@@ -10,6 +10,7 @@ export default ({ perm } = {}) => ({
   $tenant$create: checkPerm(perm, '@tenant:add'),
   $tenant$update: checkPerm(perm, '@tenant:update'),
   $tenant$delete: checkPerm(perm, '@tenant:delete'),
+  $tenant$auth: checkPerm(perm, '@tenant:update'),
   $user$query: checkPerm(perm, '@user:query'),
   $user$create: checkPerm(perm, '@user:add'),
   $user$update: checkPerm(perm, '@user:update'),
