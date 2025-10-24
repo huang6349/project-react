@@ -1,14 +1,29 @@
+import { RightContent } from '@/layouts/RightContent';
 import { SysFooter } from '@/components';
+import { queryUser } from '@/services';
 
 // 运行时配置
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config
-export const getInitialState = async () => ({
-  avatar: require('@/assets/avatar.jpg'),
-  perm: ['*'],
-  name: '惊愚',
-});
+export const getInitialState = async () => {
+  const {
+    perms,
+    roles,
+    user,
+  } = await queryUser();
+  const {
+    username,
+    nickname,
+    avatar,
+  } = user ?? {};
+  return {
+    avatar,
+    name: nickname ?? username,
+    perms: perms ?? [],
+    roles: roles ?? [],
+  };
+};
 
 const bgLayoutImgList = [{
   src: require('@/assets/tps-609-606.png'),
@@ -40,9 +55,10 @@ export const layout = () => ({
   colorWeak: !1,
   disableMobile: !0,
   splitMenus: !0,
-  footerRender: () => (
-    <SysFooter />
-  ),
+  rightContentRender: () =>
+    <RightContent />,
+  footerRender: () =>
+    <SysFooter />,
 });
 
 export const antd = (memo) => {
