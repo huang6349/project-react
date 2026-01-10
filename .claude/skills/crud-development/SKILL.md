@@ -1,0 +1,538 @@
+---
+name: crud-development
+description: |
+  当需要开发 CRUD 功能时自动使用此 Skill。
+
+  触发场景：
+  - 创建新的业务模块
+  - 编写 columns、service、index、save、view
+  - 前端 API 定义
+
+  触发词：CRUD、增删改查、开发新功能
+---
+
+# CRUD 开发技能
+
+## 功能概述
+
+自动生成 CRUD 模块的代码文件，并更新权限和路由配置。
+
+## 使用方式
+
+当用户需要创建新的业务模块时，使用此技能。
+
+## 交互步骤
+
+### 第一步：读取现有配置
+
+**必须先读取以下文件**：
+
+- 读取 `config/routes.js` 了解现有路由结构
+- 读取 `src/access.js` 了解现有权限结构
+
+### 第二步：收集基础信息
+
+**向用户提问**（使用 AskUserQuestion 工具）：
+
+| 序号 | 问题                           | 说明                 | 示例             |
+|----|------------------------------|--------------------|----------------|
+| 1  | "请输入功能模块名（英文，用于生成权限标识和路由路径）" | 必填                 | `user`、`role`  |
+| 2  | "请输入菜单显示名称（中文）"              | 必填                 | `用户`、`角色`      |
+| 3  | "请输入后端接口权限前缀"                | 必填，通常与模块名相同        | `user`、`role`  |
+| 4  | "请输入 API 请求地址路径"             | 必填，通常与模块名相同        | `user`、`role`  |
+| 5  | "请输入路由路径（可包含层级）"             | 必填，参考 routes.js 格式 | `user`、`role`  |
+| 6  | "请输入 pages 下目录路径"            | 必填                 | `user`、`role`  |
+| 7  | "需要新建/编辑页面 save.js 吗？"       | 选填，默认不需要           | 是/否            |
+| 8  | "需要详情页面 view.js 吗？"          | 选填，默认不需要           | 是/否            |
+| 9  | "请输入菜单图标（Antd 图标组件名）"        | 选填，默认 UserOutlined | `UserOutlined` |
+
+### 第三步：生成代码文件
+
+**生成规则**：
+
+- 根据用户选择确定生成哪些文件
+- 文件保存路径：`src/pages/#{pageDir}/`
+- **必须**替换所有模板中的变量占位符
+
+#### columns.js 模板
+
+```
+import { compact } from 'lodash-es';
+
+const columns = (options) => compact([{
+  title: '#序号',
+  valueType: 'indexBorder',
+  width: 80,
+  dataIndex: 'index',
+  fixed: 'left',
+  hideInDescriptions: !0,
+  hideInForm: !0,
+  hideInSearch: !0,
+}, {
+  title: '数据编号',
+  span: 3,
+  width: 180,
+  dataIndex: 'id',
+  fixed: 'left',
+  ellipsis: !0,
+  copyable: !0,
+  hideInDescriptions: !0,
+  hideInSearch: !0,
+  formItemProps: {
+    hidden: !0,
+  },
+}, {
+  // TODO: 在此添加业务字段列配置
+  title: '字段名称',
+  dataIndex: 'fieldName',
+}, {
+  title: '创建时间',
+  width: 180,
+  dataIndex: 'createTime',
+  valueType: 'dateTime',
+  hideInForm: !0,
+  hideInTable: !0,
+  hideInSearch: !0,
+}, {
+  title: '更新时间',
+  width: 180,
+  dataIndex: 'updateTime',
+  valueType: 'dateTime',
+  hideInForm: !0,
+  hideInSearch: !0,
+}, options]);
+
+export default columns;
+```
+
+#### service.js 模板
+
+```
+import { withTable } from '@/hofs';
+import { withData } from '@/hofs';
+import { safeRequest } from '@/utils';
+
+export const queryPage = (params) => (
+  safeRequest.Get(`/api/#{apiPath}/_query/paging`, { params })
+);
+
+export const dataPage = () => (
+  withTable((params) => queryPage(params))
+);
+
+export const queryById = (id) => id ? (
+  safeRequest.Get(`/api/#{apiPath}/${id}`)
+) : null;
+
+export const dataById = (id) => id ? (
+  withData(() => queryById(id))
+) : null;
+
+export const fnById = () => (
+  ({ id }) => queryById(id)
+);
+
+export const create = (data) => (
+  safeRequest.Post(`/api/#{apiPath}`, data)
+);
+
+export const update = (data) => (
+  safeRequest.Put(`/api/#{apiPath}`, data)
+);
+
+export const removeById = (id) => id ? (
+  safeRequest.Delete(`/api/#{apiPath}/${id}`)
+) : null;
+
+export default {
+  queryPage,
+  dataPage,
+  queryById,
+  dataById,
+  fnById,
+  create,
+  update,
+  removeById,
+};
+```
+
+#### index.js 模板
+
+```
+import { useRef } from 'react';
+import { withResponse } from '@/hofs';
+import { withAuth } from '@/hocs';
+import { TableDropdown } from '@ant-design/pro-components';
+import { Divider } from 'antd';
+import { SysContainer } from '@/components';
+import { SysProTable } from '@/components';
+import { SysButton } from '@/components';
+import { useAccess } from '@umijs/max';
+import { useRequest } from 'alova/client';
+import { history } from '@umijs/max';
+import { eq } from 'lodash-es';
+import { modal } from '@/hocs';
+import qs from 'query-string';
+import service from './service';
+import columns from './columns';
+
+const IndexPage = withAuth(() => {
+  const actionRef = useRef();
+  const formRef = useRef();
+  const access = useAccess();
+
+  const {
+    send: removeById,
+  } = useRequest((id) => (
+    service.removeById(id)
+  ), {
+    immediate: !1,
+  }).onSuccess(withResponse(() => (
+    actionRef?.current?.reload()
+  )));
+
+  const handleView = (record) => {
+    history.push({
+      pathname: `/#{routePath}/view`,
+      search: qs.stringify({
+        id: record?.id,
+      }),
+    });
+  };
+
+  const handleCreate = () => (() => {
+    history.push({
+      pathname: `/#{routePath}/create`,
+      search: qs.stringify({}),
+    });
+  });
+
+  const handleUpdate = (record) => (() => {
+    history.push({
+      pathname: `/#{routePath}/update`,
+      search: qs.stringify({
+        id: record?.id,
+      }),
+    });
+  });
+
+  const handleDelete = (record) => (() => {
+    modal?.confirm({
+      content: '您确认要执行删除操作吗',
+      title: '删除提示',
+      onOk: () => (
+        removeById(record?.id)
+      ),
+    });
+  });
+
+  return (<SysContainer>
+    <SysProTable
+      rowKey='id'
+      request={service.dataPage()}
+      scroll={{ x: 1300 }}
+      cardBordered={!0}
+      actionRef={actionRef}
+      formRef={formRef}
+      rowSelection={{}}
+      columns={columns({
+        title: '操作',
+        width: 138,
+        dataIndex: 'option',
+        fixed: 'right',
+        valueType: 'option',
+        search: !1,
+        hideInTable: !1,
+        hideInDescriptions: !1,
+        render: (_, record) => ([
+          <SysButton
+            key='editable'
+            type='link'
+            onClick={handleUpdate(record)}
+            disabled={!access?.$#{permName}$update}>
+            <>编辑</>
+          </SysButton>,
+          <SysButton
+            key='delete'
+            type='link'
+            onClick={handleDelete(record)}
+            disabled={!access?.$#{permName}$delete}>
+            <>删除</>
+          </SysButton>,
+          <Divider
+            key='divider'
+            type='vertical' />,
+          <TableDropdown
+            key={'action'}
+            onSelect={(key) => {
+              eq(key, 'view') && handleView(record);
+            }}
+            menus={[{
+              key: 'view',
+              name: '详情',
+              disabled: !access?.$#{permName}$query,
+            }]}
+          />,
+        ]),
+      })}
+      toolBarRender={() => ([
+        <SysButton
+          key='create'
+          type='primary'
+          onClick={handleCreate()}
+          invisible={!access?.$#{permName}$create}>
+          <>新建</>
+        </SysButton>,
+      ])} />
+  </SysContainer>);
+});
+
+export default IndexPage;
+```
+
+#### save.js 模板（仅当用户选择需要时生成）
+
+```
+import { useRef } from 'react';
+import { withAuth } from '@/hocs';
+import { withResponse } from '@/hofs';
+import { useNavigate } from '@umijs/max';
+import { SysContainer } from '@/components';
+import { SysForm } from '@/components';
+import { useRequest } from 'alova/client';
+import { useQueries } from '@/hooks';
+import { isUndefined } from 'lodash-es';
+import service from './service';
+import columns from './columns';
+
+const IndexPage = withAuth(() => {
+  const navigate = useNavigate();
+  const queries = useQueries();
+  const formRef = useRef();
+
+  const {
+    send: create,
+  } = useRequest((data) => (
+    service.create(data)
+  ), {
+    immediate: !1,
+  }).onSuccess(withResponse(() => {
+    navigate(-1);
+  }));
+
+  const {
+    send: update,
+  } = useRequest((data) => (
+    service.update(data)
+  ), {
+    immediate: !1,
+  }).onSuccess(withResponse(() => {
+    navigate(-1);
+  }));
+
+  const handleFinish = () => (values) => (
+    isUndefined(values?.id) ?
+      create(values) :
+      update(values)
+  );
+
+  return (<SysContainer back={!0}>
+    <SysForm
+      request={service.dataById(queries?.id)}
+      formRef={formRef}
+      columns={columns()}
+      onFinish={handleFinish()} />
+  </SysContainer>);
+});
+
+export default IndexPage;
+```
+
+#### view.js 模板（仅当用户选择需要时生成）
+
+```
+import { withAuth } from '@/hocs';
+import { SysDescriptions } from '@/components';
+import { SysContainer } from '@/components';
+import { useQueries } from '@/hooks';
+import service from './service';
+import columns from './columns';
+
+const IndexPage = withAuth(() => {
+  const queries = useQueries();
+
+  return (<SysContainer back={!0}>
+    <SysDescriptions
+      title='基本信息'
+      params={{ id: queries?.id }}
+      request={service.fnById()}
+      columns={columns()} />
+  </SysContainer>);
+});
+
+export default IndexPage;
+```
+
+### 第四步：修改 access.js
+
+读取 `src/access.js`，在导出对象末尾添加权限配置：
+
+```
+  $#{permName}$query: checkPerm(perms, '@#{apiPerm}:query'),
+  $#{permName}$create: checkPerm(perms, '@#{apiPerm}:add'),
+  $#{permName}$update: checkPerm(perms, '@#{apiPerm}:update'),
+  $#{permName}$delete: checkPerm(perms, '@#{apiPerm}:delete'),
+```
+
+**注意**：
+
+- 不要删除现有配置
+- 不要添加 import 语句（文件已有）
+- 添加到导出对象内部，位于最后一个配置后面
+
+### 第五步：修改路由配置
+
+读取 `config/routes.js`，根据用户选择确定需要添加的路由：
+
+**完整路由结构**（当用户需要 save.js 和 view.js 时）：
+
+```
+const $#{permName} = [{
+  path: '/#{routePath}/create',
+  component: '@/pages/#{pageDir}/save',
+  name: '新建#{menuName}',
+  access: '$#{permName}$create',
+  hideInMenu: !0,
+}, {
+  path: '/#{routePath}/update',
+  component: '@/pages/#{pageDir}/save',
+  name: '编辑#{menuName}',
+  access: '$#{permName}$update',
+  hideInMenu: !0,
+}, {
+  path: '/#{routePath}/view',
+  component: '@/pages/#{pageDir}/view',
+  name: '#{menuName}详情',
+  access: '$#{permName}$query',
+  hideInMenu: !0,
+}, {
+  path: '/#{routePath}',
+  component: '@/pages/#{pageDir}',
+}];
+
+const routes = [{
+  // ... 现有路由
+}, {
+  path: '/#{routePath}',
+  name: '#{menuName}管理',
+  icon: '#{menuIcon}',
+  access: '$#{permName}',
+  routes: $#{permName},
+}, {
+  // ... 其他路由
+}];
+```
+
+**仅列表页+save**（当用户需要 save.js 但不需要 view.js 时）：
+
+```
+const $#{permName} = [{
+  path: '/#{routePath}/create',
+  component: '@/pages/#{pageDir}/save',
+  name: '新建#{menuName}',
+  access: '$#{permName}$create',
+  hideInMenu: !0,
+}, {
+  path: '/#{routePath}/update',
+  component: '@/pages/#{pageDir}/save',
+  name: '编辑#{menuName}',
+  access: '$#{permName}$update',
+  hideInMenu: !0,
+}, {
+  path: '/#{routePath}',
+  component: '@/pages/#{pageDir}',
+}];
+
+const routes = [{
+  // ... 现有路由
+}, {
+  path: '/#{routePath}',
+  name: '#{menuName}管理',
+  icon: '#{menuIcon}',
+  access: '$#{permName}',
+  routes: $#{permName},
+}, {
+  // ... 其他路由
+}];
+```
+
+**仅列表页**（当用户不需要 save.js 和 view.js 时）：
+
+```
+const routes = [{
+  // ... 现有路由
+}, {
+  path: '/#{routePath}',
+  name: '#{menuName}管理',
+  icon: '#{menuIcon}',
+  access: '$#{permName}',
+  component: '@/pages/#{pageDir}',
+}, {
+  // ... 其他路由
+}];
+```
+
+**注意**：
+
+- 替换模板变量后再写入文件
+
+## 变量替换速查表
+
+| 变量             | 说明        | 用户输入示例         | 生成的代码示例        |
+|----------------|-----------|----------------|----------------|
+| `#{permName}`  | 功能模块名     | `user`         | `user`         |
+| `#{apiPerm}`   | 接口权限名     | `user`         | `user`         |
+| `#{apiPath}`   | API 请求地址  | `user`         | `user`         |
+| `#{routePath}` | 路由路径      | `user`         | `user`         |
+| `#{pageDir}`   | pages 下目录 | `user`         | `user`         |
+| `#{menuName}`  | 菜单显示名称    | `用户`           | `用户`           |
+| `#{menuIcon}`  | 菜单图标      | `UserOutlined` | `UserOutlined` |
+
+## 完整交互示例
+
+```
+用户：创建用户管理模块
+
+助手：
+（先读取 routes.js 和 access.js）
+请回答以下问题以创建用户管理模块：
+
+1. 功能模块名是什么？（如 user）
+2. 菜单名称是什么？（如 用户）
+3. 接口权限名是什么？（如 user）
+4. API 请求地址是什么？（如 user）
+5. 路由路径是什么？（如 user）
+6. 文件目录是什么？（如 user）
+7. 需要 save.js 吗？（是/否）
+8. 需要 view.js 吗？（是/否）
+9. 菜单图标是什么？（默认 UserOutlined）
+
+用户回答：
+- permName = user
+- menuName = 用户
+- apiPerm = user
+- apiPath = user
+- routePath = user
+- pageDir = user
+- 需要 save.js
+- 不需要 view.js
+- menuIcon = UserOutlined
+
+助手生成：
+- src/pages/user/columns.js
+- src/pages/user/service.js
+- src/pages/user/index.js
+- src/pages/user/save.js
+- 更新 config/routes.js 添加 user 相关路由
+- 更新 src/access.js 添加 user 相关权限
+```
