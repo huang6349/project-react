@@ -133,7 +133,7 @@ description: |
 
 ### 第三步：生成代码文件
 
-**模板来源**：`@/templates/code-patterns.md`
+**模板来源**：`.claude/templates/code-patterns.md`
 
 **生成规则**：
 
@@ -155,7 +155,7 @@ description: |
 
 ### 第四步：修改权限配置
 
-**模板来源**：`@/templates/code-patterns.md` → 权限配置
+**模板来源**：`.claude/templates/code-patterns.md` → 权限配置
 
 读取 `@/access.js`，在导出对象末尾添加权限配置。
 
@@ -169,7 +169,7 @@ description: |
 
 ### 第五步：修改路由配置
 
-**模板来源**：`@/templates/code-patterns.md` → 路由配置
+**模板来源**：`.claude/templates/code-patterns.md` → 路由配置
 
 读取 `config/routes.js`，根据用户选择确定需要添加的路由结构：
 
@@ -187,7 +187,7 @@ description: |
 
 ## 变量替换速查表
 
-**详见**：`@/templates/code-patterns.md` → 变量替换速查表
+**详见**：`.claude/templates/code-patterns.md` → 变量替换速查表
 
 ---
 
