@@ -6,9 +6,10 @@
 
 ## CRUD 模块模板
 
-### columns.js 模板
+### 列表列配置
 
 ```text
+// columns.js
 import { compact } from 'lodash-es';
 
 const columns = (options) => compact([{
@@ -57,9 +58,10 @@ const columns = (options) => compact([{
 export default columns;
 ```
 
-### service.js 模板
+### 服务接口
 
 ```text
+// service.js
 import { withTable } from '@/hofs';
 import { withData } from '@/hofs';
 import { safeRequest } from '@/utils';
@@ -108,9 +110,10 @@ export default {
 };
 ```
 
-### index.js 模板
+### 列表页
 
 ```text
+// index.js
 import { useRef } from 'react';
 import { withResponse } from '@/hofs';
 import { withAuth } from '@/hocs';
@@ -242,9 +245,10 @@ const IndexPage = withAuth(() => {
 export default IndexPage;
 ```
 
-### save.js 模板（仅当用户选择需要时生成）
+### 保存表单
 
 ```text
+// save.js（仅当用户选择需要时生成）
 import { useRef } from 'react';
 import { withAuth } from '@/hocs';
 import { withResponse } from '@/hofs';
@@ -300,9 +304,10 @@ const IndexPage = withAuth(() => {
 export default IndexPage;
 ```
 
-### view.js 模板（仅当用户选择需要时生成）
+### 详情页
 
 ```text
+// view.js（仅当用户选择需要时生成）
 import { withAuth } from '@/hocs';
 import { SysDescriptions } from '@/components';
 import { SysContainer } from '@/components';
@@ -325,9 +330,10 @@ const IndexPage = withAuth(() => {
 export default IndexPage;
 ```
 
-### access.js 权限配置模板
+### 权限配置
 
 ```text
+// access.js
 export default ({ perms } = {}) => ({
   // ... 现有权限
   $#{permName}$query: checkPerm(perms, '@#{apiPerm}:query'),
@@ -338,11 +344,12 @@ export default ({ perms } = {}) => ({
 });
 ```
 
-### routes.js 路由配置模板
+### 路由配置
 
 **完整路由结构**（当用户需要 save.js 和 view.js 时）：
 
 ```text
+// routes.js
 const $#{permName} = [{
   path: '/#{routePath}/create',
   component: '@/pages/#{routeDir}/save',
