@@ -380,7 +380,7 @@ const routes = [{
   name: '{menuName}管理',
   icon: '{menuIcon}',
   access: '${permName}',
-  routes: ${permName,
+  routes: ${permName},
 }, {
   // ... 其他路由
 }];
@@ -389,6 +389,7 @@ const routes = [{
 **仅列表页+save**（当用户需要 save.js 但不需要 view.js 时）：
 
 ```text
+// routes.js
 const ${permName} = [{
   path: '/{routePath}/create',
   component: '@/pages/{routeDir}/save',
@@ -422,6 +423,7 @@ const routes = [{
 **仅列表页**（当用户不需要 save.js 和 view.js 时）：
 
 ```text
+// routes.js
 const routes = [{
   // ... 现有路由
 }, {
