@@ -189,6 +189,35 @@ description: |
 
 **详见**：`@/templates/code-patterns.md` → 变量替换速查表
 
+---
+
+## 生成提示
+
+代码生成完成后，向用户展示以下格式的完成报告：
+
+```text
+✅ {permName} 模块生成完成
+
+📁 前端文件 (@/pages/{routeDir}/)
+   ├── columns.js  列表列配置
+   ├── service.js  服务接口
+   ├── index.js    列表页
+   ├── save.js     保存页    {needSave ? '✅' : '❌'}
+   └── view.js     详情页    {needView ? '✅' : '❌'}
+
+⚙️  权限配置 (@/access.js)
+   ${permName}$query   @{apiPerm}:query
+   ${permName}$create  @{apiPerm}:add
+   ${permName}$update  @{apiPerm}:update
+   ${permName}$delete  @{apiPerm}:delete
+
+🔗 路由配置 (config/routes.js)
+   /{routePath}          {menuName}管理
+   /{routePath}/create   新建{menuName}
+   /{routePath}/update   编辑{menuName}
+   /{routePath}/view     {menuName}详情
+```
+
 ## 完整交互示例
 
 ```
