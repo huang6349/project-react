@@ -245,7 +245,7 @@ const IndexPage = withAuth(() => {
 export default IndexPage;
 ```
 
-### 保存表单
+### 保存页
 
 ```text
 // save.js（仅当用户选择需要时生成）
