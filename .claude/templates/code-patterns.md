@@ -34,7 +34,7 @@ const columns = (options) => compact([{
     hidden: !0,
   },
 }, {
-  // TODO: 在此添加业务字段列配置
+  // 在此添加业务字段列配置
   title: '字段名称',
   dataIndex: 'fieldName',
 }, {
@@ -328,10 +328,14 @@ export default IndexPage;
 ### access.js 权限配置模板
 
 ```text
+export default ({ perms } = {}) => ({
+  // ... 现有权限
   $#{permName}$query: checkPerm(perms, '@#{apiPerm}:query'),
   $#{permName}$create: checkPerm(perms, '@#{apiPerm}:add'),
   $#{permName}$update: checkPerm(perms, '@#{apiPerm}:update'),
   $#{permName}$delete: checkPerm(perms, '@#{apiPerm}:delete'),
+  // ... 其他权限
+});
 ```
 
 ### routes.js 路由配置模板
@@ -341,25 +345,25 @@ export default IndexPage;
 ```text
 const $#{permName} = [{
   path: '/#{routePath}/create',
-  component: '@/pages/#{pageDir}/save',
+  component: '@/pages/#{routeDir}/save',
   name: '新建#{menuName}',
   access: '$#{permName}$create',
   hideInMenu: !0,
 }, {
   path: '/#{routePath}/update',
-  component: '@/pages/#{pageDir}/save',
+  component: '@/pages/#{routeDir}/save',
   name: '编辑#{menuName}',
   access: '$#{permName}$update',
   hideInMenu: !0,
 }, {
   path: '/#{routePath}/view',
-  component: '@/pages/#{pageDir}/view',
+  component: '@/pages/#{routeDir}/view',
   name: '#{menuName}详情',
   access: '$#{permName}$query',
   hideInMenu: !0,
 }, {
   path: '/#{routePath}',
-  component: '@/pages/#{pageDir}',
+  component: '@/pages/#{routeDir}',
 }];
 
 const routes = [{
@@ -380,19 +384,19 @@ const routes = [{
 ```text
 const $#{permName} = [{
   path: '/#{routePath}/create',
-  component: '@/pages/#{pageDir}/save',
+  component: '@/pages/#{routeDir}/save',
   name: '新建#{menuName}',
   access: '$#{permName}$create',
   hideInMenu: !0,
 }, {
   path: '/#{routePath}/update',
-  component: '@/pages/#{pageDir}/save',
+  component: '@/pages/#{routeDir}/save',
   name: '编辑#{menuName}',
   access: '$#{permName}$update',
   hideInMenu: !0,
 }, {
   path: '/#{routePath}',
-  component: '@/pages/#{pageDir}',
+  component: '@/pages/#{routeDir}',
 }];
 
 const routes = [{
@@ -418,7 +422,7 @@ const routes = [{
   name: '#{menuName}管理',
   icon: '#{menuIcon}',
   access: '$#{permName}',
-  component: '@/pages/#{pageDir}',
+  component: '@/pages/#{routeDir}',
 }, {
   // ... 其他路由
 }];
@@ -428,12 +432,12 @@ const routes = [{
 
 ## 变量替换速查表
 
-| 变量             | 说明             | 用户输入示例         | 生成的代码示例        |
-|----------------|----------------|----------------|----------------|
-| `#{permName}`  | 功能模块名称         | `user`         | `user`         |
-| `#{apiPerm}`   | 接口权限名称         | `user`         | `user`         |
-| `#{apiPath}`   | API 请求地址       | `user`         | `user`         |
-| `#{routePath}` | 路由路径           | `user`         | `user`         |
-| `#{pageDir}`   | pages 下目录      | `user`         | `user`         |
-| `#{menuName}`  | 菜单显示名称（不含"管理"） | `用户管理`         | `用户`           |
-| `#{menuIcon}`  | 菜单图标           | `UserOutlined` | `UserOutlined` |
+| 变量             | 使用场景 | 示例            |
+|----------------|------|---------------|
+| `#{permName}`  | 功能权限 | `$user$query` |
+| `#{apiPerm}`   | 接口权限 | `@user:query` |
+| `#{apiPath}`   | 接口路径 | `/api/user`   |
+| `#{routePath}` | 路由路径 | `/user`       |
+| `#{routeDir}`  | 路由目录 | `/pages/user` |
+| `#{menuName}`  | 菜单名称 | 用户            |
+| `#{menuIcon}`  | 菜单图标 | UserOutlined  |
