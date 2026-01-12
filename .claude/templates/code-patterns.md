@@ -67,7 +67,7 @@ import { withData } from '@/hofs';
 import { safeRequest } from '@/utils';
 
 export const queryPage = (params) => (
-  safeRequest.Get(`/api/#{apiPath}/_query/paging`, { params })
+  safeRequest.Get(`/api/{apiPath}/_query/paging`, { params })
 );
 
 export const dataPage = () => (
@@ -75,7 +75,7 @@ export const dataPage = () => (
 );
 
 export const queryById = (id) => id ? (
-  safeRequest.Get(`/api/#{apiPath}/${id}`)
+  safeRequest.Get(`/api/{apiPath}/${id}`)
 ) : null;
 
 export const dataById = (id) => id ? (
@@ -87,15 +87,15 @@ export const fnById = () => (
 );
 
 export const create = (data) => (
-  safeRequest.Post(`/api/#{apiPath}`, data)
+  safeRequest.Post(`/api/{apiPath}`, data)
 );
 
 export const update = (data) => (
-  safeRequest.Put(`/api/#{apiPath}`, data)
+  safeRequest.Put(`/api/{apiPath}`, data)
 );
 
 export const removeById = (id) => id ? (
-  safeRequest.Delete(`/api/#{apiPath}/${id}`)
+  safeRequest.Delete(`/api/{apiPath}/${id}`)
 ) : null;
 
 export default {
@@ -148,7 +148,7 @@ const IndexPage = withAuth(() => {
 
   const handleView = (record) => {
     history.push({
-      pathname: `/#{routePath}/view`,
+      pathname: `/{routePath}/view`,
       search: qs.stringify({
         id: record?.id,
       }),
@@ -157,14 +157,14 @@ const IndexPage = withAuth(() => {
 
   const handleCreate = () => (() => {
     history.push({
-      pathname: `/#{routePath}/create`,
+      pathname: `/{routePath}/create`,
       search: qs.stringify({}),
     });
   });
 
   const handleUpdate = (record) => (() => {
     history.push({
-      pathname: `/#{routePath}/update`,
+      pathname: `/{routePath}/update`,
       search: qs.stringify({
         id: record?.id,
       }),
@@ -204,14 +204,14 @@ const IndexPage = withAuth(() => {
             key='editable'
             type='link'
             onClick={handleUpdate(record)}
-            disabled={!access?.$#{permName}$update}>
+            disabled={!access?.${permName}$update}>
             <>编辑</>
           </SysButton>,
           <SysButton
             key='delete'
             type='link'
             onClick={handleDelete(record)}
-            disabled={!access?.$#{permName}$delete}>
+            disabled={!access?.${permName}$delete}>
             <>删除</>
           </SysButton>,
           <Divider
@@ -225,7 +225,7 @@ const IndexPage = withAuth(() => {
             menus={[{
               key: 'view',
               name: '详情',
-              disabled: !access?.$#{permName}$query,
+              disabled: !access?.${permName}$query,
             }]}
           />,
         ]),
@@ -235,7 +235,7 @@ const IndexPage = withAuth(() => {
           key='create'
           type='primary'
           onClick={handleCreate()}
-          invisible={!access?.$#{permName}$create}>
+          invisible={!access?.${permName}$create}>
           <>新建</>
         </SysButton>,
       ])} />
@@ -336,10 +336,10 @@ export default IndexPage;
 // access.js
 export default ({ perms } = {}) => ({
   // ... 现有权限
-  $#{permName}$query: checkPerm(perms, '@#{apiPerm}:query'),
-  $#{permName}$create: checkPerm(perms, '@#{apiPerm}:add'),
-  $#{permName}$update: checkPerm(perms, '@#{apiPerm}:update'),
-  $#{permName}$delete: checkPerm(perms, '@#{apiPerm}:delete'),
+  ${permName}$query: checkPerm(perms, '@{apiPerm}:query'),
+  ${permName}$create: checkPerm(perms, '@{apiPerm}:add'),
+  ${permName}$update: checkPerm(perms, '@{apiPerm}:update'),
+  ${permName}$delete: checkPerm(perms, '@{apiPerm}:delete'),
   // ... 其他权限
 });
 ```
@@ -350,37 +350,37 @@ export default ({ perms } = {}) => ({
 
 ```text
 // routes.js
-const $#{permName} = [{
-  path: '/#{routePath}/create',
-  component: '@/pages/#{routeDir}/save',
-  name: '新建#{menuName}',
-  access: '$#{permName}$create',
+const ${permName} = [{
+  path: '/{routePath}/create',
+  component: '@/pages/{routeDir}/save',
+  name: '新建{menuName}',
+  access: '${permName}$create',
   hideInMenu: !0,
 }, {
-  path: '/#{routePath}/update',
-  component: '@/pages/#{routeDir}/save',
-  name: '编辑#{menuName}',
-  access: '$#{permName}$update',
+  path: '/{routePath}/update',
+  component: '@/pages/{routeDir}/save',
+  name: '编辑{menuName}',
+  access: '${permName}$update',
   hideInMenu: !0,
 }, {
-  path: '/#{routePath}/view',
-  component: '@/pages/#{routeDir}/view',
-  name: '#{menuName}详情',
-  access: '$#{permName}$query',
+  path: '/{routePath}/view',
+  component: '@/pages/{routeDir}/view',
+  name: '{menuName}详情',
+  access: '${permName}$query',
   hideInMenu: !0,
 }, {
-  path: '/#{routePath}',
-  component: '@/pages/#{routeDir}',
+  path: '/{routePath}',
+  component: '@/pages/{routeDir}',
 }];
 
 const routes = [{
   // ... 现有路由
 }, {
-  path: '/#{routePath}',
-  name: '#{menuName}管理',
-  icon: '#{menuIcon}',
-  access: '$#{permName}',
-  routes: $#{permName,
+  path: '/{routePath}',
+  name: '{menuName}管理',
+  icon: '{menuIcon}',
+  access: '${permName}',
+  routes: ${permName,
 }, {
   // ... 其他路由
 }];
@@ -389,31 +389,31 @@ const routes = [{
 **仅列表页+save**（当用户需要 save.js 但不需要 view.js 时）：
 
 ```text
-const $#{permName} = [{
-  path: '/#{routePath}/create',
-  component: '@/pages/#{routeDir}/save',
-  name: '新建#{menuName}',
-  access: '$#{permName}$create',
+const ${permName} = [{
+  path: '/{routePath}/create',
+  component: '@/pages/{routeDir}/save',
+  name: '新建{menuName}',
+  access: '${permName}$create',
   hideInMenu: !0,
 }, {
-  path: '/#{routePath}/update',
-  component: '@/pages/#{routeDir}/save',
-  name: '编辑#{menuName}',
-  access: '$#{permName}$update',
+  path: '/{routePath}/update',
+  component: '@/pages/{routeDir}/save',
+  name: '编辑{menuName}',
+  access: '${permName}$update',
   hideInMenu: !0,
 }, {
-  path: '/#{routePath}',
-  component: '@/pages/#{routeDir}',
+  path: '/{routePath}',
+  component: '@/pages/{routeDir}',
 }];
 
 const routes = [{
   // ... 现有路由
 }, {
-  path: '/#{routePath}',
-  name: '#{menuName}管理',
-  icon: '#{menuIcon}',
-  access: '$#{permName}',
-  routes: $#{permName},
+  path: '/{routePath}',
+  name: '{menuName}管理',
+  icon: '{menuIcon}',
+  access: '${permName}',
+  routes: ${permName},
 }, {
   // ... 其他路由
 }];
@@ -425,11 +425,11 @@ const routes = [{
 const routes = [{
   // ... 现有路由
 }, {
-  path: '/#{routePath}',
-  name: '#{menuName}管理',
-  icon: '#{menuIcon}',
-  access: '$#{permName}',
-  component: '@/pages/#{routeDir}',
+  path: '/{routePath}',
+  name: '{menuName}管理',
+  icon: '{menuIcon}',
+  access: '${permName}',
+  component: '@/pages/{routeDir}',
 }, {
   // ... 其他路由
 }];
@@ -439,12 +439,12 @@ const routes = [{
 
 ## 变量替换速查表
 
-| 变量             | 使用场景 | 示例            |
-|----------------|------|---------------|
-| `#{permName}`  | 功能权限 | `$user$query` |
-| `#{apiPerm}`   | 接口权限 | `@user:query` |
-| `#{apiPath}`   | 接口路径 | `/api/user`   |
-| `#{routePath}` | 路由路径 | `/user`       |
-| `#{routeDir}`  | 路由目录 | `/pages/user` |
-| `#{menuName}`  | 菜单名称 | 用户            |
-| `#{menuIcon}`  | 菜单图标 | UserOutlined  |
+| 变量            | 使用场景 | 示例            |
+|---------------|------|---------------|
+| `{permName}`  | 功能权限 | `$user$query` |
+| `{apiPerm}`   | 接口权限 | `@user:query` |
+| `{apiPath}`   | 接口路径 | `/api/user`   |
+| `{routePath}` | 路由路径 | `/user`       |
+| `{routeDir}`  | 路由目录 | `/pages/user` |
+| `{menuName}`  | 菜单名称 | 用户            |
+| `{menuIcon}`  | 菜单图标 | UserOutlined  |
