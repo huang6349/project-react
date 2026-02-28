@@ -1,11 +1,12 @@
 import { useRef } from 'react';
-import { withAuth } from '@/hocs';
-import { withResponse } from '@/hofs';
 import { useNavigate } from '@umijs/max';
-import { SysContainer } from '@/components';
-import { SysForm } from '@/components';
 import { useRequest } from 'alova/client';
 import { useQueries } from '@/hooks';
+import { withResponse } from '@/hofs';
+import { withAuth } from '@/hocs';
+import { modal } from '@/hocs';
+import { SysContainer } from '@/components';
+import { SysForm } from '@/components';
 import { isUndefined } from 'lodash-es';
 import service from './service';
 import columns from './columns';
@@ -22,7 +23,13 @@ const IndexPage = withAuth(() => {
   ), {
     immediate: !1,
   }).onSuccess(withResponse(() => {
-    navigate(-1);
+    modal?.success({
+      content: '初始密码为 123456，请提醒用户及时修改密码',
+      title: '操作成功',
+      onOk: () => {
+        navigate(-1);
+      },
+    });
   }));
 
   const {

@@ -1,9 +1,9 @@
 import { useRef } from 'react';
-import { withResponse } from '@/hofs';
-import { SysForm } from '@/components';
-import { message } from '@/components';
 import { useRequest } from 'alova/client';
 import { useQueries } from '@/hooks';
+import { withResponse } from '@/hofs';
+import { message } from '@/hocs';
+import { SysForm } from '@/components';
 import service from './service';
 import columns from './columns';
 import styles from './index.scss';
