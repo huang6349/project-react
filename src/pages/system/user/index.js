@@ -74,14 +74,14 @@ const IndexPage = withAuth(() => {
       rowKey='id'
       name='用户信息'
       request={service.dataPage()}
-      scroll={{ x: 1300 }}
+      scroll={{ x: 1310 }}
       cardBordered={!0}
       actionRef={actionRef}
       formRef={formRef}
       rowSelection={{}}
       columns={columns({
         title: '操作',
-        width: 138,
+        width: 150,
         dataIndex: 'option',
         fixed: 'right',
         valueType: 'option',

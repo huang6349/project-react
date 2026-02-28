@@ -15,7 +15,7 @@ const VerifyModal = (props) => {
   return (<Modal
     className={styles['verify-modal']}
     centered={!0}
-    destroyOnClose={!0}
+    destroyOnHidden={!0}
     footer={null}
     mask={!0}
     maskClosable={!1}
