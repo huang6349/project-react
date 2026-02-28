@@ -28,7 +28,7 @@ const columns = (options) => compact([{
     hidden: !0,
   },
 }, {
-  title: '帐号',
+  title: '用户帐号',
   placeholder: '请输入帐号',
   width: 150,
   dataIndex: 'username',
@@ -36,7 +36,7 @@ const columns = (options) => compact([{
   copyable: !0,
   hideInForm: !0,
 }, {
-  title: '昵称',
+  title: '用户昵称',
   placeholder: '请输入昵称',
   span: 2,
   width: 150,
@@ -51,7 +51,7 @@ const columns = (options) => compact([{
   copyable: !0,
   hideInForm: !0,
 }, {
-  title: '邮箱',
+  title: '用户邮箱',
   span: 2,
   width: 150,
   dataIndex: 'email',
@@ -60,7 +60,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
 }, {
-  title: '性别',
+  title: '用户性别',
   span: 1,
   width: 150,
   dataIndex: 'genderTag',
@@ -74,7 +74,7 @@ const columns = (options) => compact([{
     style={style}
   />),
 }, {
-  title: '生日',
+  title: '用户生日',
   span: 2,
   width: 150,
   dataIndex: 'birthday',
@@ -82,7 +82,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
 }, {
-  title: '地址',
+  title: '用户地址',
   span: 3,
   width: 180,
   dataIndex: 'address',
@@ -98,7 +98,7 @@ const columns = (options) => compact([{
   hideInForm: !0,
   hideInSearch: !0,
 }, {
-  title: '状态',
+  title: '用户状态',
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
@@ -150,8 +150,8 @@ const columns = (options) => compact([{
   columns: ({ id }) => ((isEmpty(id) ? [{
     valueType: 'group',
     columns: [{
-      title: '用户',
-      placeholder: '请选择用户',
+      title: '用户帐号',
+      placeholder: '请输入帐号',
       width: 'md',
       required: !0,
       showSearch: !0,
@@ -159,8 +159,8 @@ const columns = (options) => compact([{
       request: dataUser(),
     }],
   }] : [{
-    title: '用户',
-    placeholder: '请输入用户',
+    title: '用户帐号',
+    placeholder: '请输入帐号',
     width: 'md',
     dataIndex: 'userId',
     formItemProps: {

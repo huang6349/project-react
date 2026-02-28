@@ -27,14 +27,14 @@ const columns = (options) => compact([{
     hidden: !0,
   },
 }, {
-  title: '名称',
+  title: '组织名称',
   placeholder: '请输入名称',
   width: 150,
   dataIndex: 'name',
   ellipsis: !0,
   hideInForm: !0,
 }, {
-  title: '简称',
+  title: '组织简称',
   span: 2,
   width: 150,
   dataIndex: 'abbr',
@@ -42,7 +42,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
 }, {
-  title: '类别',
+  title: '组织类别',
   span: 3,
   width: 150,
   dataIndex: 'categoryTag',
@@ -54,7 +54,7 @@ const columns = (options) => compact([{
     style={style}
   />),
 }, {
-  title: '地区',
+  title: '组织地区',
   width: 150,
   dataIndex: 'area',
   ellipsis: !0,
@@ -62,7 +62,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
 }, {
-  title: '地址',
+  title: '组织地址',
   span: 2,
   width: 180,
   dataIndex: 'address',
@@ -79,7 +79,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
 }, {
-  title: '状态',
+  title: '组织状态',
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
@@ -113,13 +113,13 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
   columns: [{
-    title: '名称',
+    title: '组织名称',
     placeholder: '请输入名称',
     width: 'md',
     required: !0,
     dataIndex: 'name',
   }, {
-    title: '简称',
+    title: '组织简称',
     placeholder: '请输入简称',
     width: 'md',
     required: !0,
@@ -131,7 +131,7 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
   columns: [{
-    title: '类别',
+    title: '组织类别',
     placeholder: '请选择类别',
     required: !0,
     width: 'md',
@@ -144,13 +144,13 @@ const columns = (options) => compact([{
   hideInTable: !0,
   hideInSearch: !0,
   columns: [{
-    title: '地区',
+    title: '组织地区',
     placeholder: '请输入地区',
     required: !0,
     width: 'md',
     dataIndex: 'area',
   }, {
-    title: '地址',
+    title: '组织地址',
     placeholder: '请输入地址',
     width: 'md',
     dataIndex: 'address',

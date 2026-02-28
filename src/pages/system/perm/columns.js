@@ -24,14 +24,14 @@ const columns = (options) => compact([{
     hidden: !0,
   },
 }, {
-  title: '名称',
+  title: '权限名称',
   placeholder: '请输入名称',
   width: 150,
   dataIndex: 'name',
   ellipsis: !0,
   hideInForm: !0,
 }, {
-  title: '代码',
+  title: '权限代码',
   placeholder: '请输入代码',
   span: 2,
   width: 150,
@@ -46,7 +46,7 @@ const columns = (options) => compact([{
   hideInForm: !0,
   hideInSearch: !0,
 }, {
-  title: '状态',
+  title: '权限状态',
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
@@ -84,13 +84,13 @@ const columns = (options) => compact([{
   hideInSearch: !0,
   hideInExport: !0,
   columns: [{
-    title: '名称',
+    title: '权限名称',
     placeholder: '请输入名称',
     required: !0,
     width: 'md',
     dataIndex: 'name',
   }, {
-    title: '代码',
+    title: '权限代码',
     placeholder: '请输入代码',
     required: !0,
     width: 'md',
