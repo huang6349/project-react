@@ -1,23 +1,25 @@
 import { useRef } from 'react';
-import { withResponse } from '@/hofs';
-import { TableDropdown } from '@ant-design/pro-components';
+import { eq } from 'lodash-es';
+import qs from 'query-string';
 import { Divider } from 'antd';
-import { SysProTable } from '@/components';
-import { SysButton } from '@/components';
+import { TableDropdown } from '@ant-design/pro-components';
 import { useAccess } from '@umijs/max';
 import { useRequest } from 'alova/client';
 import { history } from '@umijs/max';
-import { eq } from 'lodash-es';
+import { withResponse } from '@/hofs';
 import { modal } from '@/hocs';
-import qs from 'query-string';
+import { SysProTable } from '@/components';
+import { SysButton } from '@/components';
 import service from './service';
 import columns from './columns';
 
 export const UserPane = ({ id: tenantId }) => {
+  // State & Hooks
   const actionRef = useRef();
   const formRef = useRef();
   const access = useAccess();
 
+  // 数据交互
   const {
     send: removeById,
   } = useRequest((id) => (
@@ -28,6 +30,7 @@ export const UserPane = ({ id: tenantId }) => {
     actionRef?.current?.reload()
   )));
 
+  // 事件处理
   const handleView = (record) => {
     history.push({
       pathname: `/system/tenant/user/view`,
@@ -77,26 +80,27 @@ export const UserPane = ({ id: tenantId }) => {
     });
   });
 
+  // 渲染输出
   return (<SysProTable
     rowKey='id'
     name='用户信息'
     params={{ tenantId }}
     request={service.dataPage()}
-    scroll={{ x: 950 }}
+    scroll={{ x: 962 }}
     actionRef={actionRef}
     formRef={formRef}
     form={{ className: 'border-b' }}
     rowSelection={{}}
     columns={columns({
       title: '操作',
-      width: 138,
+      width: 150,
       dataIndex: 'option',
       fixed: 'right',
       valueType: 'option',
       search: !1,
       hideInTable: !1,
       hideInDescriptions: !1,
-      render: (_, record) => ([
+      render: (_, record) => [
         <SysButton
           key='editable'
           type='link'
@@ -130,15 +134,15 @@ export const UserPane = ({ id: tenantId }) => {
             disabled: !access?.$tenant$auth,
           }]}
         />,
-      ]),
+      ],
     })}
-    toolBarRender={() => ([
+    toolBarRender={() => [
       <SysButton
         type='primary'
         onClick={handleCreate()}
         invisible={!access?.$tenant$create}>
         邀请
       </SysButton>,
-    ])}
+    ]}
   />);
 };

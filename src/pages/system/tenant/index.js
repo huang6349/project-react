@@ -1,31 +1,29 @@
 import { useState, useRef } from 'react';
-import { withResponse } from '@/hofs';
-import { withAuth } from '@/hocs';
+import { eq } from 'lodash-es';
+import qs from 'query-string';
 import { ProCard } from '@ant-design/pro-components';
 import { TableDropdown } from '@ant-design/pro-components';
+import { useAccess } from '@umijs/max';
+import { useRequest } from 'alova/client';
+import { history } from '@umijs/max';
+import { withResponse } from '@/hofs';
+import { withAuth } from '@/hocs';
+import { modal } from '@/hocs';
 import { SysContainer } from '@/components';
 import { SysProTList } from '@/components';
 import { SysButton } from '@/components';
 import { UserPane } from './user';
-import { useAccess } from '@umijs/max';
-import { useRequest } from 'alova/client';
-import { history } from '@umijs/max';
-import { eq } from 'lodash-es';
-import { modal } from '@/hocs';
-import qs from 'query-string';
 import service from './service';
 import columns from './columns';
 
 const IndexPage = withAuth(() => {
+  // State & Hooks
   const [id, setSelectedRowKey] = useState();
   const actionRef = useRef();
   const formRef = useRef();
   const access = useAccess();
 
-  const handleTListChange = () => ((selectedRowKey) => {
-    setSelectedRowKey(selectedRowKey);
-  });
-
+  // 数据交互
   const {
     send: removeById,
   } = useRequest((id) => (
@@ -35,6 +33,11 @@ const IndexPage = withAuth(() => {
   }).onSuccess(withResponse(() => (
     actionRef?.current?.reload()
   )));
+
+  // 事件处理
+  const handleTListChange = () => ((selectedRowKey) => {
+    setSelectedRowKey(selectedRowKey);
+  });
 
   const handleView = (record) => {
     history.push({
@@ -71,6 +74,7 @@ const IndexPage = withAuth(() => {
     });
   };
 
+  // 渲染输出
   return (<SysContainer>
     <ProCard
       bordered={!0}
@@ -102,7 +106,7 @@ const IndexPage = withAuth(() => {
             hideInSearch: !0,
             hideInTable: !1,
             hideInDescriptions: !1,
-            render: (_, record) => ([
+            render: (_, record) => [
               <TableDropdown
                 key='action'
                 onSelect={(key) => {
@@ -124,7 +128,7 @@ const IndexPage = withAuth(() => {
                   disabled: !access?.$tenant$query,
                 }]}
               />,
-            ]),
+            ],
           })}
         />
       </ProCard>
