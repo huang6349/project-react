@@ -34,6 +34,10 @@ export const removeById = (id) => id ? (
   safeRequest.Delete(`/api/user/${id}`)
 ) : null;
 
+export const reset = (id) => id ? (
+  safeRequest.Put(`/api/user/${id}/_reset`)
+) : null;
+
 export default ({
   queryPage,
   dataPage,
@@ -43,4 +47,5 @@ export default ({
   create,
   update,
   removeById,
+  reset,
 });

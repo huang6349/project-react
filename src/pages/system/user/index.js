@@ -8,6 +8,7 @@ import { useRequest } from 'alova/client';
 import { history } from '@umijs/max';
 import { withResponse } from '@/hofs';
 import { withAuth } from '@/hocs';
+import { message } from '@/hocs';
 import { modal } from '@/hocs';
 import { SysContainer } from '@/components';
 import { SysProTable } from '@/components';
@@ -30,6 +31,16 @@ const IndexPage = withAuth(() => {
     immediate: !1,
   }).onSuccess(withResponse(() => (
     actionRef?.current?.reload()
+  )));
+
+  const {
+    send: reset,
+  } = useRequest((id) => (
+    service.reset(id)
+  ), {
+    immediate: !1,
+  }).onSuccess(withResponse(() => (
+    message?.success('操作成功，密码已重置为 123456')
   )));
 
   // 事件处理
@@ -67,6 +78,16 @@ const IndexPage = withAuth(() => {
       ),
     });
   });
+
+  const handleReset = (record) => {
+    modal?.confirm({
+      content: '您确认要执行重置密码操作吗',
+      title: '重置密码',
+      onOk: () => (
+        reset(record?.id)
+      ),
+    });
+  };
 
   // 渲染输出
   return (<SysContainer>
@@ -110,11 +131,16 @@ const IndexPage = withAuth(() => {
             key={'action'}
             onSelect={(key) => {
               eq(key, 'view') && handleView(record);
+              eq(key, 'reset') && handleReset(record);
             }}
             menus={[{
               key: 'view',
               name: '详情',
               disabled: !access?.$user$query,
+            }, {
+              key: 'reset',
+              name: '重置密码',
+              disabled: !access?.$user$update,
             }]}
           />,
         ],
