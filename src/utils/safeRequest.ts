@@ -5,8 +5,10 @@ import { notification } from '@/components';
 import { message } from '@/components';
 import { delay } from '@/utils';
 import { safeToken } from '@/utils';
-import { eq } from 'lodash-es';
+import { safeEq } from '@/utils';
 import { TOKEN_NAME } from '@/constants';
+
+const ERROR_MSG_NETWORK = '请求没有得到响应，请检查网络设置';
 
 const safeRequest = createAlova({
   requestAdapter: axiosRequestAdapter(),
@@ -22,15 +24,14 @@ const safeRequest = createAlova({
       try {
         const {
           headers,
-          // @ts-ignore
           data: res,
         } = response;
         await delay(350);
         const token = headers?.[TOKEN_NAME];
         token && await safeToken.set(token);
-        const is = eq(res?.code, 401);
+        const is = safeEq(res?.code, 401);
         is && await safeToken.remove();
-        if (eq(res?.success, !1))
+        if (safeEq(res?.success, !1))
           errorThrower(res);
         const contentType = headers?.['content-type'];
         if (contentType?.includes('application/octet-stream'))
@@ -38,7 +39,6 @@ const safeRequest = createAlova({
         return res;
       } catch (error) {
         const {
-          // @ts-ignore
           data: res,
         } = response;
         await errorHandler(error);
@@ -46,13 +46,12 @@ const safeRequest = createAlova({
       }
     },
     onError() {
-      const errorMessage = '请求没有得到响应，请检查网络设置';
-      message?.error(errorMessage);
+      message?.error(ERROR_MSG_NETWORK);
     },
   },
 });
 
-const downloadFile = (headers: any, data: Blob) => {
+const downloadFile = (headers: Record<string, any>, data: Blob) => {
   const contentDisposition = headers?.['content-disposition'];
   if (contentDisposition?.includes('filename=')) {
     // 提取文件名
@@ -82,7 +81,7 @@ enum ErrorShowType {
 }
 
 const errorHandler = async (error: any) => {
-  if (eq(error.name, 'BizError')) {
+  if (safeEq(error.name, 'BizError')) {
     if (error.info) {
       const {
         errorMessage,
@@ -111,8 +110,7 @@ const errorHandler = async (error: any) => {
       }
     }
   } else {
-    const errorMessage = '请求没有得到响应，请检查网络设置';
-    message?.error(errorMessage);
+    message?.error(ERROR_MSG_NETWORK);
   }
 };
 
@@ -124,7 +122,7 @@ const errorThrower = (res: any) => {
     code: errorCode,
     showType,
   } = res;
-  if (eq(success, !0)) return;
+  if (safeEq(success, !0)) return;
   const error: any = new Error(errorMessage);
   error.name = 'BizError';
   error.info = {

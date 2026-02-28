@@ -6,13 +6,6 @@
 
 基于 UMI 4.x 框架的 React 后台管理项目，使用 Ant Design 组件库。
 
-## Skills 索引
-
-| Skill            | 触发词       | 说明              |
-|------------------|-----------|-----------------|
-| crud-development | 增删改查、CRUD | 自动创建新的业务模块      |
-| git-gitignore    | gitignore | 自动生成符合此代码库的忽略规则 |
-
 ## 架构
 
 ### 状态管理

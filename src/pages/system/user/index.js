@@ -1,25 +1,27 @@
 import { useRef } from 'react';
-import { withResponse } from '@/hofs';
-import { withAuth } from '@/hocs';
-import { TableDropdown } from '@ant-design/pro-components';
+import { eq } from 'lodash-es';
+import qs from 'query-string';
 import { Divider } from 'antd';
-import { SysContainer } from '@/components';
-import { SysProTable } from '@/components';
-import { SysButton } from '@/components';
+import { TableDropdown } from '@ant-design/pro-components';
 import { useAccess } from '@umijs/max';
 import { useRequest } from 'alova/client';
 import { history } from '@umijs/max';
-import { eq } from 'lodash-es';
+import { withResponse } from '@/hofs';
+import { withAuth } from '@/hocs';
 import { modal } from '@/hocs';
-import qs from 'query-string';
+import { SysContainer } from '@/components';
+import { SysProTable } from '@/components';
+import { SysButton } from '@/components';
 import service from './service';
 import columns from './columns';
 
 const IndexPage = withAuth(() => {
+  // State & Hooks
   const actionRef = useRef();
   const formRef = useRef();
   const access = useAccess();
 
+  // 数据交互
   const {
     send: removeById,
   } = useRequest((id) => (
@@ -30,6 +32,7 @@ const IndexPage = withAuth(() => {
     actionRef?.current?.reload()
   )));
 
+  // 事件处理
   const handleView = (record) => {
     history.push({
       pathname: `/system/user/view`,
@@ -65,6 +68,7 @@ const IndexPage = withAuth(() => {
     });
   });
 
+  // 渲染输出
   return (<SysContainer>
     <SysProTable
       rowKey='id'
@@ -84,20 +88,20 @@ const IndexPage = withAuth(() => {
         search: !1,
         hideInTable: !1,
         hideInDescriptions: !1,
-        render: (_, record) => ([
+        render: (_, record) => [
           <SysButton
             key='editable'
             type='link'
             onClick={handleUpdate(record)}
             disabled={!access?.$user$update}>
-            <>编辑</>
+            编辑
           </SysButton>,
           <SysButton
             key='delete'
             type='link'
             onClick={handleDelete(record)}
             disabled={!access?.$user$delete}>
-            <>删除</>
+            删除
           </SysButton>,
           <Divider
             key='divider'
@@ -113,17 +117,17 @@ const IndexPage = withAuth(() => {
               disabled: !access?.$user$query,
             }]}
           />,
-        ]),
+        ],
       })}
-      toolBarRender={() => ([
+      toolBarRender={() => [
         <SysButton
           key='create'
           type='primary'
           onClick={handleCreate()}
           invisible={!access?.$user$create}>
-          <>新建</>
+          新建
         </SysButton>,
-      ])} />
+      ]} />
   </SysContainer>);
 });
 

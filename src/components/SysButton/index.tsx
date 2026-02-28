@@ -1,12 +1,11 @@
-import type { ButtonProps } from 'antd';
+import type { SysButtonProps } from './types';
 import { useMemo } from 'react';
-import { Button } from 'antd';
 import { isFunction } from 'lodash-es';
-import { clsx } from 'clsx';
+import { Button } from 'antd';
 
-const SysButton = (props: ButtonProps & {
-  invisible?: boolean | (() => boolean);
-}) => {
+const SysButton = (
+  props: SysButtonProps,
+) => {
   const {
     className,
     invisible,
@@ -19,8 +18,10 @@ const SysButton = (props: ButtonProps & {
     } else return invisible;
   }, [invisible]);
 
-  return (<Button
-    className={clsx(className, { hidden })}
+  if (hidden) {
+    return null;
+  } else return (<Button
+    className={className}
     {...buttonProps}
   />);
 };
