@@ -99,7 +99,7 @@ const IndexPage = withAuth(() => {
           formRef={formRef}
           columns={columns({
             title: '操作',
-            width: 35,
+            width: 50,
             dataIndex: 'option',
             fixed: 'right',
             valueType: 'option',
