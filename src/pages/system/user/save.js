@@ -24,7 +24,7 @@ const IndexPage = withAuth(() => {
     immediate: !1,
   }).onSuccess(withResponse(() => {
     modal?.success({
-      content: '初始密码为 123456，请提醒用户及时修改密码',
+      content: '默认密码为 123456，请提醒用户及时修改密码',
       title: '操作成功',
       onOk: () => {
         navigate(-1);
