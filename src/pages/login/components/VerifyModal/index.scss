@@ -1,0 +1,101 @@
+.verify-modal :global(.ant-modal-content) {
+  padding: 16px 16px 10px;
+  @apply select-none;
+}
+
+.verifybox {
+  @apply m-0;
+  @apply p-0;
+}
+
+.verify-img-out {
+  @apply mt-3;
+}
+
+.verify-img-panel {
+  @apply overflow-hidden;
+  @apply m-0;
+  @apply w-[310px];
+  @apply h-[155px];
+  @apply rounded-md;
+  @apply bg-gray-100;
+}
+
+.verify-img {
+  @apply w-full;
+  @apply h-full;
+  @apply block;
+}
+
+.verify-bar-area {
+  @apply relative;
+  @apply mt-[16px];
+  @apply w-[310px];
+  @apply h-[36px];
+  @apply bg-slate-100;
+  @apply rounded;
+}
+
+.verify-msg {
+  @apply absolute;
+  @apply left-0;
+  @apply top-0;
+  @apply w-[310px];
+  @apply text-center;
+  @apply text-gray-400;
+  @apply text-sm;
+  @apply leading-[36px];
+}
+
+.verify-left-bar {
+  @apply absolute;
+  @apply left-0;
+  @apply top-0;
+  @apply h-[36px];
+  @apply z-10;
+  @apply bg-slate-200;
+  @apply bg-opacity-50;
+  @apply rounded;
+}
+
+.verify-move-block {
+  @apply absolute;
+  @apply left-0;
+  @apply top-0;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply w-[45px];
+  @apply h-[36px];
+  @apply bg-white;
+  @apply rounded;
+  @apply border;
+  @apply border-solid;
+  @apply border-gray-200;
+  @apply shadow-sm;
+  @apply cursor-grab;
+  @apply z-20;
+  @apply select-none;
+}
+
+.verify-very-bottom {
+  @apply border-t;
+  @apply border-slate-100;
+  @apply border-solid;
+  @apply mt-4;
+}
+
+.verify-refresh {
+  @apply pt-3;
+  @apply px-0;
+}
+
+.verify-sub-block {
+  @apply absolute;
+  @apply -left-[1px];
+  @apply -top-[calc(155px+1px+16px)];
+  @apply w-[45px];
+  @apply h-[155px];
+  @apply overflow-hidden;
+  @apply pointer-events-none;
+}

@@ -17,6 +17,7 @@
     "antd": "5.29.3",
     "antd-style": "3.6.3",
     "clsx": "2.1.1",
+    "crypto-js": "4.2.0",
     "dayjs": "1.11.13",
     "exceljs": "4.2.1",
     "file-saver": "2.0.5",
@@ -26,6 +27,7 @@
     "query-string": "8.2.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-draggable": "4.5.0",
     "react-use": "17.5.1",
     "valtio": "2.1.3"
   },
