@@ -1,21 +1,32 @@
 import type { MenuProps } from 'antd';
+import { useCallback } from 'react';
+import { LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
+import { history } from '@umijs/max';
+import { useModel } from '@umijs/max';
+import { invalidateCache } from 'alova';
+import { safeToken } from '@/utils';
+import { eq } from 'lodash-es';
+import { modal } from '@/components';
 import HeaderDropdown from '../HeaderDropdown';
 import HeaderAction from '../HeaderAction';
 import HeaderAvatar from '../HeaderAvatar';
 import HeaderName from '../HeaderName';
-import { LogoutOutlined } from '@ant-design/icons';
-import { useCallback } from 'react';
-import { history } from '@umijs/max';
-import { useModel } from '@umijs/max';
-import { modal } from '@/components';
-import { eq } from 'lodash-es';
-import { invalidateCache } from 'alova';
-import { safeToken } from '@/utils';
 
 const HeaderAvatarDropdown = () => {
-  const { initialState } = useModel('@@initialState');
+  const {
+    initialState,
+  } = useModel('@@initialState');
 
   const items: MenuProps['items'] = [{
+    key: 'settings',
+    label: (<>
+      <UserOutlined />
+      个人设置
+    </>),
+  }, {
+    type: 'divider',
+  }, {
     key: 'logout',
     label: (<>
       <LogoutOutlined />

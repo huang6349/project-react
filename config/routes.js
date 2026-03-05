@@ -120,6 +120,16 @@ const $system$perm = [{
   component: '@/pages/system/perm',
 }];
 
+const $account = [{
+  path: '/account',
+  component: '@/pages/account',
+}, {
+  path: '/account/settings',
+  component: '@/pages/account/settings',
+  name: '个人设置',
+  hideInMenu: !0,
+}];
+
 const $system = [{
   path: '/system/tenant',
   name: '组织管理',
@@ -155,6 +165,11 @@ const routes = [{
   icon: 'SettingOutlined',
   access: '$system',
   routes: $system,
+}, {
+  path: '/account',
+  name: '帐号管理',
+  routes: $account,
+  hideInMenu: !0,
 }, {
   path: '/login',
   component: '@/pages/login',
