@@ -1,27 +1,30 @@
 import type { TableColumnType } from './types';
 import type { TableProps } from './types';
 import type { AlertRenderType } from './types';
-import { ProTable } from '@ant-design/pro-components';
-import { Space } from 'antd';
-import { TableTitle } from './TableTitle';
-import { SysLink } from '@/components';
 import { useMemo } from 'react';
 import { useRef } from 'react';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { useUpdateEffect } from 'react-use';
+import { ProTable } from '@ant-design/pro-components';
+import { Space } from 'antd';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
+import { useIsomorphicLayoutEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 import { isFunction } from 'lodash-es';
 import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
-import { filterExportCols } from './filterCols';
-import { exportToExcel } from './exceljs';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
+import clsx from 'clsx';
+import { SysLink } from '@/components';
+import { TableTitle } from './TableTitle';
+import { filterExportCols } from './filterCols';
+import { exportToExcel } from './exceljs';
 import state from './index.state';
 
-const SysProTable = (props: TableProps) => {
+const SysProTable = (
+  props: TableProps,
+) => {
   const headerRef = useRef<any>();
 
   const {
@@ -30,6 +33,7 @@ const SysProTable = (props: TableProps) => {
   const snap = useSnapshot(state);
 
   const {
+    className: cls,
     onTListChange,
     tableAlertOption,
     name,
@@ -72,7 +76,9 @@ const SysProTable = (props: TableProps) => {
   };
 
   const $cols = useMemo(() => {
-    const patch = ($cols: TableColumnType[]): any[] => (
+    const patch = (
+      $cols: TableColumnType[],
+    ): any[] => (
       produce($cols, (cols) => {
         cols?.forEach((col) => {
           const {
@@ -132,6 +138,7 @@ const SysProTable = (props: TableProps) => {
   }, [selectedRowKey]);
 
   return (<ProTable
+    className={clsx('sys-pro-table', cls)}
     cardBordered={!1}
     tableAlertOptionRender={tableAlertOptionRender}
     headerTitle={(<TableTitle
@@ -150,9 +157,7 @@ const SysProTable = (props: TableProps) => {
       ...form,
       layout: 'vertical',
     }}
-    request={(params,
-              sort,
-              filter) => {
+    request={(params, sort, filter) => {
       const {
         pageSize,
         current,

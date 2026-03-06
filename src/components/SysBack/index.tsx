@@ -1,20 +1,22 @@
-import type { ButtonProps } from 'antd';
+import type { BackProps } from './types';
 import { useNavigate } from '@umijs/max';
 import { SysButton } from '@/components';
+import clsx from 'clsx';
 
-const SysBack = (props: ButtonProps & {
-  invisible?: boolean | (() => boolean);
-  label?: string;
-}) => {
+const SysBack = (
+  props: BackProps,
+) => {
   const navigate = useNavigate();
 
   const {
+    className: cls,
     onClick,
     label,
     ...buttonProps
   } = props;
 
   return (<SysButton
+    className={clsx('sys-back', cls)}
     type='primary'
     {...buttonProps}
     onClick={(event) => {

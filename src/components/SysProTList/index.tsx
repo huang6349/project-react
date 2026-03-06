@@ -1,27 +1,31 @@
+import type { Key } from 'react';
 import type { TableColumnType } from './types';
 import type { TableProps } from './types';
-import type { Key } from 'react';
-import { ProTable } from '@ant-design/pro-components';
 import { useMemo } from 'react';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useUpdateEffect } from 'react-use';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
+import { ProTable } from '@ant-design/pro-components';
 import { isFunction } from 'lodash-es';
 import { includes } from 'lodash-es';
 import { head } from 'lodash-es';
 import { set } from 'lodash-es';
 import { map } from 'lodash-es';
 import { produce } from 'immer';
+import clsx from 'clsx';
 import state from './index.state';
 
-const SysProTList = (props: TableProps) => {
+const SysProTList = (
+  props: TableProps,
+) => {
   const {
     pathname: namespace,
   } = useLocation();
   const snap = useSnapshot(state);
 
   const {
+    className: cls,
     onTListChange,
     syncQueries,
     rowSelection,
@@ -35,7 +39,9 @@ const SysProTList = (props: TableProps) => {
   } = props;
 
   const $cols = useMemo(() => {
-    const patch = ($cols: TableColumnType[]): any[] => (
+    const patch = (
+      $cols: TableColumnType[],
+    ): any[] => (
       produce($cols, (cols) => {
         cols?.forEach((col) => {
           const {
@@ -85,6 +91,7 @@ const SysProTList = (props: TableProps) => {
   }, [selectedRowKeys]);
 
   return (<ProTable
+    className={clsx('sys-pro-tlist', cls)}
     cardBordered={!1}
     options={!1}
     ghost={!0}
@@ -113,9 +120,7 @@ const SysProTList = (props: TableProps) => {
       ...form,
       layout: 'vertical',
     }}
-    request={(params,
-              sort,
-              filter) => {
+    request={(params, sort, filter) => {
       const {
         pageSize,
         current,

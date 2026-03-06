@@ -2,20 +2,24 @@ import type { FormColumnType } from './types';
 import type { FormProps } from './types';
 import { useMemo } from 'react';
 import { BetaSchemaForm } from '@ant-design/pro-components';
-import { isFunction } from 'lodash-es';
 import { isArray } from 'lodash-es';
+import { isFunction } from 'lodash-es';
 import { eq } from 'lodash-es';
 import { filterFormCols } from './filterCols';
 import { produce } from 'immer';
 
-const SchemaForm = (props: FormProps) => {
+const SchemaForm = (
+  props: FormProps,
+) => {
   const {
     columns,
     ...formSchema
   } = props;
 
   const $cols = useMemo(() => {
-    const patch = ($cols: FormColumnType[]): any[] => (
+    const patch = (
+      $cols: FormColumnType[],
+    ): any[] => (
       produce($cols, (cols) => {
         cols?.forEach((col) => {
           const {
@@ -50,14 +54,14 @@ const SchemaForm = (props: FormProps) => {
                 const _formItemProps: any = formItemProps(_form, _config);
                 if (!_formItemProps.rules)
                   _formItemProps.rules = [];
-                _formItemProps.rules.push({ required: true });
+                _formItemProps.rules.push({ required: !0 });
                 return _formItemProps;
               };
             } else {
               const _formItemProps: any = formItemProps || {};
               if (!_formItemProps.rules)
                 _formItemProps.rules = [];
-              _formItemProps.rules.push({ required: true });
+              _formItemProps.rules.push({ required: !0 });
               col.formItemProps = _formItemProps;
             }
           }

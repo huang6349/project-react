@@ -2,7 +2,9 @@ import type { FormColumnType } from './types';
 import { isString } from 'lodash-es';
 import { includes } from 'lodash-es';
 
-export const getValueType = (col: FormColumnType) => (
+export const getValueType = (
+  col: FormColumnType,
+) => (
   isString(col?.valueType) ? col?.valueType : ''
 );
 

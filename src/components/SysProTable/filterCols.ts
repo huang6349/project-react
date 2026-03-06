@@ -2,7 +2,9 @@ import type { TableColumnType } from './types';
 import { isString } from 'lodash-es';
 import { includes } from 'lodash-es';
 
-export const getValueType = (col: TableColumnType) => (
+export const getValueType = (
+  col: TableColumnType,
+) => (
   isString(col?.valueType) ? col?.valueType : ''
 );
 

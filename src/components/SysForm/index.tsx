@@ -1,16 +1,13 @@
-import type { FormColumnType } from './types';
 import type { FormProps } from './types';
-import type { ProCardProps } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
 import SchemaForm from './SchemaForm';
+import clsx from 'clsx';
 
-const SysForm = (props: FormProps & {
-  bordered?: ProCardProps['bordered'];
-  ghost?: ProCardProps['ghost'];
-  cardProps?: ProCardProps,
-  columns: FormColumnType[];
-}) => {
+const SysForm = (
+  props: FormProps,
+) => {
   const {
+    className: cls,
     bordered,
     ghost,
     cardProps,
@@ -18,6 +15,7 @@ const SysForm = (props: FormProps & {
   } = props;
 
   return (<ProCard
+    className={clsx('sys-form', cls)}
     bordered={bordered}
     ghost={ghost}
     {...cardProps}>

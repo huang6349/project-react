@@ -3,10 +3,12 @@ import { useMemo } from 'react';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
 import { filterDescriptionsCols } from './filterCols';
-import styles from './index.scss';
+import clsx from 'clsx';
+import './index.scss';
 
 const SysDescriptions = (props: DescriptionsProps) => {
   const {
+    className: cls,
     bordered,
     title,
     columns,
@@ -18,7 +20,7 @@ const SysDescriptions = (props: DescriptionsProps) => {
   ), [columns]);
 
   return (<ProCard
-    className={styles['sys-descriptions']}
+    className={clsx('sys-descriptions', cls)}
     title={title}
     bordered={bordered}>
     <ProDescriptions

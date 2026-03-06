@@ -1,17 +1,21 @@
-import type { ProCardProps } from '@ant-design/pro-components';
+import type { TabsProps } from './types';
 import { ProCard } from '@ant-design/pro-components';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
 import { set } from 'lodash-es';
+import clsx from 'clsx';
 import state from './index.state';
 
-const SysTabs = (props: ProCardProps) => {
+const SysTabs = (
+  props: TabsProps,
+) => {
   const {
     pathname: namespace,
   } = useLocation();
   const snap = useSnapshot(state);
 
   const {
+    className: cls,
     tabs,
     ...cardProps
   } = props;
@@ -21,6 +25,7 @@ const SysTabs = (props: ProCardProps) => {
   } = snap[namespace] || {};
 
   return (<ProCard
+    className={clsx('sys-tabs', cls)}
     bordered={!0}
     {...cardProps}
     tabs={{

@@ -1,12 +1,20 @@
-import type { ButtonProps } from 'antd';
+import type { LinkProps } from './types';
 import { SysButton } from '@/components';
+import clsx from 'clsx';
 
-const SysLink = (props: ButtonProps & {
-  invisible?: boolean | (() => boolean);
-}) => (<SysButton
-  className='h-auto p-0'
-  type='link'
-  {...props}
-/>);
+const SysLink = (
+  props: LinkProps,
+) => {
+  const {
+    className: cls,
+    ...linkProps
+  } = props;
+
+  return (<SysButton
+    className={clsx('sys-link', 'h-auto', 'p-0', cls)}
+    type='link'
+    {...linkProps}
+  />);
+};
 
 export default SysLink;
