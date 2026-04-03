@@ -128,6 +128,35 @@ const $account = [{
   component: '@/pages/account/settings',
   name: '个人设置',
   hideInMenu: !0,
+}, {
+  path: '/tenant/settings',
+  component: '@/pages/tenant/settings',
+  name: '系统设置',
+  hideInMenu: !0,
+}, {
+  path: '/tenant/settings/user/create',
+  component: '@/pages/tenant/settings/user/save',
+  name: '邀请用户',
+  access: '$tenant$create',
+  hideInMenu: !0,
+}, {
+  path: '/tenant/settings/user/update',
+  component: '@/pages/tenant/settings/user/save',
+  name: '编辑用户',
+  access: '$tenant$update',
+  hideInMenu: !0,
+}, {
+  path: '/tenant/settings/user/auth',
+  component: '@/pages/tenant/settings/user/auth',
+  name: '用户授权',
+  access: '$tenant$auth',
+  hideInMenu: !0,
+}, {
+  path: '/tenant/settings/user/view',
+  component: '@/pages/tenant/settings/user/view',
+  name: '用户详情',
+  access: '$tenant$query',
+  hideInMenu: !0,
 }];
 
 const $system = [{
@@ -167,6 +196,9 @@ const routes = [{
   routes: $system,
 }, {
   path: '/account',
+  name: '帐号管理',
+  routes: $account,
+}, {
   name: '帐号管理',
   routes: $account,
   hideInMenu: !0,

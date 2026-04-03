@@ -1,2 +1,2 @@
 export { queryDict } from './dict';
-export { queryUser } from './user';
+export { queryUser, user } from './user';

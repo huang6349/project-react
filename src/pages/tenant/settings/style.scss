@@ -1,0 +1,61 @@
+.main {
+  @apply flex;
+  @apply w-full;
+  @apply h-full;
+  @apply pt-4;
+  @apply pb-4;
+  @apply bg-white;
+  @apply border;
+  @apply border-gray-200;
+  @apply rounded-lg;
+
+  :global(.ant-list-split .ant-list-item:last-child) {
+    @apply border-b;
+    @apply border-gray-200;
+  }
+
+  :global(.ant-list-item) {
+    @apply py-3.5;
+  }
+
+  @media screen and (max-width: 768px) {
+    @apply flex-col;
+  }
+}
+
+.left-menu {
+  @apply w-56;
+  @apply border-r;
+  @apply border-gray-200;
+
+  :global(.ant-menu-inline) {
+    border: none !important;
+  }
+
+  :global(.ant-menu-horizontal) {
+    @apply font-bold;
+  }
+
+  @media screen and (max-width: 768px) {
+    @apply w-full;
+    @apply border-none;
+  }
+}
+
+.right {
+  @apply flex-1;
+  @apply py-2;
+  @apply px-10;
+
+  @media screen and (max-width: 768px) {
+    @apply p-10;
+  }
+}
+
+.title {
+  @apply mb-3;
+  @apply text-xl;
+  @apply font-medium;
+  @apply leading-7;
+  @apply text-gray-900;
+}
