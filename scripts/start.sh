@@ -22,7 +22,8 @@ fi
 set +a
 
 PACKAGE_FILE="$SCRIPT_DIR/www.tar.gz"
-NGINX_DIR=${NGINX_DIR:-"$SCRIPT_DIR/../project-nginx/config/www"}
+_NGINX_SIBLING=$(cd "$SCRIPT_DIR/.." && pwd)
+NGINX_DIR=${NGINX_DIR:-"$_NGINX_SIBLING/project-nginx/config/www"}
 
 echo "==> 开始部署..."
 echo "部署文件: $PACKAGE_FILE"
