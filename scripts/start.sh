@@ -13,7 +13,7 @@ fi
 set +a
 
 PACKAGE_FILE="$SCRIPT_DIR/www.tar.gz"
-NGINX_DIR=${NGINX_DIR:-"$PARENT_DIR/project-nginx/config/www"}
+NGINX_DIR=${NGINX_DIR:-"$PARENT_DIR/../project-nginx/config/www"}
 
 echo "==> 开始部署..."
 echo "部署文件: $PACKAGE_FILE"
