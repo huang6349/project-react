@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 # 部署到 Nginx
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-PARENT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+
+# 如果在 dist/ 下，移到上级目录
+if [ "$(basename "$SCRIPT_DIR")" = "dist" ]; then
+    echo "==> 从 dist/ 移动到上级目录..."
+    cd "$SCRIPT_DIR/.."
+    mv dist/* . 2>/dev/null || true
+    rmdir dist 2>/dev/null || true
+    SCRIPT_DIR=$(pwd)
+fi
 
 # 加载 .env
+PARENT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 set -a
 if [ -f "$SCRIPT_DIR/.env" ]; then
     source "$SCRIPT_DIR/.env"
@@ -13,7 +22,8 @@ fi
 set +a
 
 PACKAGE_FILE="$SCRIPT_DIR/www.tar.gz"
-NGINX_DIR=${NGINX_DIR:-"$PARENT_DIR/../project-nginx/config/www"}
+_NGINX_SIBLING=$(cd "$PARENT_DIR/.." && pwd)
+NGINX_DIR=${NGINX_DIR:-"$_NGINX_SIBLING/project-nginx/config/www"}
 
 echo "==> 开始部署..."
 echo "部署文件: $PACKAGE_FILE"
