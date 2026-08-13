@@ -305,3 +305,7 @@ vite.config.ts.timestamp-*
 /dist
 /.mfsu
 .swc
+.turbopack
+
+# Claude Code local tasks
+/.claude/tasks/

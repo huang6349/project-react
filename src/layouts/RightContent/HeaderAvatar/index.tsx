@@ -8,7 +8,6 @@ const HeaderAvatar = (props: AvatarProps) => {
     src,
     ...avatarProps
   } = props;
-  console.log(avatarProps);
   return (<Avatar
     className={clsx('umi-plugin-layout-avatar', cls)}
     alt='avatar'
