@@ -29,7 +29,7 @@
     "react-dom": "18.0.0",
     "react-draggable": "4.5.0",
     "react-use": "17.5.1",
-    "valtio": "2.1.3"
+    "valtio": "2.1.8"
   },
   "devDependencies": {
     "@types/file-saver": "2.0.7",
