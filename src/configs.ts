@@ -6,11 +6,15 @@ import { get } from 'lodash-es';
 const DEFAULTS = {
   name: '前端应用框架模版',
   slogan: '这是一个构建 REACT 项目的模板库',
+  tenantEnabled: !1,
+  iotEnabled: !1,
   aiEnabled: !1,
 };
 
 export const pickConfigs = (raw: Record<string, any> = {}) => ({
   name: get(raw, 'system.name') ?? DEFAULTS.name,
   slogan: get(raw, 'system.slogan') ?? DEFAULTS.slogan,
+  tenantEnabled: get(raw, 'tenant.enabled') ?? DEFAULTS.tenantEnabled,
+  iotEnabled: get(raw, 'iot.enabled') ?? DEFAULTS.iotEnabled,
   aiEnabled: get(raw, 'ai.enabled') ?? DEFAULTS.aiEnabled,
 });
