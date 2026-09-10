@@ -13,6 +13,7 @@ import { VerifyModal } from './components';
 import { useRequest } from 'alova/client';
 import { useModel } from '@umijs/max';
 import { history } from '@umijs/max';
+import { safeConfigs } from '@/utils';
 import { safeToken } from '@/utils';
 import { safeEq } from '@/utils';
 import service from './service';
@@ -82,8 +83,8 @@ const IndexPage = withAntd(() => {
     <div className={styles['content']}>
       <LoginForm
         contentStyle={{ width: 368 }}
-        title='前端应用框架模版'
-        subTitle='这是一个构建 REACT 项目的模板库'
+        title={safeConfigs.get('name')}
+        subTitle={safeConfigs.get('slogan')}
         loading={loading}
         submitter={submitter}
         onFinish={handleFinish}>

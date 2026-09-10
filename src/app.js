@@ -1,17 +1,22 @@
 import { RightContent } from '@/layouts/RightContent';
 import { SysFooter } from '@/components';
+import { queryConfigs } from '@/services';
 import { queryUser } from '@/services';
+import { safeConfigs } from '@/utils';
 
 // 运行时配置
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config
 export const getInitialState = async () => {
-  const {
+  const [, {
     perms,
     roles,
     user,
-  } = await queryUser();
+  }] = await Promise.all([
+    queryConfigs(),
+    queryUser(),
+  ]);
   const {
     username,
     nickname,
@@ -44,7 +49,7 @@ const bgLayoutImgList = [{
 
 export const layout = () => ({
   layout: 'mix',
-  title: '前端应用框架模版',
+  title: safeConfigs.get('name'),
   logo: require('@/assets/logo.jpg'),
   bgLayoutImgList,
   defaultCollapsed: !0,
@@ -55,10 +60,12 @@ export const layout = () => ({
   colorWeak: !1,
   disableMobile: !0,
   splitMenus: !0,
-  rightContentRender: () =>
-    <RightContent />,
-  footerRender: () =>
-    <SysFooter />,
+  rightContentRender: () => (
+    <RightContent />
+  ),
+  footerRender: () => (
+    <SysFooter />
+  ),
 });
 
 export const antd = (memo) => {
