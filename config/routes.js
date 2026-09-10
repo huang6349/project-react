@@ -164,6 +164,7 @@ const $account = [{
   path: '/account/settings',
   component: '@/pages/account/settings',
   name: '个人设置',
+  access: '$account',
   hideInMenu: !0,
 }, {
   path: '/account',
@@ -186,6 +187,7 @@ const routes = [{
 }, {
   path: '/account',
   name: '帐号管理',
+  access: '$account',
   routes: $account,
   hideInMenu: !0,
 }, {

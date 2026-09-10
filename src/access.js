@@ -2,6 +2,7 @@ import { checkPerm } from '@/utils';
 
 export default ({ perms } = {}) => ({
   $configs: checkPerm(perms, '*'),
+  $account: !0,
   $system: checkPerm(perms, '@tenant:query', '@user:query', '@role:query', '@perm:query'),
   $system$tenant: checkPerm(perms, '@tenant:query'),
   $system$user: checkPerm(perms, '@user:query'),

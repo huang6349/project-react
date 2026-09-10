@@ -27,20 +27,21 @@ const HeaderAvatarDropdown = () => {
   const access = useAccess();
 
   const items: MenuProps['items'] = [
-    // 系统设置仅超管可见（perms 含 '*'），无权限不渲染入口
+    // 系统设置仅超管可见
     ...(access?.$configs ? [{
       key: 'configs',
       label: (<>
         <ControlOutlined />
         系统设置
       </>),
-    }] : []), {
+    }] : []),
+    ...(access?.$account ? [{
       key: 'account',
       label: (<>
         <UserOutlined />
         个人设置
       </>),
-    }, {
+    }] : []), {
       type: 'divider',
     }, {
       key: 'logout',
