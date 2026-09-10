@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { Switch } from 'antd';
 import { List } from 'antd';
+import { Tooltip } from 'antd';
 import { message } from '@/components';
 import { useModel } from '@umijs/max';
 import { eq } from 'lodash-es';
@@ -19,6 +20,7 @@ const FeatureSwitch = (props) => {
     loading,
     title,
     description,
+    readonly,
   } = props;
 
   const {
@@ -65,14 +67,22 @@ const FeatureSwitch = (props) => {
   };
 
   // 6. 渲染输出：加载中或提交中由 Switch 呈现 loading 态（自动禁用交互）
-  const actions = [<Switch
+  const control = <Switch
     key={code}
     loading={loading || updating}
+    disabled={readonly}
     checked={value?.[field] ?? !1}
     unCheckedChildren='关'
     checkedChildren='开'
     onChange={handleChange}
-  />];
+  />;
+
+  // 只读态包一层 span 承接事件：disabled 的 Switch 自身不触发鼠标事件，Tooltip 会失效
+  const actions = [readonly ? (
+    <Tooltip key={code} title='该配置由系统统一管理，暂不支持修改'>
+      <span className='inline-flex'>{control}</span>
+    </Tooltip>
+  ) : control];
 
   return (<List.Item
     actions={actions}>
@@ -87,6 +97,7 @@ FeatureSwitch.defaultProps = {
   configs: {},
   field: 'enabled',
   loading: !1,
+  readonly: !1,
 };
 
 export default FeatureSwitch;
