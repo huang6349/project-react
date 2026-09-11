@@ -9,25 +9,13 @@ import { safeConfigs } from '@/utils';
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config
 export const getInitialState = async () => {
-  const [, {
-    perms,
-    roles,
-    user,
-  }] = await Promise.all([
+  await Promise.all([
     queryConfigs(),
     queryUser(),
   ]);
-  const {
-    username,
-    nickname,
-    avatar,
-  } = user ?? {};
-  return {
-    avatar,
-    name: nickname ?? username,
-    perms: perms ?? [],
-    roles: roles ?? [],
-  };
+  // 数据已写入各自 store，无需在此返回
+  // 返回新对象：umi 依据该对象引用变化触发 access 重算
+  return {};
 };
 
 const bgLayoutImgList = [{

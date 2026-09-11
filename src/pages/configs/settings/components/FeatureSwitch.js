@@ -65,10 +65,10 @@ const FeatureSwitch = (props) => {
     const next = { ...prev, [field]: enabled };
     setValue(next);
     // 剔除后端下发的只读标记，避免连同 enabled 一起回传
-    // 业务失败（success=false）与网络失败统一判为未成功，回滚到变更前
     const ok = await update(omit(next, 'readonly'))
       .then((res) => eq(res?.success, !0))
       .catch(() => !1);
+    // 业务失败（success=false）与网络失败统一判为未成功，回滚到变更前
     if (!ok) setValue(prev);
   };
 

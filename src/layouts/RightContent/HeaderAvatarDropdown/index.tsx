@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { ControlOutlined } from '@ant-design/icons';
 import { LogoutOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
-import { history } from '@umijs/max';
 import { useAccess } from '@umijs/max';
-import { useModel } from '@umijs/max';
+import { useUser } from '@/hooks';
+import { history } from '@umijs/max';
 import { invalidateCache } from 'alova';
 import { safeToken } from '@/utils';
 import { safeEq } from '@/utils';
@@ -21,10 +21,12 @@ const routeMap: Record<string, string> = {
 };
 
 const HeaderAvatarDropdown = () => {
-  const {
-    initialState,
-  } = useModel('@@initialState');
   const access = useAccess();
+
+  const {
+    name,
+    avatar,
+  } = useUser();
 
   const items: MenuProps['items'] = [
     // 系统设置仅超管可见
@@ -75,8 +77,8 @@ const HeaderAvatarDropdown = () => {
 
   return (<HeaderDropdown menu={menu}>
     <HeaderAction>
-      <HeaderAvatar src={initialState?.avatar} />
-      <HeaderName name={initialState?.name} />
+      <HeaderAvatar src={avatar} />
+      <HeaderName name={name} />
     </HeaderAction>
   </HeaderDropdown>);
 };

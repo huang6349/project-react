@@ -12,8 +12,8 @@ import { SysFooter } from '@/components';
 import { VerifyModal } from './components';
 import { useRequest } from 'alova/client';
 import { useModel } from '@umijs/max';
+import { useConfigs } from '@/hooks';
 import { history } from '@umijs/max';
-import { safeConfigs } from '@/utils';
 import { safeToken } from '@/utils';
 import { safeEq } from '@/utils';
 import service from './service';
@@ -24,6 +24,11 @@ const IndexPage = withAntd(() => {
   const {
     refresh,
   } = useModel('@@initialState');
+
+  const {
+    name,
+    slogan,
+  } = useConfigs();
 
   const [captchaVisible, setCaptchaVisible] = useState(!1);
   const [isVerified, setIsVerified] = useState(!1);
@@ -83,8 +88,8 @@ const IndexPage = withAntd(() => {
     <div className={styles['content']}>
       <LoginForm
         contentStyle={{ width: 368 }}
-        title={safeConfigs.get('name')}
-        subTitle={safeConfigs.get('slogan')}
+        title={name}
+        subTitle={slogan}
         loading={loading}
         submitter={submitter}
         onFinish={handleFinish}>
