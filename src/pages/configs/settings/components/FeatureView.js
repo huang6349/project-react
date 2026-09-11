@@ -9,17 +9,15 @@ import service from '../service';
 const FEATURES = [{
   code: 'tenant',
   title: '多租户模式',
-  description: '开启后不同租户的数据相互隔离，互不可见',
-  readonly: !0,
+  desc: '开启后不同租户的数据相互隔离，互不可见',
 }, {
   code: 'iot',
   title: '物联网',
-  description: '开启后可接入物联网设备',
-  readonly: !0,
+  desc: '开启后可接入物联网设备',
 }, {
   code: 'ai',
   title: '智能助手',
-  description: '开启后可使用 AI 智能助手',
+  desc: '开启后可使用 AI 智能助手',
 }];
 
 const FeatureView = () => {
@@ -45,8 +43,7 @@ const FeatureView = () => {
         configs={configs?.[item.code]}
         loading={loading}
         title={item.title}
-        description={item.description}
-        readonly={item.readonly}
+        desc={item.desc}
       />
     ))}
   </List>);

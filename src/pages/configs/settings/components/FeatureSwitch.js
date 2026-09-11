@@ -7,6 +7,7 @@ import { List } from 'antd';
 import { Tooltip } from 'antd';
 import { message } from '@/components';
 import { useModel } from '@umijs/max';
+import { omit } from 'lodash-es';
 import { eq } from 'lodash-es';
 import { useRequest } from 'alova/client';
 import service from '../service';
@@ -19,8 +20,7 @@ const FeatureSwitch = (props) => {
     field,
     loading,
     title,
-    description,
-    readonly,
+    desc,
   } = props;
 
   const {
@@ -36,6 +36,11 @@ const FeatureSwitch = (props) => {
     if (!touched.current)
       setValue(configs);
   }, [configs]);
+
+  // 只读标记由配置块下发，缺省视为可编辑
+  const {
+    readonly = !1,
+  } = configs ?? {};
 
   // 4. 提交请求
   const {
@@ -59,8 +64,9 @@ const FeatureSwitch = (props) => {
     // 乐观更新：先切换显示，失败再回滚
     const next = { ...prev, [field]: enabled };
     setValue(next);
+    // 剔除后端下发的只读标记，避免连同 enabled 一起回传
     // 业务失败（success=false）与网络失败统一判为未成功，回滚到变更前
-    const ok = await update(next)
+    const ok = await update(omit(next, 'readonly'))
       .then((res) => eq(res?.success, !0))
       .catch(() => !1);
     if (!ok) setValue(prev);
@@ -88,7 +94,7 @@ const FeatureSwitch = (props) => {
     actions={actions}>
     <List.Item.Meta
       title={title}
-      description={description} />
+      description={desc} />
   </List.Item>);
 };
 
@@ -97,7 +103,6 @@ FeatureSwitch.defaultProps = {
   configs: {},
   field: 'enabled',
   loading: !1,
-  readonly: !1,
 };
 
 export default FeatureSwitch;
