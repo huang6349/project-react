@@ -1,9 +1,9 @@
+import { withAccess } from '@/hofs';
 import { checkConfigs } from '@/utils';
 import { checkPerm } from '@/utils';
-import { safeAccess } from '@/utils';
 
-// 权限声明：只列叶子，父级（如 $system）由 safeAccess 按「任一子节点通过即通过」派生
-export default () => safeAccess({
+// 权限声明：只列叶子，父级（如 $system）由 withAccess 按「任一子节点通过即通过」派生
+export default withAccess(() => ({
   $configs: checkPerm('*'),
   $account: !0,
   $system$tenant: checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
@@ -28,4 +28,4 @@ export default () => safeAccess({
   $perm$create: checkPerm('@perm:add'),
   $perm$update: checkPerm('@perm:update'),
   $perm$delete: checkPerm('@perm:delete'),
-});
+}));
