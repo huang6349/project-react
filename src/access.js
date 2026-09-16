@@ -1,19 +1,20 @@
 import { checkConfigs } from '@/utils';
 import { checkPerm } from '@/utils';
+import { safeAccess } from '@/utils';
 
-export default () => ({
+// 权限声明：只列叶子，父级（如 $system）由 safeAccess 按「任一子节点通过即通过」派生
+export default () => safeAccess({
   $configs: checkPerm('*'),
   $account: !0,
-  $system: checkPerm('@tenant:query', '@user:query', '@role:query', '@perm:query'),
   $system$tenant: checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
   $system$user: checkPerm('@user:query'),
   $system$role: checkPerm('@role:query'),
   $system$perm: checkPerm('@perm:query'),
-  $tenant$query: checkPerm('@tenant:query'),
-  $tenant$create: checkPerm('@tenant:add'),
-  $tenant$update: checkPerm('@tenant:update'),
-  $tenant$delete: checkPerm('@tenant:delete'),
-  $tenant$auth: checkPerm('@tenant:update'),
+  $tenant$query: checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
+  $tenant$create: checkConfigs('tenantEnabled') && checkPerm('@tenant:add'),
+  $tenant$update: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
+  $tenant$delete: checkConfigs('tenantEnabled') && checkPerm('@tenant:delete'),
+  $tenant$auth: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
   $user$query: checkPerm('@user:query'),
   $user$create: checkPerm('@user:add'),
   $user$update: checkPerm('@user:update'),
