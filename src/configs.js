@@ -11,7 +11,10 @@ const DEFAULTS = {
   aiEnabled: !1,
 };
 
-export const pickConfigs = (raw: Record<string, any> = {}) => ({
+// 参数类型用 JSDoc 声明：pickConfigs 的推导类型经 ReturnType 供 src/utils/safeConfigs.ts 使用，
+// 缺省会推断成 {}，导致 lodash get 的返回值退化，Configs 类型不可控
+/** @param {Record<string, any>} raw */
+export const pickConfigs = (raw = {}) => ({
   name: get(raw, 'system.name') ?? DEFAULTS.name,
   slogan: get(raw, 'system.slogan') ?? DEFAULTS.slogan,
   tenantEnabled: get(raw, 'tenant.enabled') ?? DEFAULTS.tenantEnabled,
