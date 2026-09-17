@@ -14,7 +14,6 @@ export default withAccess(() => ({
   $tenant$create: checkConfigs('tenantEnabled') && checkPerm('@tenant:add'),
   $tenant$update: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
   $tenant$delete: checkConfigs('tenantEnabled') && checkPerm('@tenant:delete'),
-  $tenant$auth: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
   $user$query: checkPerm('@user:query'),
   $user$create: checkPerm('@user:add'),
   $user$update: checkPerm('@user:update'),
@@ -28,4 +27,10 @@ export default withAccess(() => ({
   $perm$create: checkPerm('@perm:add'),
   $perm$update: checkPerm('@perm:update'),
   $perm$delete: checkPerm('@perm:delete'),
+  $org$member: checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
+  $member$query: checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
+  $member$create: checkConfigs('tenantEnabled') && checkPerm('@tenant:add'),
+  $member$update: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
+  $member$delete: checkConfigs('tenantEnabled') && checkPerm('@tenant:delete'),
+  $member$auth: checkConfigs('tenantEnabled') && checkPerm('@tenant:update'),
 }));

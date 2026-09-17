@@ -4,10 +4,8 @@ import { Navigate } from '@umijs/max';
 
 const IndexPage = withAuth(() => {
   const access = useAccess();
-  if (access?.$org) {
-    return <Navigate to='/org' />;
-  } else if (access?.$system) {
-    return <Navigate to='/system' />;
+  if (access?.$org$member) {
+    return <Navigate to='/org/member' />;
   } else return null;
 });
 

@@ -104,14 +104,14 @@ export const UserPane = ({ id: tenantId }) => {
         <SysButton
           key='editable'
           type='link'
-          disabled={!access?.$tenant$update}
+          disabled={!access?.$member$update}
           onClick={handleUpdate(record)}>
           编辑
         </SysButton>,
         <SysButton
           key='delete'
           type='link'
-          disabled={!access?.$tenant$delete}
+          disabled={!access?.$member$delete}
           onClick={handleDelete(record)}>
           删除
         </SysButton>,
@@ -127,11 +127,11 @@ export const UserPane = ({ id: tenantId }) => {
           menus={[{
             key: 'view',
             name: '详情',
-            disabled: !access?.$tenant$query,
+            disabled: !access?.$member$query,
           }, {
             key: 'auth',
             name: '授权',
-            disabled: !access?.$tenant$auth,
+            disabled: !access?.$member$auth,
           }]}
         />,
       ],
@@ -139,8 +139,8 @@ export const UserPane = ({ id: tenantId }) => {
     toolBarRender={() => [
       <SysButton
         type='primary'
-        onClick={handleCreate()}
-        invisible={!access?.$tenant$create}>
+        invisible={!access?.$member$create}
+        onClick={handleCreate()}>
         邀请
       </SysButton>,
     ]}

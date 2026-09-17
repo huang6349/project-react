@@ -113,15 +113,15 @@ const IndexPage = withAuth(() => {
           <SysButton
             key='editable'
             type='link'
-            onClick={handleUpdate(record)}
-            disabled={!access?.$user$update}>
+            disabled={!access?.$user$update}
+            onClick={handleUpdate(record)}>
             编辑
           </SysButton>,
           <SysButton
             key='delete'
             type='link'
-            onClick={handleDelete(record)}
-            disabled={!access?.$user$delete}>
+            disabled={!access?.$user$delete}
+            onClick={handleDelete(record)}>
             删除
           </SysButton>,
           <Divider
@@ -149,8 +149,8 @@ const IndexPage = withAuth(() => {
         <SysButton
           key='create'
           type='primary'
-          onClick={handleCreate()}
-          invisible={!access?.$user$create}>
+          invisible={!access?.$user$create}
+          onClick={handleCreate()}>
           新建
         </SysButton>,
       ]} />

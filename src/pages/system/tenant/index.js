@@ -87,8 +87,8 @@ const IndexPage = withAuth(() => {
           className='mt-2'
           type='primary'
           block={!0}
-          onClick={handleCreate()}
-          disabled={!access?.$tenant$create}>
+          disabled={!access?.$tenant$create}
+          onClick={handleCreate()}>
           新建
         </SysButton>
         <SysProTList

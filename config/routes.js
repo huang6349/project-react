@@ -1,26 +1,66 @@
+const $org$member = [{
+  path: '/org/member/create',
+  component: '@/pages/org/member/save',
+  name: '邀请成员',
+  access: '$member$create',
+  hideInMenu: !0,
+}, {
+  path: '/org/member/update',
+  component: '@/pages/org/member/save',
+  name: '编辑成员',
+  access: '$member$update',
+  hideInMenu: !0,
+}, {
+  path: '/org/member/auth',
+  component: '@/pages/org/member/auth',
+  name: '成员授权',
+  access: '$member$auth',
+  hideInMenu: !0,
+}, {
+  path: '/org/member/view',
+  component: '@/pages/org/member/view',
+  name: '成员详情',
+  access: '$member$query',
+  hideInMenu: !0,
+}, {
+  path: '/org/member',
+  component: '@/pages/org/member',
+}];
+
+const $org = [{
+  path: '/org/member',
+  name: '成员管理',
+  icon: 'UsergroupAddOutlined',
+  access: '$org$member',
+  routes: $org$member,
+}, {
+  path: '/org',
+  component: '@/pages/org',
+}];
+
 const $system$tenant = [{
   path: '/system/tenant/user/create',
   component: '@/pages/system/tenant/user/save',
   name: '邀请用户',
-  access: '$tenant$create',
+  access: '$member$create',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/user/update',
   component: '@/pages/system/tenant/user/save',
   name: '编辑用户',
-  access: '$tenant$update',
+  access: '$member$update',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/user/auth',
   component: '@/pages/system/tenant/user/auth',
   name: '用户授权',
-  access: '$tenant$auth',
+  access: '$member$auth',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/user/view',
   component: '@/pages/system/tenant/user/view',
   name: '用户详情',
-  access: '$tenant$query',
+  access: '$member$query',
   hideInMenu: !0,
 }, {
   path: '/system/tenant/create',
@@ -172,6 +212,12 @@ const $account = [{
 }];
 
 const routes = [{
+  path: '/org',
+  name: '我的组织',
+  icon: 'ClusterOutlined',
+  access: '$org',
+  routes: $org,
+}, {
   path: '/system',
   name: '系统管理',
   icon: 'SettingOutlined',
@@ -180,7 +226,6 @@ const routes = [{
 }, {
   path: '/configs',
   name: '系统设置',
-  icon: 'ControlOutlined',
   access: '$configs',
   routes: $configs,
   hideInMenu: !0,
