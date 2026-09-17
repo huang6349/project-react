@@ -1,7 +1,9 @@
 import type { TabsProps } from './types';
+import { useMemo } from 'react';
 import { ProCard } from '@ant-design/pro-components';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
+import { isFunction } from 'lodash-es';
 import { set } from 'lodash-es';
 import clsx from 'clsx';
 import state from './index.state';
@@ -16,15 +18,24 @@ const SysTabs = (
 
   const {
     className: cls,
+    invisible,
     tabs,
     ...cardProps
   } = props;
+
+  const hidden = useMemo(() => {
+    if (isFunction(invisible)) {
+      return invisible();
+    } else return invisible;
+  }, [invisible]);
 
   const {
     activeKey,
   } = snap[namespace] || {};
 
-  return (<ProCard
+  if (hidden) {
+    return null;
+  } else return (<ProCard
     className={clsx('sys-tabs', cls)}
     bordered={!0}
     {...cardProps}
@@ -34,7 +45,12 @@ const SysTabs = (
         set(state, `${namespace}.activeKey`, activeKey);
       },
       ...tabs,
-    }} />);
+    }}
+  />);
+};
+
+SysTabs.defaultProps = {
+  invisible: !1,
 };
 
 export default SysTabs;

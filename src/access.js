@@ -18,6 +18,7 @@ export default withAccess(() => ({
   $user$create: checkPerm('@user:add'),
   $user$update: checkPerm('@user:update'),
   $user$delete: checkPerm('@user:delete'),
+  $user$auth: !checkConfigs('tenantEnabled') && checkPerm('@tenant:query'),
   $role$query: checkPerm('@role:query'),
   $role$create: checkPerm('@role:add'),
   $role$update: checkPerm('@role:update'),

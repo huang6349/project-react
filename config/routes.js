@@ -98,6 +98,12 @@ const $system$user = [{
   access: '$user$update',
   hideInMenu: !0,
 }, {
+  path: '/system/user/auth',
+  component: '@/pages/system/user/auth',
+  name: '用户授权',
+  access: '$user$auth',
+  hideInMenu: !0,
+}, {
   path: '/system/user/view',
   component: '@/pages/system/user/view',
   name: '用户详情',

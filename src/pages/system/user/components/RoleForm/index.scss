@@ -1,0 +1,9 @@
+.form :global(.ant-checkbox-wrapper) span:last-child {
+  @apply truncate;
+}
+
+.form :global(.ant-checkbox-wrapper) {
+  @apply min-w-[132px];
+  @apply max-w-[132px];
+  @apply w-[132px];
+}

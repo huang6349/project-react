@@ -53,6 +53,15 @@ const IndexPage = withAuth(() => {
     });
   };
 
+  const handleAuth = (record) => {
+    history.push({
+      pathname: `/system/user/auth`,
+      search: qs.stringify({
+        id: record?.id,
+      }),
+    });
+  };
+
   const handleCreate = () => (() => {
     history.push({
       pathname: `/system/user/create`,
@@ -131,13 +140,17 @@ const IndexPage = withAuth(() => {
             key={'action'}
             onSelect={(key) => {
               eq(key, 'view') && handleView(record);
+              eq(key, 'auth') && handleAuth(record);
               eq(key, 'reset') && handleReset(record);
             }}
             menus={[{
               key: 'view',
               name: '详情',
               disabled: !access?.$user$query,
-            }, {
+            }, ...(access?.$user$auth ? [{
+              key: 'auth',
+              name: '授权',
+            }] : []), {
               key: 'reset',
               name: '重置密码',
               disabled: !access?.$user$update,

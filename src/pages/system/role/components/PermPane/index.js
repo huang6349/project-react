@@ -5,7 +5,7 @@ import service from './service';
 import columns from './columns';
 import styles from './index.scss';
 
-const RolePane = () => {
+const PermPane = () => {
   const queries = useQueries();
   const formRef = useRef();
 
@@ -20,4 +20,4 @@ const RolePane = () => {
   />);
 };
 
-export default RolePane;
+export default PermPane;
