@@ -1,19 +1,21 @@
 import { withResponse } from '@/hofs';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
 import { Switch } from 'antd';
 import { List } from 'antd';
 import { Tooltip } from 'antd';
 import { message } from '@/components';
 import { useModel } from '@umijs/max';
+import { cloneDeep } from 'lodash-es';
 import { omit } from 'lodash-es';
 import { eq } from 'lodash-es';
+import { get } from 'lodash-es';
+import { set } from 'lodash-es';
 import { useRequest } from 'alova/client';
 import service from '../service';
 
+// 值不存本地：同一 code 下可能有多个开关共用一块 configs，
+// 各持副本会在提交时互相覆盖，所以值由父级持有、这里改完立刻回写
 const FeatureSwitch = (props) => {
-  // 1. Props 解构
+  // 1. configs 是「自己这一块」配置；只读标记由它下发，缺省视为可编辑
   const {
     code,
     configs,
@@ -21,28 +23,18 @@ const FeatureSwitch = (props) => {
     loading,
     title,
     desc,
+    onBlockChange,
   } = props;
 
   const {
     refresh,
   } = useModel('@@initialState');
 
-  // 2. 内部状态：开关值快照与用户操作标记
-  const [value, setValue] = useState(configs);
-  const touched = useRef(!1);
-
-  // 3. 初始值同步：configs 晚于行挂载返回时回填开关值（用户已操作则不覆盖）
-  useEffect(() => {
-    if (!touched.current)
-      setValue(configs);
-  }, [configs]);
-
-  // 只读标记由配置块下发，缺省视为可编辑
   const {
     readonly = !1,
   } = configs ?? {};
 
-  // 4. 提交请求
+  // 2. 后端按整块覆盖存储，所以每次提交都要带上当前最新的整块
   const {
     loading: updating,
     send: update,
@@ -57,27 +49,28 @@ const FeatureSwitch = (props) => {
     });
   }));
 
-  // 5. 事件处理
+  // 3. field 支持点号路径，读写都要走 lodash 才会落到嵌套层
   const handleChange = async (enabled) => {
-    touched.current = !0;
-    const prev = value;
+    const prev = configs ?? {};
     // 乐观更新：先切换显示，失败再回滚
-    const next = { ...prev, [field]: enabled };
-    setValue(next);
+    const next = set(cloneDeep(prev), field, enabled);
+    onBlockChange(() => next);
     // 剔除后端下发的只读标记，避免连同 enabled 一起回传
     const ok = await update(omit(next, 'readonly'))
       .then((res) => eq(res?.success, !0))
       .catch(() => !1);
-    // 业务失败（success=false）与网络失败统一判为未成功，回滚到变更前
-    if (!ok) setValue(prev);
+    // 业务失败与网络失败统一判为未成功。只恢复自己那个字段，
+    // 同块里兄弟开关改过的字段保留
+    if (!ok) onBlockChange((cur) => (
+      set(cloneDeep(cur ?? {}), field, get(prev, field))
+    ));
   };
 
-  // 6. 渲染输出：加载中或提交中由 Switch 呈现 loading 态（自动禁用交互）
+  // 4. 加载中与提交中交给 Switch 自带的 loading，它会自动禁用交互
   const control = <Switch
-    key={code}
     loading={loading || updating}
     disabled={readonly}
-    checked={value?.[field] ?? !1}
+    checked={get(configs, field) ?? !1}
     unCheckedChildren='关'
     checkedChildren='开'
     onChange={handleChange}
@@ -85,7 +78,7 @@ const FeatureSwitch = (props) => {
 
   // 只读态包一层 span 承接事件：disabled 的 Switch 自身不触发鼠标事件，Tooltip 会失效
   const actions = [readonly ? (
-    <Tooltip key={code} title='该配置由系统统一管理，暂不支持修改'>
+    <Tooltip title='该配置由系统统一管理，暂不支持修改'>
       <span className='inline-flex'>{control}</span>
     </Tooltip>
   ) : control];
@@ -98,7 +91,6 @@ const FeatureSwitch = (props) => {
   </List.Item>);
 };
 
-// 默认属性
 FeatureSwitch.defaultProps = {
   configs: {},
   field: 'enabled',
