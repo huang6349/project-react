@@ -2,6 +2,7 @@ import { withResponse } from '@/hofs';
 import { useState } from 'react';
 import { FeatureSwitch } from './';
 import { List } from 'antd';
+import { isUndefined } from 'lodash-es';
 import { omit } from 'lodash-es';
 import { set } from 'lodash-es';
 import { useRequest } from 'alova/client';
@@ -36,7 +37,7 @@ const normalize = (data) => {
     if ((path?.length ?? 0) < 2) return;   // 单段路径没有扁平键可搬
     const flat = path.join('.');
     const value = next[code]?.[flat];      // 可选链顺带挡掉块不是对象的情况
-    if (value === undefined) return;
+    if (isUndefined(value)) return;
     next[code] = set(omit(next[code], flat), path, value);
   });
   return next;
