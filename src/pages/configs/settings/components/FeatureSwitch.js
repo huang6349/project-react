@@ -54,7 +54,7 @@ const FeatureSwitch = (props) => {
   ), {
     immediate: !1,
   }).onSuccess(withResponse(() => {
-    message.success('设置更新成功');
+    message?.success('设置更新成功');
     // 重新拉取全局配置，开关即时生效
     refresh()?.catch(() => {
     });

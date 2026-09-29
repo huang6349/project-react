@@ -19,7 +19,7 @@ const BasicView = () => {
   ), {
     immediate: !1,
   }).onSuccess(withResponse(() => {
-    message.success('设置更新成功');
+    message?.success('设置更新成功');
     // 重新拉取全局配置，系统名称/标语即时生效
     refresh()?.catch(() => {
     });

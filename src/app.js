@@ -1,6 +1,7 @@
 import { RightContent } from '@/layouts/RightContent';
 import { SysFooter } from '@/components';
 import { queryConfigs } from '@/services';
+import { queryTenant } from '@/services';
 import { queryUser } from '@/services';
 import { safeConfigs } from '@/utils';
 
@@ -11,6 +12,7 @@ import { safeConfigs } from '@/utils';
 export const getInitialState = async () => {
   await Promise.all([
     queryConfigs(),
+    queryTenant(),
     queryUser(),
   ]);
   // 数据已写入各自 store，无需在此返回

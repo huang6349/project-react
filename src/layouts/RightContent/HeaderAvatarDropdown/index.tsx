@@ -14,6 +14,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import HeaderAction from '../HeaderAction';
 import HeaderAvatar from '../HeaderAvatar';
 import HeaderName from '../HeaderName';
+import useTenantMenu from './useTenantMenu';
 
 const routeMap: Record<string, string> = {
   configs: '/configs/settings',
@@ -24,11 +25,18 @@ const HeaderAvatarDropdown = () => {
   const access = useAccess();
 
   const {
+    items: tenantItems,
+    withClick: tenantClick,
+  } = useTenantMenu();
+
+  const {
     name,
     avatar,
   } = useUser();
 
   const items: MenuProps['items'] = [
+    // 组织切换片段：租户功能开启才渲染，自带分隔线，数据与切换逻辑都在 useTenantMenu
+    ...(access?.$tenant$switch ? tenantItems : []),
     // 系统设置仅超管可见
     ...(access?.$configs ? [{
       key: 'configs',
@@ -51,16 +59,17 @@ const HeaderAvatarDropdown = () => {
         <LogoutOutlined />
         退出登录
       </>),
-    }];
+    },
+  ];
 
   const menu: MenuProps = {
     className: 'umi-plugin-layout-menu',
     selectedKeys: [],
     items,
-    onClick({ key }) {
+    onClick: tenantClick(({ key }) => {
       if (safeEq(key, 'logout')) return logout();
       history?.push(routeMap[key] ?? '/');
-    },
+    }),
   };
 
   const logout = useCallback(() => {

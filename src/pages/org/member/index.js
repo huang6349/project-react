@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { Divider } from 'antd';
 import { TableDropdown } from '@ant-design/pro-components';
 import { useAccess } from '@umijs/max';
-import { useRequest } from 'alova/client';
+import { useUser } from '@/hooks';
 import { history } from '@umijs/max';
 import { withResponse } from '@/hofs';
 import { withAuth } from '@/hocs';
@@ -12,20 +12,21 @@ import { modal } from '@/hocs';
 import { SysContainer } from '@/components';
 import { SysProTable } from '@/components';
 import { SysButton } from '@/components';
+import { useRequest } from 'alova/client';
 import service from './service';
 import columns from './columns';
 
 // 组织管理员视角：在本组织下邀请成员并授权。
-// 组织编号暂为固定值，待后端下发「主组织」后改为从会话取。
-// 用字符串而非数字：雪花 ID 超出 Number.MAX_SAFE_INTEGER，转数字会丢精度。
-const TENANT_ID = '108699815087000122';
-
+// 租户编号取自会话当前默认租户（顶部切换器切换后自动跟随）。
 const IndexPage = withAuth(() => {
   // State & Hooks
   const actionRef = useRef();
   const formRef = useRef();
   const access = useAccess();
-  const tenantId = TENANT_ID;
+
+  const {
+    tenantId,
+  } = useUser();
 
   // 数据交互
   const {
@@ -80,8 +81,8 @@ const IndexPage = withAuth(() => {
 
   const handleDelete = (record) => (() => {
     modal?.confirm({
-      content: '您确认要执行删除操作吗',
-      title: '删除提示',
+      content: '您确认要执行移除操作吗',
+      title: '移除提示',
       onOk: () => (
         removeById(record?.id)
       ),
@@ -122,7 +123,7 @@ const IndexPage = withAuth(() => {
             type='link'
             disabled={!access?.$member$delete}
             onClick={handleDelete(record)}>
-            删除
+            移除
           </SysButton>,
           <Divider
             key='divider'

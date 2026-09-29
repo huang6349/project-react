@@ -16,4 +16,5 @@ export const pickUser = (raw = {}) => ({
   avatar: get(raw, 'user.avatar'),
   perms: get(raw, 'perms') ?? DEFAULTS.perms,
   roles: get(raw, 'roles') ?? DEFAULTS.roles,
+  tenantId: get(raw, 'tenantId'),
 });

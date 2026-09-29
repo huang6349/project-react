@@ -7,5 +7,6 @@ export { default as safeEq } from './safeEq';
 export { default as safeRequest } from './safeRequest';
 export { default as safeToken } from './safeToken';
 export { default as safeConfigs } from './safeConfigs';
+export { default as safeTenant } from './safeTenant';
 export { default as safeUser } from './safeUser';
 export { default as safeAccess } from './safeAccess';

@@ -1,8 +1,7 @@
 import { withConfigs } from '@/hofs';
 import { safeRequest } from '@/utils';
 
-export const queryConfigs = withConfigs(() => configs());
-
-export const configs = () => (
+// 拉全局配置并写入 safeConfigs store
+export const queryConfigs = withConfigs(() => (
   safeRequest.Get(`/api/system/configs`)
-);
+));
