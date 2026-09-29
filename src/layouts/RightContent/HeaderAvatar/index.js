@@ -1,8 +1,7 @@
-import type { AvatarProps } from 'antd';
 import { Avatar } from 'antd';
 import clsx from 'clsx';
 
-const HeaderAvatar = (props: AvatarProps) => {
+const HeaderAvatar = (props) => {
   const {
     className: cls,
     src,

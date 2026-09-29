@@ -1,9 +1,6 @@
-import type { SpanProps } from './types';
 import clsx from 'clsx';
 
-const HeaderName = (props: SpanProps & {
-  name?: string;
-}) => {
+const HeaderName = (props) => {
   const {
     className: cls,
     name,

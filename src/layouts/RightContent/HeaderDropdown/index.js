@@ -1,8 +1,7 @@
-import type { DropdownProps } from 'antd';
 import { Dropdown } from 'antd';
 import clsx from 'clsx';
 
-const HeaderDropdown = (props: DropdownProps) => {
+const HeaderDropdown = (props) => {
   const {
     overlayClassName: cls,
     ...dropdownProps

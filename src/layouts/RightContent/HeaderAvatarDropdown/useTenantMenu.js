@@ -1,5 +1,3 @@
-import type { UseTenantMenu } from './types';
-import type { WithClick } from './types';
 import { SWITCH_MSG_KEY } from './constants';
 import { TENANT_KEY } from './constants';
 import { withResponse } from '@/hofs';
@@ -23,7 +21,8 @@ import { useRequest } from 'alova/client';
 import service from './service';
 
 // 头像菜单的组织切换模块：数据与切换链路在此，片段由外层按 access.$tenant$switch 挂载
-const useTenantMenu = (): UseTenantMenu => {
+/** @returns {import('./types').UseTenantMenu} */
+const useTenantMenu = () => {
   // 1. State & Hooks —— 可切换组织已在 getInitialState 阶段拉好，这里只订阅
   const {
     loading: refreshing,
@@ -39,7 +38,7 @@ const useTenantMenu = (): UseTenantMenu => {
   } = useUser();
 
   // 目标组织 id —— loading 只有布尔值，给不了「是哪一个」
-  const [target, setTarget] = useState<string | null>(null);
+  const [target, setTarget] = useState(null);
 
   // 本次已提示过成功，防 .onComplete 把同 key 的成功提示又关掉
   const succeeded = useRef(!1);
@@ -53,7 +52,7 @@ const useTenantMenu = (): UseTenantMenu => {
   const {
     loading: requesting,
     send: switchTo,
-  } = useRequest((id: string) => (
+  } = useRequest((id) => (
     service.switchTenant(id)
   ), {
     immediate: !1,
@@ -80,7 +79,7 @@ const useTenantMenu = (): UseTenantMenu => {
 
   // 3. 事件处理：链路与失败提示都在上面，这里只判该不该切
   //    入口守卫不能省 —— disabled 只拦鼠标，键盘 ENTER 不受它约束
-  const handleSwitch = (id: string) => {
+  const handleSwitch = (id) => {
     if (switching) return;
     if (isEmpty(id)) return;
     if (safeEq(id, tenantId)) return;
@@ -96,7 +95,7 @@ const useTenantMenu = (): UseTenantMenu => {
   };
 
   // 4. 菜单片段：自带分隔线，取不到数据时整段为空，不留悬空 divider
-  const items: UseTenantMenu['items'] = useMemo(() => (
+  const items = useMemo(() => (
     tenants?.length ? [{
       key: 'tenant-menu',
       label: (<>
@@ -122,7 +121,7 @@ const useTenantMenu = (): UseTenantMenu => {
   ), [tenants, switching, target, tenantId]);
 
   // 5. 点击封装（高阶函数）：命中组织项内置切换并短路，其余透传给外层
-  const withClick: WithClick = (onFallback) => (info) => {
+  const withClick = (onFallback) => (info) => {
     if (startsWith(info.key, TENANT_KEY)) {
       handleSwitch(replace(info.key, TENANT_KEY, ''));
     } else onFallback(info);

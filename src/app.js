@@ -1,5 +1,5 @@
 import { RightContent } from '@/layouts/RightContent';
-import { SysFooter } from '@/components';
+import { Footer } from '@/layouts/Footer';
 import { queryConfigs } from '@/services';
 import { queryTenant } from '@/services';
 import { queryUser } from '@/services';
@@ -50,12 +50,8 @@ export const layout = () => ({
   colorWeak: !1,
   disableMobile: !0,
   splitMenus: !0,
-  rightContentRender: () => (
-    <RightContent />
-  ),
-  footerRender: () => (
-    <SysFooter />
-  ),
+  rightContentRender: () => <RightContent />,
+  footerRender: () => <Footer />,
 });
 
 export const antd = (memo) => {

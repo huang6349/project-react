@@ -2,9 +2,9 @@ import HeaderWrapper from './HeaderWrapper';
 import HeaderAvatarDropdown from './HeaderAvatarDropdown';
 import HeaderDocs from './HeaderDocs';
 
-export const RightContent = () => {
-  return (<HeaderWrapper>
+export const RightContent = () => (
+  <HeaderWrapper>
     <HeaderDocs />
     <HeaderAvatarDropdown />
-  </HeaderWrapper>);
-};
+  </HeaderWrapper>
+);

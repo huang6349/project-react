@@ -1,7 +1,6 @@
-import type { DivProps } from './types';
 import clsx from 'clsx';
 
-const HeaderWrapper = (props: DivProps) => {
+const HeaderWrapper = (props) => {
   const {
     className: cls,
     ...divProps

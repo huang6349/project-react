@@ -1,7 +1,6 @@
-import type { SpanProps } from './types';
 import clsx from 'clsx';
 
-const HeaderAction = (props: SpanProps) => {
+const HeaderAction = (props) => {
   const {
     className: cls,
     ...spanProps

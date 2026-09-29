@@ -1,10 +1,7 @@
-import type { FooterProps } from './types';
 import { DefaultFooter } from '@ant-design/pro-components';
 import clsx from 'clsx';
 
-const SysFooter = (
-  props: FooterProps,
-) => {
+export const Footer = (props) => {
   const {
     className: cls,
     ...footerProps
@@ -16,5 +13,3 @@ const SysFooter = (
     {...footerProps}
   />);
 };
-
-export default SysFooter;

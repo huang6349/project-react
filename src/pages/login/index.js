@@ -8,7 +8,7 @@ import { ProFormText } from '@ant-design/pro-components';
 import { LoginForm } from '@ant-design/pro-components';
 import { withAntd } from '@/hocs';
 import { withResponse } from '@/hofs';
-import { SysFooter } from '@/components';
+import { Footer } from '@/layouts/Footer';
 import { VerifyModal } from './components';
 import { useRequest } from 'alova/client';
 import { useModel } from '@umijs/max';
@@ -121,7 +121,7 @@ const IndexPage = withAntd(() => {
         setIsVerified(isVerified ?? !1);
         setVerifyToken(verifyToken);
       }} />
-    <SysFooter />
+    <Footer />
   </div>);
 });
 
