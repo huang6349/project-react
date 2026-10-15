@@ -17,6 +17,8 @@ const safeRequest = createAlova({
   cacheFor: null,
   timeout: 5000,
   async beforeRequest(method) {
+    // 禁用浏览器 HTTP 缓存，避免切换租户后命中磁盘缓存拿到旧数据
+    method.config.headers['Cache-Control'] = 'no-cache, no-store';
     method.config.headers[TOKEN_NAME] = await safeToken.get();
   },
   responded: {
