@@ -1,16 +1,16 @@
-import type { FormColumnType } from './types';
+import type { SysFormColumnType } from './types';
 import { isString } from 'lodash-es';
 import { includes } from 'lodash-es';
 
 export const getValueType = (
-  col: FormColumnType,
+  col: SysFormColumnType,
 ) => (
   isString(col?.valueType) ? col?.valueType : ''
 );
 
 export const filterFormCols = (
-  columns: FormColumnType[],
-): FormColumnType[] => (
+  columns: SysFormColumnType[],
+): SysFormColumnType[] => (
   columns?.filter((col) => (
     !col?.hideInForm
   ))?.filter((col) => {

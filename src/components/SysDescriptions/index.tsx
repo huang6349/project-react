@@ -1,4 +1,4 @@
-import type { DescriptionsProps } from './types';
+import type { SysDescriptionsProps } from './types';
 import { useMemo } from 'react';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
@@ -6,7 +6,9 @@ import { filterDescriptionsCols } from './filterCols';
 import clsx from 'clsx';
 import './index.scss';
 
-const SysDescriptions = (props: DescriptionsProps) => {
+const SysDescriptions = (
+  props: SysDescriptionsProps,
+) => {
   const {
     className: cls,
     bordered,

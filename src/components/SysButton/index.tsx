@@ -1,11 +1,11 @@
-import type { ButtonProps } from './types';
+import type { SysButtonProps } from './types';
 import { useMemo } from 'react';
 import { isFunction } from 'lodash-es';
 import { Button } from 'antd';
 import clsx from 'clsx';
 
 const SysButton = (
-  props: ButtonProps,
+  props: SysButtonProps,
 ) => {
   const {
     className: cls,

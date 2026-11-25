@@ -3,7 +3,7 @@ import type { Workbook } from 'exceljs';
 import type { Xlsx } from 'exceljs';
 import type { Buffer } from 'exceljs';
 import type { Column } from 'exceljs';
-import type { TableColumnType } from './types';
+import type { SysProTableColumnType } from './types';
 import { isUndefined } from 'lodash-es';
 import { isString } from 'lodash-es';
 import { isFunction } from 'lodash-es';
@@ -23,7 +23,7 @@ export const DEFAULT_COLUMN_WIDTH: number = 20;
 
 const formatOptionsType = (
   text: any,
-  col: TableColumnType,
+  col: SysProTableColumnType,
 ) => {
   if (col?.valueEnum) {
     return get(col?.valueEnum, [text, 'text']);
@@ -51,7 +51,7 @@ const formatDateType = (
 
 export const getExportValue = (
   record: Record<string, any>,
-  col: TableColumnType,
+  col: SysProTableColumnType,
   index: number = 0,
 ): any => {
   // dataIndex 如果是 react node 就不导出
@@ -116,7 +116,7 @@ export const saveWorkbook = (
 };
 
 export const exportToExcel = (
-  columns: TableColumnType[],
+  columns: SysProTableColumnType[],
   dataSource: any,
   fileName: string = '默认导出',
 ) => {
@@ -129,7 +129,7 @@ export const exportToExcel = (
 
   // 设置列
   worksheet.columns = columns?.map((
-    col: TableColumnType,
+    col: SysProTableColumnType,
   ): Partial<Column> => ({
     header: isString(col.title) ? col.title : '',
     key: isString(col.dataIndex) ? col.dataIndex : dayjs().format('x'),
@@ -149,7 +149,7 @@ export const exportToExcel = (
   const rowsData: any[] = dataSource?.map((
     record: Record<string, any>,
     recordIndex: number,
-  ) => columns.map((col: TableColumnType) => (
+  ) => columns.map((col: SysProTableColumnType) => (
     getExportValue(record, col, recordIndex)
   )));
 
@@ -162,7 +162,7 @@ export const exportToExcel = (
     recordIndex: number,
   ) => {
     columns?.forEach((
-      col: TableColumnType,
+      col: SysProTableColumnType,
       colIdx: number,
     ) => {
       if (isFunction(col?.onCell)) {

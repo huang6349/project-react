@@ -1,4 +1,4 @@
-import type { HeaderProps } from './types';
+import type { SysProTableHeaderProps } from './types';
 import { memo } from 'react';
 import { useState } from 'react';
 import { useImperativeHandle } from 'react';
@@ -6,7 +6,7 @@ import { Typography } from 'antd';
 import dayjs from 'dayjs';
 
 export const TableTitle = memo((
-  props: HeaderProps,
+  props: SysProTableHeaderProps,
 ) => {
   const {
     headerRef,

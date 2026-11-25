@@ -1,4 +1,4 @@
-import type { DictTagProps } from './types';
+import type { SysDictTagProps } from './types';
 import { SyncOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { isEmpty } from 'lodash-es';
@@ -20,7 +20,7 @@ export const STATE = [{
 }];
 
 const SysDictTag = (
-  props: DictTagProps,
+  props: SysDictTagProps,
 ) => {
   const {
     className: cls,
@@ -29,12 +29,14 @@ const SysDictTag = (
     ...tagProps
   } = props;
 
+  const tagState = STATE[style ?? 0];
+
   if (isEmpty(label)) {
     return <>-</>;
   } else return (<Tag
     className={clsx('sys-dict-tag', cls)}
-    color={STATE[style ?? 0]?.color}
-    icon={STATE[style ?? 0]?.icon}
+    color={tagState?.color}
+    icon={tagState?.icon}
     {...tagProps}>
     {label}
   </Tag>);

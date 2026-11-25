@@ -1,6 +1,5 @@
 import type { Key } from 'react';
-import type { TableColumnType } from './types';
-import type { TableProps } from './types';
+import type { SysProTListProps } from './types';
 import { useMemo } from 'react';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useUpdateEffect } from 'react-use';
@@ -12,18 +11,13 @@ import { includes } from 'lodash-es';
 import { head } from 'lodash-es';
 import { set } from 'lodash-es';
 import { map } from 'lodash-es';
-import { produce } from 'immer';
+import { patchCols } from '@/utils';
 import clsx from 'clsx';
 import state from './index.state';
 
 const SysProTList = (
-  props: TableProps,
+  props: SysProTListProps,
 ) => {
-  const {
-    pathname: namespace,
-  } = useLocation();
-  const snap = useSnapshot(state);
-
   const {
     className: cls,
     onTListChange,
@@ -38,37 +32,14 @@ const SysProTList = (
     ...proTableProps
   } = props;
 
-  const $cols = useMemo(() => {
-    const patch = (
-      $cols: TableColumnType[],
-    ): any[] => (
-      produce($cols, (cols) => {
-        cols?.forEach((col) => {
-          const {
-            fieldProps = {},
-            placeholder,
-          } = col;
+  const {
+    pathname: namespace,
+  } = useLocation();
+  const snap = useSnapshot(state);
 
-          if (placeholder) {
-            if (isFunction(fieldProps)) {
-              col.fieldProps = (_form: any, _config: any): any => {
-                const _fieldProps = fieldProps(_form, _config);
-                if (!_fieldProps.placeholder)
-                  _fieldProps.placeholder = placeholder;
-                return _fieldProps;
-              };
-            } else {
-              const _fieldProps = fieldProps || {};
-              if (!_fieldProps.placeholder)
-                _fieldProps.placeholder = placeholder;
-              col.fieldProps = _fieldProps;
-            }
-          }
-        });
-      })
-    );
-    return patch(columns);
-  }, [columns]);
+  const $cols = useMemo(() => (
+    patchCols(columns)
+  ), [columns]);
 
   const {
     selectedRowKeys,

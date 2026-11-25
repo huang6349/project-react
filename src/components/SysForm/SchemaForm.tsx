@@ -1,5 +1,5 @@
-import type { FormColumnType } from './types';
-import type { FormProps } from './types';
+import type { SysFormColumnType } from './types';
+import type { SysFormProps } from './types';
 import { useMemo } from 'react';
 import { BetaSchemaForm } from '@ant-design/pro-components';
 import { isArray } from 'lodash-es';
@@ -9,7 +9,7 @@ import { filterFormCols } from './filterCols';
 import { produce } from 'immer';
 
 const SchemaForm = (
-  props: FormProps,
+  props: SysFormProps,
 ) => {
   const {
     columns,
@@ -18,7 +18,7 @@ const SchemaForm = (
 
   const $cols = useMemo(() => {
     const patch = (
-      $cols: FormColumnType[],
+      $cols: SysFormColumnType[],
     ): any[] => (
       produce($cols, (cols) => {
         cols?.forEach((col) => {
@@ -54,14 +54,14 @@ const SchemaForm = (
                 const _formItemProps: any = formItemProps(_form, _config);
                 if (!_formItemProps.rules)
                   _formItemProps.rules = [];
-                _formItemProps.rules.push({ required: !0 });
+                _formItemProps.rules.push({ required: !0, message: placeholder });
                 return _formItemProps;
               };
             } else {
               const _formItemProps: any = formItemProps || {};
               if (!_formItemProps.rules)
                 _formItemProps.rules = [];
-              _formItemProps.rules.push({ required: !0 });
+              _formItemProps.rules.push({ required: !0, message: placeholder });
               col.formItemProps = _formItemProps;
             }
           }
@@ -87,7 +87,7 @@ const SchemaForm = (
           }
 
           if (eq(valueType, 'dependency') && isFunction(columns)) {
-            col.columns = (values): FormColumnType[] => (
+            col.columns = (values): SysFormColumnType[] => (
               patch(filterFormCols(columns(values)))
             );
           }

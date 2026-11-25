@@ -1,10 +1,10 @@
-import type { FormProps } from './types';
+import type { SysFormProps } from './types';
 import { ProCard } from '@ant-design/pro-components';
 import SchemaForm from './SchemaForm';
 import clsx from 'clsx';
 
 const SysForm = (
-  props: FormProps,
+  props: SysFormProps,
 ) => {
   const {
     className: cls,

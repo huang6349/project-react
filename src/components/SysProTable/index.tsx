@@ -1,10 +1,12 @@
-import type { TableColumnType } from './types';
-import type { TableProps } from './types';
-import type { AlertRenderType } from './types';
+import type { SysProTableProps } from './types';
+import type { SysProTableAlertRenderType } from './types';
+import type { SysProTableHeaderRefType } from './types';
 import { useMemo } from 'react';
 import { useRef } from 'react';
 import { ProTable } from '@ant-design/pro-components';
 import { Space } from 'antd';
+import { TableTitle } from './TableTitle';
+import { SysLink } from '@/components';
 import { useLocation } from '@umijs/max';
 import { useSnapshot } from '@umijs/max';
 import { useIsomorphicLayoutEffect } from 'react-use';
@@ -13,25 +15,16 @@ import { isFunction } from 'lodash-es';
 import { compact } from 'lodash-es';
 import { join } from 'lodash-es';
 import { set } from 'lodash-es';
-import { produce } from 'immer';
-import dayjs from 'dayjs';
-import clsx from 'clsx';
-import { SysLink } from '@/components';
-import { TableTitle } from './TableTitle';
 import { filterExportCols } from './filterCols';
 import { exportToExcel } from './exceljs';
+import { patchCols } from '@/utils';
+import dayjs from 'dayjs';
+import clsx from 'clsx';
 import state from './index.state';
 
 const SysProTable = (
-  props: TableProps,
+  props: SysProTableProps,
 ) => {
-  const headerRef = useRef<any>();
-
-  const {
-    pathname: namespace,
-  } = useLocation();
-  const snap = useSnapshot(state);
-
   const {
     className: cls,
     onTListChange,
@@ -46,12 +39,19 @@ const SysProTable = (
     ...proTableProps
   } = props;
 
-  const tableAlertOptionRender: AlertRenderType = (props) => {
+  const headerRef = useRef<SysProTableHeaderRefType>();
+
+  const {
+    pathname: namespace,
+  } = useLocation();
+  const snap = useSnapshot(state);
+
+  const tableAlertOptionRender: SysProTableAlertRenderType = (alertProps) => {
     const {
       onCleanSelected,
       selectedRows,
       intl,
-    } = props;
+    } = alertProps;
 
     const {
       enableExport = !0,
@@ -75,37 +75,9 @@ const SysProTable = (
     </Space>);
   };
 
-  const $cols = useMemo(() => {
-    const patch = (
-      $cols: TableColumnType[],
-    ): any[] => (
-      produce($cols, (cols) => {
-        cols?.forEach((col) => {
-          const {
-            fieldProps = {},
-            placeholder,
-          } = col;
-
-          if (placeholder) {
-            if (isFunction(fieldProps)) {
-              col.fieldProps = (_form: any, _config: any): any => {
-                const _fieldProps = fieldProps(_form, _config);
-                if (!_fieldProps.placeholder)
-                  _fieldProps.placeholder = placeholder;
-                return _fieldProps;
-              };
-            } else {
-              const _fieldProps = fieldProps || {};
-              if (!_fieldProps.placeholder)
-                _fieldProps.placeholder = placeholder;
-              col.fieldProps = _fieldProps;
-            }
-          }
-        });
-      })
-    );
-    return patch(columns);
-  }, [columns]);
+  const $cols = useMemo(() => (
+    patchCols(columns)
+  ), [columns]);
 
   const {
     selectedRowKey,
@@ -171,7 +143,7 @@ const SysProTable = (
     }}
     onLoad={(dataSource) => {
       const header = headerRef?.current;
-      header?.refreshTime();
+      header?.refreshTime?.();
       onLoad?.(dataSource);
     }}
   />);

@@ -1,9 +1,9 @@
-import type { LinkProps } from './types';
+import type { SysLinkProps } from './types';
 import { SysButton } from '@/components';
 import clsx from 'clsx';
 
 const SysLink = (
-  props: LinkProps,
+  props: SysLinkProps,
 ) => {
   const {
     className: cls,

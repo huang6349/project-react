@@ -1,16 +1,16 @@
-import type { DescriptionsColumnType } from './types';
+import type { SysDescriptionsColumnType } from './types';
 import { isString } from 'lodash-es';
 import { includes } from 'lodash-es';
 
 export const getValueType = (
-  col: DescriptionsColumnType,
+  col: SysDescriptionsColumnType,
 ) => (
   isString(col?.valueType) ? col?.valueType : ''
 );
 
 export const filterDescriptionsCols = (
-  columns: DescriptionsColumnType[],
-): DescriptionsColumnType[] => (
+  columns: SysDescriptionsColumnType[],
+): SysDescriptionsColumnType[] => (
   columns?.filter((col) => (
     !col?.hideInDescriptions
   ))?.filter((col) => {

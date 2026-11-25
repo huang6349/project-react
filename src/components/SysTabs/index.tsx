@@ -1,4 +1,4 @@
-import type { TabsProps } from './types';
+import type { SysTabsProps } from './types';
 import { useMemo } from 'react';
 import { ProCard } from '@ant-design/pro-components';
 import { useLocation } from '@umijs/max';
@@ -9,19 +9,19 @@ import clsx from 'clsx';
 import state from './index.state';
 
 const SysTabs = (
-  props: TabsProps,
+  props: SysTabsProps,
 ) => {
-  const {
-    pathname: namespace,
-  } = useLocation();
-  const snap = useSnapshot(state);
-
   const {
     className: cls,
     invisible,
     tabs,
     ...cardProps
   } = props;
+
+  const {
+    pathname: namespace,
+  } = useLocation();
+  const snap = useSnapshot(state);
 
   const hidden = useMemo(() => {
     if (isFunction(invisible)) {

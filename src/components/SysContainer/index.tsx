@@ -1,10 +1,10 @@
-import type { ContainerProps } from './types';
+import type { SysContainerProps } from './types';
 import { PageContainer } from '@ant-design/pro-components';
 import { SysBack } from '@/components';
 import clsx from 'clsx';
 
 const SysContainer = (
-  props: ContainerProps,
+  props: SysContainerProps,
 ) => {
   const {
     className: cls,

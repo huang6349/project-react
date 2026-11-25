@@ -4,7 +4,7 @@ import type { Key } from 'react';
 import type { MutableRefObject } from 'react';
 
 /** 表格列配置 */
-export type TableAlertOptionType = {
+export type SysProTableAlertOptionType = {
   /** 启用导出 */
   enableExport?: boolean;
   /** 启用清空 */
@@ -14,9 +14,13 @@ export type TableAlertOptionType = {
 };
 
 /** 表格列类型 */
-export type TableColumnType = ProColumnType<any, any> & {
+export type SysProTableColumnType = ProColumnType<any, any> & {
   /** 占位符 */
   placeholder?: string;
+  /** 权限编码 */
+  access?: string;
+  /** 链接地址 */
+  linkHref?: string | ((record: any) => string);
   /** 在导出中隐藏 */
   hideInExport?: boolean;
   /** 导出渲染 */
@@ -24,30 +28,30 @@ export type TableColumnType = ProColumnType<any, any> & {
 };
 
 /** 表格 Props */
-export type TableProps = Omit<ProTableProps<any, any>, 'columns'> & {
+export type SysProTableProps = Omit<ProTableProps<any, any>, 'columns'> & {
   /** 列表变化回调 */
   onTListChange?: (selectedRowKey?: Key) => void;
   /** 表格顶部配置 */
-  tableAlertOption?: TableAlertOptionType;
+  tableAlertOption?: SysProTableAlertOptionType;
   /** 表格名称 */
   name?: string;
   /** 同步查询参数 */
   syncQueries?: boolean | ((values: any) => any);
   /** 列配置 */
-  columns: TableColumnType[];
+  columns: SysProTableColumnType[];
 };
 
 /** 提示渲染类型 */
-export type AlertRenderType = TableProps['tableAlertOptionRender'];
+export type SysProTableAlertRenderType = SysProTableProps['tableAlertOptionRender'];
 
 /** 表头引用类型 */
-export type HeaderRefType = {
+export type SysProTableHeaderRefType = {
   /** 刷新时间 */
   refreshTime?: () => void;
 };
 
 /** 表头 Props */
-export type HeaderProps = {
+export type SysProTableHeaderProps = {
   /** 表头引用 */
-  headerRef?: MutableRefObject<HeaderRefType>;
+  headerRef?: MutableRefObject<SysProTableHeaderRefType | undefined>;
 };

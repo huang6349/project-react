@@ -11,3 +11,4 @@ export { default as SysLink } from './SysLink';
 export { default as SysDescriptions } from './SysDescriptions';
 export { default as SysTabs } from './SysTabs';
 export { default as SysDictTag } from './SysDictTag';
+export { default as SysProvider } from './SysProvider';
