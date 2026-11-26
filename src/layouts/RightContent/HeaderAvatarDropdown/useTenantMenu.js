@@ -113,7 +113,7 @@ const useTenantMenu = () => {
             <CheckOutlined /> :
             <ApartmentOutlined />,
         // 后端可能不返回组织名，缺省时回落到这个占位
-        label: label ?? '未选择组织',
+        label: label || '未选择组织',
       })),
     }, {
       type: 'divider',

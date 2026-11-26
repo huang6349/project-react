@@ -9,7 +9,7 @@ const HeaderName = (props) => {
   return (<span
     className={clsx('umi-plugin-layout-name', cls)}
     {...spanProps}>
-    {name ?? '匿名'}
+    {name || '匿名'}
   </span>);
 };
 

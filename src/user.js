@@ -12,7 +12,7 @@ const DEFAULTS = {
 // 缺省会推断成 {}，导致 lodash get 的返回值退化为 undefined，User 类型失真
 /** @param {Record<string, any>} raw */
 export const pickUser = (raw = {}) => ({
-  name: get(raw, 'user.nickname') ?? get(raw, 'user.username'),
+  name: get(raw, 'user.nickname') || get(raw, 'user.username'),
   avatar: get(raw, 'user.avatar'),
   perms: get(raw, 'perms') ?? DEFAULTS.perms,
   roles: get(raw, 'roles') ?? DEFAULTS.roles,

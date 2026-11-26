@@ -11,7 +11,7 @@ const HeaderAvatar = (props) => {
     className={clsx('umi-plugin-layout-avatar', cls)}
     alt='avatar'
     size='small'
-    src={src ?? require('@/assets/avatar.jpg')}
+    src={src || require('@/assets/avatar.jpg')}
     {...avatarProps}
   />);
 };

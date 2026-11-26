@@ -15,8 +15,8 @@ const DEFAULTS = {
 // 缺省会推断成 {}，导致 lodash get 的返回值退化，Configs 类型不可控
 /** @param {Record<string, any>} raw */
 export const pickConfigs = (raw = {}) => ({
-  name: get(raw, 'system.name') ?? DEFAULTS.name,
-  slogan: get(raw, 'system.slogan') ?? DEFAULTS.slogan,
+  name: get(raw, 'system.name') || DEFAULTS.name,
+  slogan: get(raw, 'system.slogan') || DEFAULTS.slogan,
   tenantEnabled: get(raw, 'tenant.enabled') ?? DEFAULTS.tenantEnabled,
   iotEnabled: get(raw, 'iot.enabled') ?? DEFAULTS.iotEnabled,
   aiEnabled: get(raw, 'ai.enabled') ?? DEFAULTS.aiEnabled,
