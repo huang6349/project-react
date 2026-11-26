@@ -12,7 +12,7 @@
     "@alova/adapter-axios": "2.0.19",
     "@ant-design/icons": "5.6.1",
     "@ant-design/pro-components": "2.8.10",
-    "@umijs/max": "4.7.5",
+    "@umijs/max": "4.7.40",
     "alova": "3.5.4",
     "antd": "5.29.3",
     "antd-style": "3.6.3",
