@@ -1,5 +1,4 @@
 import { compact } from 'lodash-es';
-import { SysDictTag } from '@/components';
 
 const columns = (options) => compact([{
   title: '#序号',
@@ -25,10 +24,22 @@ const columns = (options) => compact([{
   },
 }, {
   title: '角色名称',
-  placeholder: '请输入名称',
+  access: '$role$query',
   width: 150,
   dataIndex: 'name',
   ellipsis: !0,
+  search: !1,
+  hideInForm: !0,
+  valueType: 'link',
+  linkHref: (record) => `/system/role/view?id=${record?.id}`,
+}, {
+  title: '角色名称',
+  placeholder: '请输入名称',
+  dataIndex: 'name',
+  search: !0,
+  hideInTable: !0,
+  hideInDescriptions: !0,
+  hideInExport: !0,
   hideInForm: !0,
 }, {
   title: '角色代码',
@@ -50,18 +61,13 @@ const columns = (options) => compact([{
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
+  valueType: 'dictTag',
   hideInDescriptions: !0,
   hideInForm: !0,
   hideInTable: !0,
   hideInSearch: !0,
   hideInExport: !0,
-  renderExport: ({ label } = {}) => (
-    label
-  ),
-  render: ({ label, style } = {}) => (<SysDictTag
-    label={label}
-    style={style}
-  />),
+  renderExport: ({ label } = {}) => label,
 }, {
   title: '创建时间',
   width: 180,

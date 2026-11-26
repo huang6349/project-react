@@ -1,9 +1,8 @@
-import { SysDictTag } from '@/components';
 import { compact } from 'lodash-es';
 import { isEmpty } from 'lodash-es';
 import { dataUser } from './service';
 
-const columns = (options) => compact([{
+const columns = (options, tenantId) => compact([{
   title: '#序号',
   valueType: 'indexBorder',
   width: 80,
@@ -27,11 +26,23 @@ const columns = (options) => compact([{
   },
 }, {
   title: '用户帐号',
-  placeholder: '请输入帐号',
+  access: '$member$query',
   width: 150,
   dataIndex: 'username',
   ellipsis: !0,
-  copyable: !0,
+  copyable: !1,
+  search: !1,
+  hideInForm: !0,
+  valueType: 'link',
+  linkHref: (record) => `/org/member/view?id=${record?.id}&tenantId=${tenantId}`,
+}, {
+  title: '用户帐号',
+  placeholder: '请输入帐号',
+  dataIndex: 'username',
+  search: !0,
+  hideInTable: !0,
+  hideInDescriptions: !0,
+  hideInExport: !0,
   hideInForm: !0,
 }, {
   title: '用户昵称',
@@ -62,15 +73,10 @@ const columns = (options) => compact([{
   span: 1,
   width: 150,
   dataIndex: 'genderTag',
+  valueType: 'dictTag',
   hideInForm: !0,
   hideInSearch: !0,
-  renderExport: ({ label } = {}) => (
-    label
-  ),
-  render: ({ label, style } = {}) => (<SysDictTag
-    label={label}
-    style={style}
-  />),
+  renderExport: ({ label } = {}) => label,
 }, {
   title: '用户生日',
   span: 2,
@@ -100,18 +106,13 @@ const columns = (options) => compact([{
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
+  valueType: 'dictTag',
   hideInDescriptions: !0,
   hideInForm: !0,
   hideInTable: !0,
   hideInSearch: !0,
   hideInExport: !0,
-  renderExport: ({ label } = {}) => (
-    label
-  ),
-  render: ({ label, style } = {}) => (<SysDictTag
-    label={label}
-    style={style}
-  />),
+  renderExport: ({ label } = {}) => label,
 }, {
   title: '创建时间',
   width: 180,

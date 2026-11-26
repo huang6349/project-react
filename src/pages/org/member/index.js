@@ -145,7 +145,7 @@ const IndexPage = withAuth(() => {
             }]}
           />,
         ],
-      })}
+      }, tenantId)}
       toolBarRender={() => [
         <SysButton
           type='primary'

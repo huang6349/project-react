@@ -1,4 +1,3 @@
-import { SysDictTag } from '@/components';
 import { compact } from 'lodash-es';
 import { queryDict } from '@/services';
 
@@ -28,10 +27,23 @@ const columns = (options) => compact([{
   },
 }, {
   title: '组织名称',
-  placeholder: '请输入名称',
+  access: '$tenant$query',
   width: 150,
   dataIndex: 'name',
   ellipsis: !0,
+  copyable: !1,
+  search: !1,
+  hideInForm: !0,
+  valueType: 'link',
+  linkHref: (record) => `/system/tenant/view?id=${record?.id}`,
+}, {
+  title: '组织名称',
+  placeholder: '请输入名称',
+  dataIndex: 'name',
+  search: !0,
+  hideInTable: !0,
+  hideInDescriptions: !0,
+  hideInExport: !0,
   hideInForm: !0,
 }, {
   title: '组织简称',
@@ -46,13 +58,11 @@ const columns = (options) => compact([{
   span: 3,
   width: 150,
   dataIndex: 'categoryTag',
+  valueType: 'dictTag',
   hideInForm: !0,
   hideInTable: !0,
   hideInSearch: !0,
-  render: ({ label, style } = {}) => (<SysDictTag
-    label={label}
-    style={style}
-  />),
+  renderExport: ({ label } = {}) => label,
 }, {
   title: '组织地区',
   width: 150,
@@ -83,14 +93,13 @@ const columns = (options) => compact([{
   span: 3,
   width: 150,
   dataIndex: 'statusTag',
+  valueType: 'dictTag',
   hideInDescriptions: !0,
   hideInForm: !0,
   hideInTable: !0,
   hideInSearch: !0,
-  render: ({ label, style } = {}) => (<SysDictTag
-    label={label}
-    style={style}
-  />),
+  hideInExport: !0,
+  renderExport: ({ label } = {}) => label,
 }, {
   title: '创建时间',
   width: 180,

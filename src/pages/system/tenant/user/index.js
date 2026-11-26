@@ -135,7 +135,7 @@ export const UserPane = ({ id: tenantId }) => {
           }]}
         />,
       ],
-    })}
+    }, tenantId)}
     toolBarRender={() => [
       <SysButton
         type='primary'
